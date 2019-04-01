@@ -250,5 +250,14 @@ button{
 
 .btn-footer{
   position: absolute;
-  bottom: 5%;
+  bottom: 0;
+  width: 100vw;
+  background-color: #ffffff;
+  padding: 5px
+
+}
+
+.btn-footer button{
+    width: 99%;
+    margin-bottom: 5px;    
 }

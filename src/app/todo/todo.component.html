@@ -192,10 +192,10 @@
   
          <div fxLayout="row" fxLayoutAlign="start center">
              <mat-form-field class="input-name">
-               <input  maxlength="10" matInput placeholder="Jogador"  id="input-player-name"[(ngModel)]="jogador.name">
+               <input (keyup.enter)="save(jogador)" maxlength="10" matInput placeholder="Jogador"  id="input-player-name" [(ngModel)]="jogador.name">
              </mat-form-field>
              
-             <button mat-raised-button color="primary" (click)="save(jogador)">Adicionar</button>
+             <button  mat-raised-button color="primary" (click)="save(jogador)">Adicionar</button>
            </div>
            <mat-divider></mat-divider>
            <div fxFlex>

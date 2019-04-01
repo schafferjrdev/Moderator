@@ -531,6 +531,12 @@ export class TodoComponent implements OnInit {
     
   }
 
+ 
+
+  onEnter(value: string) { 
+    console.log(value); 
+  }
+
   // newGame(){
   //   if (typeof(Storage) !== "undefined") {
   //     // Store
