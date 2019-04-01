@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl} from '@angular/forms';
+
 import _ from "lodash";
 
 export class Todo {
@@ -49,6 +51,8 @@ export class TodoComponent implements OnInit {
   step: number = 0;
 
   playerEditIndex: number =0;
+  myControl = new FormControl();
+  options: string[] = [];
   
   todo: Todo = new Todo();
   todos: Todo[] = [];
@@ -56,7 +60,7 @@ export class TodoComponent implements OnInit {
   jogador: Jogador = new Jogador();
   jogadores: Jogador[] = [];
 
-  classesForSort: string[];
+  classesForSort: Classes[];
 
   times = {
     aldeia:0,
@@ -278,8 +282,10 @@ export class TodoComponent implements OnInit {
     this.classesInGame = _.concat(this.classesInGame,addMore("Lobo", 3));
     this.classesInGame = _.pull(this.classesInGame,undefined);
     this.classesInGame = _.shuffle(this.classesInGame);
+    this.getLocalFav();
+    
     // var pulled = _.pullAt(array, 0);
-    console.log(this.classesInGame);
+    // console.log(this.classesInGame);
     
     
   }
@@ -291,12 +297,7 @@ export class TodoComponent implements OnInit {
     document.getElementById('input-player-name').focus();
     if(jogador.name !== undefined){
       if(jogador.name.trim() != ""){
-        let index = 0;
-        if(this.times.balance >= 6){
-          index = _.findIndex(this.classes, { 'name': 'Lobisomem' });
-        }else{
-          index = _.findIndex(this.classes, { 'name': 'Aldeão' });
-        }
+        let index = _.findIndex(this.classes, { 'name': 'Aldeão' });
         
         jogador.job = this.classes[index];
         jogador.target = false;
@@ -431,8 +432,8 @@ export class TodoComponent implements OnInit {
     return index !== -1 ? true : false;  
   }
 
-  show(jogador: Jogador){
-    
+  show(){
+    console.log("teste");
   }
 
   dayPass(){
@@ -477,25 +478,91 @@ export class TodoComponent implements OnInit {
   prevStep(){
     this.step--;
   }
+  toStep(n:number){
+    this.step = n;
+  }
 
   saveLocal(){
     if (typeof(Storage) !== "undefined") {
       localStorage.setItem("players", JSON.stringify(this.jogadores));
+      localStorage.setItem("classesOn", JSON.stringify(this.classesInGame));
+      localStorage.setItem("allClasses", JSON.stringify(this.classes));
+      localStorage.setItem("gameStatus", JSON.stringify(this.times));
     }
   }
 
   restart(){
     if (typeof(Storage) !== "undefined" && localStorage["players"]) {
       this.jogadores = JSON.parse(localStorage.getItem("players"));
-      this.nextStep();
+      this.classesInGame = JSON.parse(localStorage.getItem("classesOn"));
+      this.classes = JSON.parse(localStorage.getItem("allClasses"));
+      this.times = JSON.parse(localStorage.getItem("gameStatus"));
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
+      this.toStep(4);
     }else{
       console.log("No data saved");
     }
     
   }
 
+
+  saveLocalFav(){
+    if (typeof(Storage) !== "undefined") {
+      localStorage.setItem("favorites", JSON.stringify(this.options));
+    }
+  }
+
+  getLocalFav(){
+    if (typeof(Storage) !== "undefined" && localStorage["favorites"]) {
+      this.options = JSON.parse(localStorage.getItem("favorites"));
+      
+    }else{
+      console.log("No data saved");
+    }
+  }
+
+  fav(val:string){
+    
+      val.toLowerCase();
+      val = capitalizeFirstLetter(val);
+      add(this.options,val);
+      this.saveLocalFav();
+    
+    
+  }
+
+  unfav(val:string){
+    
+      val.toLowerCase();
+      val = capitalizeFirstLetter(val);
+      remove(this.options,val);
+      this.saveLocalFav();
+    
+    console.log(this.options);
+  }
+
+  hasName(name:string){
+    let index = _.findIndex(this.options, function(o) { return o.toUpperCase() === name.toUpperCase(); });
+    return index !== -1 ? true : false;  
+  }
+
   addClasses(){
-    console.log(this.classesInGame);
+    
+   for (let i = 0; i < this.classesInGame.length; i++) {
+    this.classesForSort = _.concat(this.classesForSort,addMore(this.classesInGame[i], this.classesInGame[i].qnt));
+    
+   }
+    
+    this.classesForSort = _.pull(this.classesForSort,undefined);
+    this.classesForSort = _.shuffle(this.classesForSort);
+    for (let j = 0; j < this.jogadores.length; j++) {
+      this.jogadores[j].job = this.classesForSort[j];
+      
+    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
+    this.saveLocal();
+
+    this.nextStep();
   }
 
   
@@ -518,23 +585,15 @@ export class TodoComponent implements OnInit {
     let total = 0;
     let balance = 0;
     for (let i = 0; i < this.classesInGame.length; i++) {
-      // total =+ this.classesInGame[i].qnt;
+      
       total = total+this.classesInGame[i].qnt;
       balance = balance+(this.classesInGame[i].qnt*parseInt(this.classesInGame[i].power));
     }
     console.log(total);
     this.times.totalClasses = total;
-    // this.times.totalClasses = total;
-    // console.log(this.times.totalClasses);
     this.times.balancing = balance;
     
     
-  }
-
- 
-
-  onEnter(value: string) { 
-    console.log(value); 
   }
 
   // newGame(){
@@ -588,8 +647,11 @@ export class TodoComponent implements OnInit {
     
     
   }
+
   
 }
+
+
 
 
 
@@ -597,12 +659,13 @@ function addMore(value, quantity){
   let array =[];
   for (let i = 0; i < quantity; i++) {
       array.push(value);
-      // array = _.concat(array,value);
   }
   return array;
 }
 
+
 function add(array, value) {
+  
   if (array.indexOf(value) === -1) {
     array.push(value);
   }
@@ -614,3 +677,9 @@ function remove(array, value) {
     array.splice(index, 1);
   }
 }
+
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+

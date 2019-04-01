@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {NumberPickerModule} from 'ng-number-picker';
+import { LongpressDirective } from './longpress.directive';
 
 import {
   MatButtonModule,
@@ -22,7 +22,8 @@ import {
   MatDialogModule,
   MatRippleModule,
   MatProgressBarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatAutocompleteModule
   
 } from '@angular/material';
 
@@ -36,7 +37,8 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    TodoComponent
+    TodoComponent,
+    LongpressDirective
   ],
   imports: [
     BrowserAnimationsModule,
@@ -60,7 +62,7 @@ import { environment } from '../environments/environment';
     MatButtonToggleModule,
     MatRippleModule,
     MatProgressBarModule,
-    NumberPickerModule,
+    MatAutocompleteModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
