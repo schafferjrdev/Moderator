@@ -247,3 +247,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#683ab7', end
 button{
     outline: none;
 }
+
+.btn-footer{
+  position: absolute;
+  bottom: 5%;
+}

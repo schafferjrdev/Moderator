@@ -219,7 +219,9 @@
                </div>
              </mat-list>
            </div>
-           <button [disabled]="jogadores.length<7" mat-raised-button color="primary" (click)="nextStep()" >Escolher jogadores</button>
+            <div class="btn-footer">
+              <button [disabled]="jogadores.length<7" mat-raised-button color="primary" (click)="nextStep()" >Escolher jogadores</button>
+            </div>
      
  </div>
 
@@ -278,7 +280,9 @@
           </div>
        
       </div>
-      <button [disabled]="(jogadores.length - times.totalClasses)>0" mat-raised-button color="primary" (click)="addClasses()">Escolher classes</button>
-      <button mat-stroked-button color="primary" (click)="prevStep()">Voltar</button>
+      <div class="btn-footer">
+        <button [disabled]="(jogadores.length - times.totalClasses)>0" mat-raised-button color="primary" (click)="addClasses()">Escolher classes</button>
+        <button mat-stroked-button color="primary" (click)="prevStep()">Voltar</button>
+      </div>
 
 </div>
