@@ -38,11 +38,11 @@
 }
 
 .lista-overflow{
-    height: 400px;
+    height: 70vh;
     overflow-y: auto;
 }
 .lista-overflow-classes{
-    height: 75vh;
+    height: 70vh;
     overflow-y: auto;
 }
 .lista-overflow-game{
