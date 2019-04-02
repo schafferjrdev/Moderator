@@ -39,9 +39,8 @@
 }
 
 .lista-overflow{
-    height: 70vh;
+    height: 60vh;
     overflow-y: auto;
-    padding-bottom: 50px;
 }
 .lista-overflow-classes{
     height: 70vh;

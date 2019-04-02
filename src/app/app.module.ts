@@ -6,6 +6,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LongpressDirective } from './longpress.directive';
 import 'hammerjs';
+import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+
+export class MyHammerConfig extends HammerGestureConfig {
+    overrides = <any> {
+        'pinch': { enable: false },
+        'rotate': { enable: false }
+    }
+}
 
 import {
   MatButtonModule,
@@ -66,7 +74,10 @@ import { environment } from '../environments/environment';
     MatAutocompleteModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [{
+            provide: HAMMER_GESTURE_CONFIG,
+            useClass: MyHammerConfig
+        }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

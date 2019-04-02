@@ -188,10 +188,12 @@
 
 <!-- Tela de ADD -->
 
-<div *ngIf="step == 2" class="content" fxLayout="column" layout-align="space-between stretch">
+ <div *ngIf="step == 2" class="content" fxLayout="column" >
   
-         <div fxLayout="row" fxLayoutAlign="start center">
-             <mat-form-field class="input-name">
+    <div fxFlex>
+        
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <mat-form-field class="input-name">
                <input (keyup.enter)="save(jogador)" maxlength="10" matInput placeholder="Jogador"  id="input-player-name" [(ngModel)]="jogador.name" [formControl]="myControl" [matAutocomplete]="auto">
                <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let option of options" [value]="option">
@@ -199,20 +201,19 @@
                   </mat-option>
                 </mat-autocomplete>
 
-             </mat-form-field>
-             
-             <button  mat-raised-button color="primary" (click)="save(jogador)" >Adicionar</button>
-           </div>
-           <mat-divider></mat-divider>
-           <div fxFlex>
-             
-             <mat-list>
-               <h3 mat-subheader>Jogadores ({{jogadores.length}})</h3>
-               
-               
-               <mat-divider></mat-divider>
-               <div class="lista-overflow">
-                 <mat-list-item  *ngFor="let jogador of jogadores">
+          </mat-form-field>
+          
+           <button  mat-raised-button color="primary" (click)="save(jogador)" >Adicionar</button>
+
+           
+          </div>
+          
+           <label class="subtitles gray-color">Jogadores ({{jogadores.length}})</label>   
+          <mat-divider></mat-divider>
+          <div class="lista-overflow">
+
+          <mat-list>
+                <mat-list-item  *ngFor="let jogador of jogadores">
                    <h4 mat-line>{{jogador.name}}</h4>
 
                    <button *ngIf="!hasName(jogador.name)" matRipple color="accent" mat-icon-button (click)="fav(jogador.name)">
@@ -232,16 +233,18 @@
                    <mat-divider></mat-divider>
                  </mat-list-item>
                  
-               </div>
+              
              </mat-list>
            </div>
-           
-            <div class="btn-footer">
+
+      
+      </div>
+      <div class="btn-footer">
               <button [disabled]="jogadores.length<7" mat-raised-button color="primary" (click)="nextStep()" >Escolher jogadores</button>
               <button mat-stroked-button color="primary" (click)="prevStep()">Voltar</button>
             </div>
-     
- </div>
+
+</div>
 
  <!-- Tela ADD CLASSES -->
 
