@@ -4,20 +4,64 @@
 
 
 
-.accent-color {
+.accent-color{
     color: #ffd740 !important;
 }
+
+.accent-color-focused .mat-select:focus{
+    color: #ffd740 !important;
+}
+
+.accent-color  .mat-select:focus .mat-select-arrow{
+    color: #ffd740 !important;
+}
+
+.accent-color .mat-form-field-ripple{
+    background-color: #ffd740 !important;
+}
+
 
 .white-color {
     color: #fff !important;
 }
-.primary-color {
+
+
+.primary-color{
+    color: #673ab7 !important;
+}
+.primary-color-focused .mat-select:focus{
     color: #673ab7 !important;
 }
 
+.primary-color  .mat-select:focus .mat-select-arrow{
+    color: #673ab7 !important;
+}
+
+.primary-color .mat-form-field-ripple{
+    background-color: #673ab7 !important;
+}
+
+
+
 .warn-color{
     color: #f44336 !important;
+
+
 }
+
+.warn-color-focused .mat-select:focus{
+    color: #f44336 !important;
+}
+
+.warn-color  .mat-select:focus .mat-select-arrow{
+    color: #f44336 !important;
+}
+
+.warn-color .mat-form-field-ripple{
+    background-color: #f44336 !important;
+}
+
+
 
 .darkgrey-color{
     color: #444444 !important;
@@ -41,4 +85,8 @@
 .disabled-icon .icon-path{
     fill: #fff !important;
   }
+
+
+
+
 

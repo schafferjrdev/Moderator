@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Germania+One');
 
+
 .body{
     overflow-y: hidden !important;
 }
@@ -40,13 +41,14 @@
 .lista-overflow{
     height: 70vh;
     overflow-y: auto;
+    padding-bottom: 50px;
 }
 .lista-overflow-classes{
     height: 70vh;
     overflow-y: auto;
 }
 .lista-overflow-game{
-    max-height: 400px;
+    max-height: 90vh;
     overflow-y: auto;
     display: flex;
     flex-flow: wrap;
@@ -264,3 +266,4 @@ button{
     width: 100%;
     margin-bottom: 5px;    
 }
+

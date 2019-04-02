@@ -316,7 +316,7 @@ export class TodoComponent implements OnInit {
         let balance =0;
         for (let index = 0; index < this.jogadores.length; index++) {
           balance = balance+Number(this.jogadores[index].job.power);
-          if(this.jogadores[index].job.team === 'good' && !this.jogadores[index].dead){
+          if(this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead){
             quantity++;
           }
           if(this.jogadores[index].dead){
@@ -324,8 +324,8 @@ export class TodoComponent implements OnInit {
           }  
         }
         this.times.balance = balance;
-        this.times.aldeia = quantity;
-        this.times.lobos = this.jogadores.length - dead - quantity;
+        this.times.lobos = quantity;
+        this.times.aldeia = this.jogadores.length - dead - quantity;
       }else{
         jogador.name = "";
       }
@@ -358,7 +358,7 @@ export class TodoComponent implements OnInit {
     let balance =0;
     for (let index = 0; index < this.jogadores.length; index++) {
       balance = balance+Number(this.jogadores[index].job.power);
-      if(this.jogadores[index].job.team === 'good' && !this.jogadores[index].dead){
+      if(this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead){
         quantity++;
       }
       if(this.jogadores[index].dead){
@@ -366,8 +366,8 @@ export class TodoComponent implements OnInit {
       }  
     }
     this.times.balance = balance;
-    this.times.aldeia = quantity;
-    this.times.lobos = this.jogadores.length - dead - quantity;
+    this.times.lobos = quantity;
+    this.times.aldeia = this.jogadores.length - dead - quantity;
     this.showPlayer = false;
     this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']); 
 
@@ -400,7 +400,7 @@ export class TodoComponent implements OnInit {
     let balance =0;
     for (let index = 0; index < this.jogadores.length; index++) {
       balance = balance+Number(this.jogadores[index].job.power);
-      if(this.jogadores[index].job.team === 'good' && !this.jogadores[index].dead){
+      if(this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead){
         quantity++;
       }
       if(this.jogadores[index].dead){
@@ -409,8 +409,8 @@ export class TodoComponent implements OnInit {
        
     }
     this.times.balance = balance;
-    this.times.aldeia = quantity;
-    this.times.lobos = this.jogadores.length - dead - quantity;
+    this.times.lobos = quantity;
+    this.times.aldeia = this.jogadores.length - dead - quantity;
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -451,7 +451,9 @@ export class TodoComponent implements OnInit {
   }
 
   voltar(){
+
     this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
+    this.saveLocal();
     this.showPlayer = false;
   }
 
@@ -460,15 +462,15 @@ export class TodoComponent implements OnInit {
     let dead =0;
     for (let index = 0; index < this.jogadores.length; index++) {
 
-      if(this.jogadores[index].job.team === 'good' && !this.jogadores[index].dead){
+      if(this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead){
         quantity++;
       }
       if(this.jogadores[index].dead){
         dead++;
       }  
     }
-    this.times.aldeia = quantity;
-    this.times.lobos = this.jogadores.length - dead - quantity;
+    this.times.lobos = quantity;
+    this.times.aldeia = this.jogadores.length - dead - quantity;
   }
 
   nextStep(){
@@ -493,9 +495,10 @@ export class TodoComponent implements OnInit {
 
   restart(){
     if (typeof(Storage) !== "undefined" && localStorage["players"]) {
-      this.jogadores = JSON.parse(localStorage.getItem("players"));
+      
       this.classesInGame = JSON.parse(localStorage.getItem("classesOn"));
       this.classes = JSON.parse(localStorage.getItem("allClasses"));
+      this.jogadores = JSON.parse(localStorage.getItem("players"));
       this.times = JSON.parse(localStorage.getItem("gameStatus"));
       this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
       this.toStep(4);
@@ -538,7 +541,7 @@ export class TodoComponent implements OnInit {
       remove(this.options,val);
       this.saveLocalFav();
     
-    console.log(this.options);
+    
   }
 
   hasName(name:string){
@@ -560,6 +563,7 @@ export class TodoComponent implements OnInit {
       
     }
     this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
+    this.teamsUp();
     this.saveLocal();
 
     this.nextStep();
@@ -589,7 +593,7 @@ export class TodoComponent implements OnInit {
       total = total+this.classesInGame[i].qnt;
       balance = balance+(this.classesInGame[i].qnt*parseInt(this.classesInGame[i].power));
     }
-    console.log(total);
+    
     this.times.totalClasses = total;
     this.times.balancing = balance;
     
