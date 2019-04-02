@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LongpressDirective } from './longpress.directive';
+import 'hammerjs';
 
 import {
   MatButtonModule,

@@ -313,9 +313,9 @@
         
         <mat-divider></mat-divider>
         
-
+        <!-- Card Jogador -->
         <div  class="lista-overflow-game" *ngIf="!showPlayer">
-        <mat-card appLongpress [duration]="800" (onLongPress)="open(jogador)" [ngClass]="{'cursed-border':jogador.job.name === 'Amaldiçoado','lupin-border':jogador.job.name === 'Lupino','lycan-border':jogador.job.name === 'Licano','good-border':jogador.job.team === 'good', 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" matRipple class="player mat-elevation-z6" *ngFor="let jogador of jogadores">
+        <mat-card  (press)="{event:open(jogador), time:500}" [ngClass]="{'cursed-border':jogador.job.name === 'Amaldiçoado','lupin-border':jogador.job.name === 'Lupino','lycan-border':jogador.job.name === 'Licano','good-border':jogador.job.team === 'good', 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" matRipple class="player mat-elevation-z6" *ngFor="let jogador of jogadores">
             <p class="grave-dead" *ngIf="jogador.dead">
                  
                 <mat-icon class="grave" svgIcon="grave"></mat-icon>
