@@ -266,3 +266,18 @@ button{
     margin-bottom: 5px;    
 }
 
+.extra{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.doggy{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 5px;
+  margin-top: 50px;  
+}

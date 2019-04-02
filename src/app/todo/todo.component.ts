@@ -23,6 +23,24 @@ export class Jogador {
   dead: boolean;
   curePotion: boolean;
   deathPotion: boolean;
+  crowMark: boolean;
+  foxPower: boolean;
+  buddy: boolean;
+
+}
+
+export class Status {
+  target: number = 0;
+  toughTarget: number = 0;
+  love: number = 0;
+  save: number = 0;
+  enchant: number = 0;
+  dead: number = 0;
+  curePotion: number = 0;
+  deathPotion: number = 0;
+  crowMark: number = 0;
+  foxPower: number = 0;
+  buddy: number = 0;
 
 }
 
@@ -47,7 +65,7 @@ export class TodoComponent implements OnInit {
   showPlayer: boolean = false;
   filterInGame: boolean = false;
   sortGame: boolean = false;
-  hasData: boolean = localStorage["players"];
+  hasData: boolean = localStorage["gameSave"];
   step: number = 0;
 
   playerEditIndex: number =0;
@@ -61,6 +79,8 @@ export class TodoComponent implements OnInit {
   jogadores: Jogador[] = [];
 
   classesForSort: Classes[];
+
+  statusUseds: Status = new Status();
 
   times = {
     aldeia:0,
@@ -275,6 +295,8 @@ export class TodoComponent implements OnInit {
   classesInGame: Classes[] = this.classes;
   
   constructor() {
+
+    
     
     this.classes = _.sortBy(this.classes, ['team', 'power']);  
     this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
@@ -308,6 +330,9 @@ export class TodoComponent implements OnInit {
         jogador.toughTarget = false;
         jogador.curePotion = false;
         jogador.deathPotion = false;
+        jogador.crowMark = false;
+        jogador.foxPower = false;
+        jogador.buddy = false;
         this.jogadores.push(jogador);
         this.jogador = new Jogador();
         this.jogadores = Object.assign([], this.jogadores);
@@ -485,26 +510,39 @@ export class TodoComponent implements OnInit {
   }
 
   saveLocal(){
+    let gameSave = {
+      jogadores: this.jogadores,
+      classesin: this.classesInGame,
+      classes: this.classes,
+      times: this.times,
+      status: this.statusUseds
+    }
     if (typeof(Storage) !== "undefined") {
       localStorage.setItem("players", JSON.stringify(this.jogadores));
       localStorage.setItem("classesOn", JSON.stringify(this.classesInGame));
       localStorage.setItem("allClasses", JSON.stringify(this.classes));
       localStorage.setItem("gameStatus", JSON.stringify(this.times));
+      localStorage.setItem("statuses", JSON.stringify(this.statusUseds));
+      localStorage.setItem("gameSave", JSON.stringify(gameSave));
+
     }
   }
 
   restart(){
-    if (typeof(Storage) !== "undefined" && localStorage["players"]) {
-      
-      this.classesInGame = JSON.parse(localStorage.getItem("classesOn"));
-      this.classes = JSON.parse(localStorage.getItem("allClasses"));
-      this.jogadores = JSON.parse(localStorage.getItem("players"));
-      this.times = JSON.parse(localStorage.getItem("gameStatus"));
+    if (typeof(Storage) !== "undefined" && localStorage["gameSave"]) {
+      // console.log(JSON.parse(localStorage.getItem("gameSave")));
+      let save = JSON.parse(localStorage.getItem("gameSave"));
+      this.classesInGame = save.classesin;
+      this.classes = save.classes;
+      this.jogadores = save.jogadores;
+      this.times = save.times;
+      this.statusUseds = save.status;
       this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
       this.toStep(4);
     }else{
       console.log("No data saved");
     }
+
     
   }
 
@@ -650,6 +688,42 @@ export class TodoComponent implements OnInit {
 
     
     
+  }
+
+  getColor(team:String){
+
+    if(team === "bad"){
+      return "warn"
+    }else if(team === "good"){
+      return "primary"
+    }else if(team === "neutral"){
+      return "accent"
+    }
+
+  }
+
+  attack(jogador: Jogador){
+    jogador.target = !jogador.target;
+  }
+
+  changeStatus(jogador: Jogador, property){
+    jogador[property] = !jogador[property];
+    
+    this.statusUsed(property);
+
+    this.saveLocal();
+  }
+
+  statusUsed(status){
+     let stat = _.countBy(this.jogadores, status);
+
+     if(stat.true>0){
+        this.statusUseds[status] = stat.true;
+     }else{
+        this.statusUseds[status] = 0;
+     }
+     
+     console.log(this.statusUseds);
   }
 
   

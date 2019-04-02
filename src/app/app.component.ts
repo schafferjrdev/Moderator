@@ -16,7 +16,7 @@ export class AppComponent {
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/wolf_head.svg'));
     iconRegistry.addSvgIcon(
         'rings',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/transfuse.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/linked-rings.svg'));
     iconRegistry.addSvgIcon(
           'death',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/hasty-grave.svg'));
@@ -25,7 +25,7 @@ export class AppComponent {
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/slashed-shield.svg'));
         iconRegistry.addSvgIcon(
           'atk',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/claw-slashes.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/claw.svg'));
         iconRegistry.addSvgIcon(
           'werewolf',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/werewolf.svg'));
@@ -53,6 +53,25 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'white-wolf',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/werewolf-white.svg'));
+        iconRegistry.addSvgIcon(
+          'hood',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/cowled.svg'));
+        iconRegistry.addSvgIcon(
+          'elder-sign',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/flexible-star.svg'));
+        iconRegistry.addSvgIcon(
+          'feather',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/feather.svg'));
+        iconRegistry.addSvgIcon(
+          'paw',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/paw.svg'));
+        iconRegistry.addSvgIcon(
+          'fox-tail',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/fox-tail.svg'));
+        iconRegistry.addSvgIcon(
+          'double-claw',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/double-claw.svg'));
+
 
         iconRegistry.addSvgIcon(
           'amaldicoado',
