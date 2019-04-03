@@ -71,8 +71,19 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'double-claw',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/double-claw.svg'));
-
-
+        iconRegistry.addSvgIcon(
+          'day',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/sunrise.svg'));
+        iconRegistry.addSvgIcon(
+          'night',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/night-sky.svg'));
+        iconRegistry.addSvgIcon(
+          'eliminate',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reaper-scythe.svg'));
+        iconRegistry.addSvgIcon(
+          'vote',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/gibbet.svg'));
+        
         iconRegistry.addSvgIcon(
           'amaldicoado',
         sanitizer.bypassSecurityTrustResourceUrl('assets/players/amaldicoado.svg'));

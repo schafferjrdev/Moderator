@@ -11,19 +11,21 @@ export class Todo {
 export class Jogador {
   name: string;
   job: Classes;
-  target: boolean;
-  toughTarget: boolean;
-  love: boolean;
-  save: boolean;
-  enchant: boolean;
-  dead: boolean;
-  curePotion: boolean;
-  deathPotion: boolean;
-  crowMark: boolean;
-  foxPower: boolean;
-  buddy: boolean;
+  lynch:boolean = false;
+  target: boolean = false;
+  toughTarget: boolean = false;
+  love: boolean = false;
+  save: boolean = false;
+  enchant: boolean = false;
+  dead: boolean = false;
+  curePotion: boolean = false;
+  deathPotion: boolean = false;
+  crowMark: boolean = false;
+  foxPower: boolean = false;
+  buddy: boolean = false;
 
 }
+
 
 export class Status {
   target: number = 0;
@@ -63,6 +65,8 @@ export class TodoComponent implements OnInit {
   sortGame: boolean = false;
   hasData: boolean = localStorage["gameSave"];
   step: number = 0;
+  night:boolean = true;
+  showDead:boolean = false;
 
   playerEditIndex: number =0;
   myControl = new FormControl();
@@ -291,8 +295,6 @@ export class TodoComponent implements OnInit {
   classesInGame: Classes[] = this.classes;
   
   constructor() {
-
-    
     
     this.classes = _.sortBy(this.classes, ['team', 'power']);  
     this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
@@ -318,17 +320,7 @@ export class TodoComponent implements OnInit {
         let index = _.findIndex(this.classes, { 'name': 'Aldeão' });
         
         jogador.job = this.classes[index];
-        jogador.target = false;
-        jogador.dead = false;
-        jogador.save = false;
-        jogador.love = false;
-        jogador.enchant = false;
-        jogador.toughTarget = false;
-        jogador.curePotion = false;
-        jogador.deathPotion = false;
-        jogador.crowMark = false;
-        jogador.foxPower = false;
-        jogador.buddy = false;
+        
         this.jogadores.push(jogador);
         this.jogador = new Jogador();
         this.jogadores = Object.assign([], this.jogadores);
@@ -371,6 +363,11 @@ export class TodoComponent implements OnInit {
     
   }
   
+
+  invertFlag(flag:boolean){
+    // flag = !flag;
+    console.log(flag);
+  }
 
   delete(jogador: Jogador) {
     this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
@@ -463,10 +460,21 @@ export class TodoComponent implements OnInit {
     return index !== -1 ? true : false;  
   }
 
-  playerWithStatus(stat:string, array){
-    let playerWithStatus = _.filter(array, function(o) { return o[stat] == true; });
+  playerWithStatus(stat:string, array, type:boolean){
+    let playerWithStatus = _.filter(array, function(o) { return o[stat] == type; });
     
     return playerWithStatus;
+  }
+  playerWithClass(classe:string, array){
+    let playerWithClass = _.filter(array, function(o) { return o.job.name == classe; });
+    
+    return playerWithClass;
+  }
+
+  playerWithClassAndStatusTrue(classe:string, array,stat:string){
+    let playerWithClassAndStatus = _.filter(array, function(o) { return o.job.name == classe; });
+    let index = _.findIndex(playerWithClassAndStatus, function(o) { return o[stat] == true; });
+    return index !== -1 ? true : false;
   }
 
   statusTrue(stat:string, array){
@@ -482,12 +490,44 @@ export class TodoComponent implements OnInit {
       }
   }
 
+  changeStatusWhere(stat:string, arrayToChange, arrayCompare, type:boolean){
+    
+    for (let i = 0; i < arrayToChange.length; i++) {
+      for (let j = 0; j < arrayCompare.length; j++) {
+        if(arrayToChange[i].name === arrayCompare[j].name){
+          arrayToChange[i][stat] = type;
+        }
+        
+      }
+      
+    }
+    this.teamsUp();
+  }
+
+  changeStatusWhereMinus(stat:string, arrayToChange, arrayCompare, type:boolean, classe:string){
+    
+    for (let i = 0; i < arrayToChange.length; i++) {
+      for (let j = 0; j < arrayCompare.length; j++) {
+        if(arrayToChange[i].name === arrayCompare[j].name && arrayToChange[i].job.name !== classe){
+          arrayToChange[i][stat] = type;
+        }
+        
+      }
+      
+    }
+    this.teamsUp();
+  }
+
   show(){
     console.log("teste");
   }
 
   dayPass(){
-    let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true; });
+    this.night = !this.night;
+  }
+
+  eliminate(){
+    let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.name !== 'Gigante'; });
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
     playerAttacked = _.uniqBy(playerAttacked, 'name');
@@ -495,18 +535,44 @@ export class TodoComponent implements OnInit {
     let playerNotSaved = _.filter(playerAttacked, function(o){return o.save === false; });
     playerNotSaved = _.filter(playerNotSaved, function(o){return o.curePotion === false; });
     playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+    
+
 
     let lovers; 
     if(this.statusTrue('love',playerNotSaved)){
-      lovers = this.playerWithStatus('love',this.jogadores);
+      lovers = this.playerWithStatus('love',this.jogadores,true);
       playerNotSaved = _.concat(playerNotSaved,lovers);
+      playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+    }
+    let buddy;
+    if(this.statusTrue('buddy',playerNotSaved)){
+      buddy = this.playerWithClass('Cachorro',this.jogadores)
+      playerNotSaved = _.concat(playerNotSaved,buddy);
       playerNotSaved = _.uniqBy(playerNotSaved, 'name');
     }
 
     
-    console.log(playerNotSaved);
+    
+    playerNotSaved = this.playerWithStatus('dead',playerNotSaved,false);
+    this.changeStatusWhere("dead",this.jogadores,playerNotSaved,true);
+    // console.log(playerNotSaved);
+    let playerAlive = _.filter(this.jogadores, function(o){return o.dead === false; });
+    this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'Gigante');
+    this.changeStatusWhere('toughTarget', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('save', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('crowMark', this.jogadores, playerAlive, false);
 
+    
+    let indexCursed = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Amaldiçoado' && o.target === true; });
+    let indexWolf = _.findIndex(this.classes, function(o) { return o.name === 'Lobisomem'; });
 
+    if(indexCursed != -1){
+      this.jogadores[indexCursed].dead = false;
+      this.jogadores[indexCursed].job = this.classes[indexWolf];
+      this.teamsUp();
+
+    }
+    
 
     // for (let index = 0; index < this.jogadores.length; index++) {
     //   this.jogadores[index].target = false;
