@@ -463,16 +463,57 @@ export class TodoComponent implements OnInit {
     return index !== -1 ? true : false;  
   }
 
+  playerWithStatus(stat:string, array){
+    let playerWithStatus = _.filter(array, function(o) { return o[stat] == true; });
+    
+    return playerWithStatus;
+  }
+
+  statusTrue(stat:string, array){
+    let index = _.findIndex(array, function(o) { return o[stat] == true; });
+    
+    return index !== -1 ? true : false;
+  }
+
+  changeAllStatus(stat:string, array, type:boolean){
+      for (let i = 0; i < array.length; i++) {
+        array[i][stat] = type;
+        
+      }
+  }
+
   show(){
     console.log("teste");
   }
 
   dayPass(){
-    for (let index = 0; index < this.jogadores.length; index++) {
-      this.jogadores[index].target = false;
-      this.jogadores[index].save = false;
+    let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true; });
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
+    playerAttacked = _.uniqBy(playerAttacked, 'name');
 
+    let playerNotSaved = _.filter(playerAttacked, function(o){return o.save === false; });
+    playerNotSaved = _.filter(playerNotSaved, function(o){return o.curePotion === false; });
+    playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+
+    let lovers; 
+    if(this.statusTrue('love',playerNotSaved)){
+      lovers = this.playerWithStatus('love',this.jogadores);
     }
+
+    playerNotSaved = _.concat(playerNotSaved,lovers);
+    playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+    console.log(playerNotSaved);
+
+
+
+    // for (let index = 0; index < this.jogadores.length; index++) {
+    //   this.jogadores[index].target = false;
+    //   this.jogadores[index].toughTarget = false;
+    //   this.jogadores[index].save = false;
+    //   this.jogadores[index].crowMark = false;
+
+    // }
   }
 
   open(jogador: Jogador){

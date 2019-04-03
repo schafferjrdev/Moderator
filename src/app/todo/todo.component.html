@@ -329,10 +329,10 @@
 
             <mat-card-title *ngIf="!jogador.dead" [ngClass]="{'primary-color':jogador.job.team === 'good', 'warn-color':jogador.job.team === 'bad','accent-color':jogador.job.team === 'neutral'}">
               <mat-icon [ngClass]="{'icon-good':jogador.job.team === 'good','icon-bad':jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral'}" mat-card-avatar svgIcon="{{jogador.job.icon}}"></mat-icon>  
-                {{jogador.job.name}}
+                {{jogador.job.name}} 
                </mat-card-title> 
             <mat-card-subtitle>
-                {{jogador.name}}
+                {{jogador.name}} 
             </mat-card-subtitle>
             
             <mat-card-content>
@@ -371,16 +371,14 @@
                 </button>
 
               <div class="extra">
-                <button *ngIf="hasClass('Lider do Culto') && jogador.job.name !== 'Lider do Culto'" mat-icon-button (click)="changeStatus(jogador, 'enchant')">
-                <mat-icon  [ngClass]="{'icon-gray':!jogador.enchant,'icon-neutral':jogador.enchant }" class="example-tab-icon" svgIcon="elder-sign"></mat-icon>
-                </button>
-
-                <button  *ngIf="hasClass('Cupido')" mat-icon-button (click)="changeStatus(jogador, 'love')">
-                <mat-icon [ngClass]="{'icon-gray':!jogador.love, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="rings"></mat-icon>
+                <button  *ngIf="hasClass('Cupido') && statusUseds.love < 2 || hasClass('Cupido') && jogador.love" mat-icon-button (click)="changeStatus(jogador, 'love')">
+                  <mat-icon [ngClass]="{'icon-gray':!jogador.love, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="rings"></mat-icon>
                 </button> 
-
-                  
+                <button *ngIf="hasClass('Lider do Culto') && jogador.job.name !== 'Lider do Culto'" mat-icon-button (click)="changeStatus(jogador, 'enchant')">
+                  <mat-icon  [ngClass]="{'icon-gray':!jogador.enchant,'icon-neutral':jogador.enchant }" class="example-tab-icon" svgIcon="elder-sign"></mat-icon>
+                </button>  
               </div> 
+
               </div>
               </mat-card-content>
 
