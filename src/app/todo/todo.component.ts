@@ -499,10 +499,11 @@ export class TodoComponent implements OnInit {
     let lovers; 
     if(this.statusTrue('love',playerNotSaved)){
       lovers = this.playerWithStatus('love',this.jogadores);
+      playerNotSaved = _.concat(playerNotSaved,lovers);
+      playerNotSaved = _.uniqBy(playerNotSaved, 'name');
     }
 
-    playerNotSaved = _.concat(playerNotSaved,lovers);
-    playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+    
     console.log(playerNotSaved);
 
 
