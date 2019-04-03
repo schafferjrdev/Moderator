@@ -313,8 +313,8 @@
 
 <div *ngIf="step == 4" class="content" fxLayout="column">
   <h3 class="warn-color center-text"  *ngIf="jogadores.length==0"  mat-subheader>Adicione os jogadores!</h3>
-        <h4 fxLayout="row" fxLayoutAlign="start center" mat-subheader *ngIf="jogadores.length>0"><label class="primary-color">Aldeia {{times.aldeia}} </label><mat-icon>close</mat-icon><label class="warn-color"> {{times.lobos}} Lobos</label> </h4>
-        <p  class="label-balance" *ngIf="jogadores.length>0">Balanceamento: {{times.balancing}}<button mat-button color="primary" (click)="dayPass()">Passar dia</button></p>
+        <h4 fxLayout="row" fxLayoutAlign="start center" class="subtitles" *ngIf="jogadores.length>0"><label class="primary-color">Aldeia {{times.aldeia}} </label><mat-icon>close</mat-icon><label class="warn-color"> {{times.lobos}} Lobos</label> <label *ngIf="hasClass('Lider do Culto')" class="accent-color">&nbsp;({{times.cult}}/{{times.lobos+times.aldeia}})</label></h4>
+       <button mat-button color="primary" (click)="dayPass()">Passar dia</button>
         
         <mat-divider></mat-divider>
         
@@ -372,7 +372,7 @@
 
               <div class="extra">
                 <button *ngIf="hasClass('Lider do Culto') && jogador.job.name !== 'Lider do Culto'" mat-icon-button (click)="changeStatus(jogador, 'enchant')">
-                <mat-icon  [ngClass]="{'icon-gray':!jogador.enchant, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="elder-sign"></mat-icon>
+                <mat-icon  [ngClass]="{'icon-gray':!jogador.enchant,'icon-neutral':jogador.enchant }" class="example-tab-icon" svgIcon="elder-sign"></mat-icon>
                 </button>
 
                 <button  *ngIf="hasClass('Cupido')" mat-icon-button (click)="changeStatus(jogador, 'love')">

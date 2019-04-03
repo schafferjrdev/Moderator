@@ -7,10 +7,6 @@ export class Todo {
   desc: string;
 }
 
-export interface Food {
-  value: string;
-  viewValue: string;
-}
 
 export class Jogador {
   name: string;
@@ -85,7 +81,7 @@ export class TodoComponent implements OnInit {
   times = {
     aldeia:0,
     lobos:0,
-    balance:0,
+    cult:0,
     balancing:0,
     totalClasses:0
   }
@@ -348,7 +344,7 @@ export class TodoComponent implements OnInit {
             dead++;
           }  
         }
-        this.times.balance = balance;
+        // this.times.balance = balance;
         this.times.lobos = quantity;
         this.times.aldeia = this.jogadores.length - dead - quantity;
       }else{
@@ -390,7 +386,7 @@ export class TodoComponent implements OnInit {
         dead++;
       }  
     }
-    this.times.balance = balance;
+    // this.times.balance = balance;
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
     this.showPlayer = false;
@@ -433,7 +429,7 @@ export class TodoComponent implements OnInit {
       }
        
     }
-    this.times.balance = balance;
+    // this.times.balance = balance;
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
 
@@ -449,7 +445,17 @@ export class TodoComponent implements OnInit {
         this.classesHelp = classTemp;
         this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);  
     }
-       
+    if(this.hasClass('Lider do Culto')){
+      this.jogadores[_.findIndex(this.jogadores, function(o) { return o.job.name === 'Lider do Culto'; })].enchant = true;
+    }
+       this.times.cult = this.numberCult();
+  }
+
+  numberCult(){
+    
+    let cultAlive = _.filter(this.jogadores, function(o) { return o.dead === false; });
+    return _.countBy(cultAlive, 'enchant').true > 0 ? _.countBy(cultAlive, 'enchant').true : 0 ;
+
   }
 
   hasClass(className:string){
@@ -496,6 +502,7 @@ export class TodoComponent implements OnInit {
     }
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
+    this.times.cult = this.numberCult();
   }
 
   nextStep(){
@@ -601,6 +608,7 @@ export class TodoComponent implements OnInit {
       
     }
     this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.power','job.name']);
+   
     this.teamsUp();
     this.saveLocal();
 
@@ -707,7 +715,9 @@ export class TodoComponent implements OnInit {
   }
 
   changeStatus(jogador: Jogador, property){
+    
     jogador[property] = !jogador[property];
+    this.teamsUp();
     
     this.statusUsed(property);
 
@@ -717,13 +727,8 @@ export class TodoComponent implements OnInit {
   statusUsed(status){
      let stat = _.countBy(this.jogadores, status);
 
-     if(stat.true>0){
-        this.statusUseds[status] = stat.true;
-     }else{
-        this.statusUseds[status] = 0;
-     }
-     
-     console.log(this.statusUseds);
+     this.statusUseds[status] = stat.true>0 ? stat.true:0;
+
   }
 
   
