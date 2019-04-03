@@ -250,13 +250,22 @@ button{
     width: 100%;
     margin-bottom: 5px;    
 }
-
-.extra{
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-right: 5px;
-  margin-top: 5px;
+.side{
+    display: flex;
+    flex-flow: column;
+    
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    
+}
+.incult{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
 }
 
 .doggy{
@@ -264,7 +273,15 @@ button{
   top: 0;
   right: 0;
   margin-right: 5px;
-  margin-top: 50px;  
+  margin-top: 46px;   
+}
+
+.inlove{
+    position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 5px;
+  margin-top: 90px;
 }
 
 .dead{
@@ -288,3 +305,16 @@ button{
 .icon-btn{
     vertical-align: text-bottom !important;
 }
+
+.action-btns{
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+}
+
+.subtitle-player, .title-player{
+    margin-bottom: 0;
+}
+.subtitle-player{
+    height: 20px;
+}   

@@ -34,7 +34,7 @@ export class AppComponent {
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/farmer.svg'));
         iconRegistry.addSvgIcon(
           'grave',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/dead-grave.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/grave.svg'));
         iconRegistry.addSvgIcon(
           'voodoo',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/voodoo.svg'));
@@ -79,10 +79,23 @@ export class AppComponent {
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/night-sky.svg'));
         iconRegistry.addSvgIcon(
           'eliminate',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reaper-scythe.svg'));
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/tombstone.svg'));
         iconRegistry.addSvgIcon(
           'vote',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/gibbet.svg'));
+
+        iconRegistry.addSvgIcon(
+          'grave1',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icon-grave-1.svg'));
+        iconRegistry.addSvgIcon(
+          'grave2',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icon-grave-2.svg'));
+        iconRegistry.addSvgIcon(
+          'grave3',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icon-grave-3.svg'));
+        iconRegistry.addSvgIcon(
+          'revive',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/revive.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',
