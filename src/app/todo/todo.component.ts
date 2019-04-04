@@ -14,6 +14,7 @@ export class Jogador {
   lynch:boolean = false;
   target: boolean = false;
   toughTarget: boolean = false;
+  attacked: boolean = false;
   love: boolean = false;
   save: boolean = false;
   enchant: boolean = false;
@@ -539,6 +540,7 @@ export class TodoComponent implements OnInit {
 
   eliminate(){
     let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.name !== 'Gigante'; });
+    let indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Gigante' && o.target === true && o.save === false; });
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.lynch === true && o.job.name !== 'Príncipe'; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
@@ -548,7 +550,9 @@ export class TodoComponent implements OnInit {
     playerNotSaved = _.filter(playerNotSaved, function(o){return o.curePotion === false; });
     playerNotSaved = _.uniqBy(playerNotSaved, 'name');
     
-
+    if(indexGiantWound != -1){
+      this.jogadores[indexGiantWound].attacked = true;
+    }
 
     let lovers; 
     if(this.statusTrue('love',playerNotSaved)){
@@ -567,13 +571,22 @@ export class TodoComponent implements OnInit {
     
     playerNotSaved = this.playerWithStatus('dead',playerNotSaved,false);
     this.changeStatusWhere("dead",this.jogadores,playerNotSaved,true);
-    // console.log(playerNotSaved);
+   
+
     let playerAlive = _.filter(this.jogadores, function(o){return o.dead === false; });
-    this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'Gigante');
+    let giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Gigante' && o.attacked === true; });
+    if(giantAttacked != -1){
+      this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'Gigante');
+      
+    }else{
+      this.changeStatusWhere('target', this.jogadores, playerAlive, false);
+    }
+   
     this.changeStatusWhere('toughTarget', this.jogadores, playerAlive, false);
     this.changeStatusWhere('save', this.jogadores, playerAlive, false);
     this.changeStatusWhere('crowMark', this.jogadores, playerAlive, false);
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('deathPotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
 
 
@@ -597,7 +610,7 @@ export class TodoComponent implements OnInit {
     //   this.jogadores[index].crowMark = false;
 
     // }
-    
+    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
     this.saveLocal();
   }
 

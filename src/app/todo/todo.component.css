@@ -80,6 +80,9 @@
 .icon-gray{
     fill: #ccc;
 }
+.icon-darkgray{
+    fill: #666 !important;
+}
 
 .gray-color{
     color: #ccc;
@@ -318,3 +321,28 @@ button{
 .subtitle-player{
     height: 20px;
 }   
+
+.icon-text{
+    vertical-align: text-bottom;
+}
+
+.header{
+    display: flex;
+    flex-flow: row;
+    padding-top: 10px;
+    padding-left: 10px;
+    
+} 
+
+.header h5{
+    padding-right: 5px;
+}
+
+
+.btn-menu{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 20px;
+    margin-top: 5px;
+}

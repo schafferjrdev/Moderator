@@ -96,6 +96,10 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'revive',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/revive.svg'));
+
+        iconRegistry.addSvgIcon(
+          'menu',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',

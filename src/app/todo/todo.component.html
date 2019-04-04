@@ -312,20 +312,32 @@
 <!-- tela de Jogo -->
 
 <div *ngIf="step == 4" class="content" fxLayout="column">
-  <h3 class="warn-color center-text"  *ngIf="jogadores.length==0"  mat-subheader>Adicione os jogadores!</h3>
-        <h4 fxLayout="row" fxLayoutAlign="start center" class="subtitles" *ngIf="jogadores.length>0"><label class="primary-color">Aldeia {{times.aldeia}} </label><mat-icon>close</mat-icon><label class="warn-color"> {{times.lobos}} Lobos</label> <label *ngIf="hasClass('Lider do Culto') && !playerWithClassAndStatusTrue('Lider do Culto',jogadores,'dead')" class="accent-color">&nbsp;({{times.cult}}/{{times.lobos+times.aldeia}})</label></h4>
-       
-       <div class="action-btns">
-          <button mat-icon-button  (click)="eliminate()">
-              <mat-icon class="icon-btn example-tab-icon"  [ngClass]="{'icon-good':!night,'icon-bad':night}"   svgIcon="eliminate"></mat-icon>
-          </button>
-          <button mat-icon-button  (click)="dayPass()">
-            <mat-icon class="icon-btn example-tab-icon" [ngClass]="{'icon-good':!night,'icon-bad':night}" *ngIf="night" svgIcon="day"></mat-icon>
-            <mat-icon class="icon-btn example-tab-icon" [ngClass]="{'icon-good':!night,'icon-bad':night}" *ngIf="!night" svgIcon="night"></mat-icon>
-          </button>
-
-       </div>
-       
+  
+  <div class="header">
+    
+    <h5 *ngIf="jogadores.length>0"><label class="primary-color">Aldeia {{times.aldeia}} </label><mat-icon class="icon-text">close</mat-icon><label class="warn-color"> {{times.lobos}} Lobos</label></h5>
+    <h5 *ngIf="hasClass('Lider do Culto') && !playerWithClassAndStatusTrue('Lider do Culto',jogadores,'dead')" class="accent-color">({{times.cult}}/{{times.lobos+times.aldeia}})</h5>
+    
+    <div class="btn-menu">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon class="icon-btn example-tab-icon" [ngClass]="{'icon-good':!night,'icon-bad':night}" svgIcon="menu"></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="eliminate()">
+          <mat-icon class="icon-btn example-tab-icon"  [ngClass]="{'icon-good':!night,'icon-bad':night}"   svgIcon="eliminate"></mat-icon>
+          <span>Eliminar</span>
+        </button>
+        
+        <button mat-menu-item (click)="dayPass()">
+          <mat-icon class="icon-btn example-tab-icon" [ngClass]="{'icon-good':!night,'icon-bad':night}" *ngIf="night" svgIcon="day"></mat-icon>
+          <mat-icon class="icon-btn example-tab-icon" [ngClass]="{'icon-good':!night,'icon-bad':night}" *ngIf="!night" svgIcon="night"></mat-icon>
+          <span *ngIf="night">Dia</span>
+          <span *ngIf="!night">Noite</span>
+        </button>
+      </mat-menu>
+              
+    </div>
+  </div> 
         
         <mat-divider></mat-divider>
         
@@ -370,55 +382,55 @@
                   </button>
 
               </div> -->
-              <div *ngIf="!jogador.dead">
+              <div >
 
                 <div >
                 
-                <button  *ngIf="!night && jogador.job.name !== 'Príncipe'" mat-icon-button (click)="changeStatus(jogador, 'lynch')">
+                <button  *ngIf="!night && jogador.job.name !== 'Príncipe' && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'lynch')">
                   <mat-icon  [ngClass]="{'icon-gray':!jogador.lynch, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="vote"></mat-icon>
                 </button>
 
-                <button   *ngIf="jogador.job.name === 'Raposa' && night" mat-icon-button (click)="changeStatus(jogador, 'foxPower')">
+                <button   *ngIf="jogador.job.name === 'Raposa' && night && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'foxPower')">
                   <mat-icon [ngClass]="{'icon-gray':jogador.foxPower, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="fox-tail"></mat-icon>
                 </button>
 
-                <button *ngIf="night"  mat-icon-button (click)="changeStatus(jogador, 'target')">
+                <button [disabled]="jogador.attacked" *ngIf="night && !jogador.dead"  mat-icon-button (click)="changeStatus(jogador, 'target')">
                   <mat-icon  [ngClass]="{'icon-gray':!jogador.target, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="atk"></mat-icon>
                 </button>
 
-                <button   *ngIf="jogador.job.name === 'Gigante' && jogador.target  && night"  mat-icon-button (click)="changeStatus(jogador, 'toughTarget')">
+                <button   *ngIf="jogador.job.name === 'Gigante' && jogador.attacked  && night && !jogador.dead"  mat-icon-button (click)="changeStatus(jogador, 'toughTarget')">
                   <mat-icon [ngClass]="{'icon-gray':!jogador.toughTarget, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="double-claw"></mat-icon>
                 </button>
 
 
-                <button  *ngIf="hasClass('Guardião') && night" mat-icon-button (click)="changeStatus(jogador, 'save')">
+                <button  *ngIf="hasClass('Guardião') && night && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'save')">
                   <mat-icon  [ngClass]="{'icon-gray':!jogador.save, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="shield"></mat-icon>
                 </button>   
-                <button  *ngIf="hasClass('Corvo')" mat-icon-button (click)="changeStatus(jogador, 'crowMark')">
+                <button  *ngIf="hasClass('Corvo') && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'crowMark')">
                   <mat-icon  [ngClass]="{'icon-gray':!jogador.crowMark, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="feather"></mat-icon>
                 </button>           
                     
                   
-                <button *ngIf="hasClass('Bruxa') && statusUseds.curePotion === 0  && night || hasClass('Bruxa') && jogador.curePotion  && night" mat-icon-button (click)="changeStatus(jogador, 'curePotion')">
+                <button *ngIf="hasClass('Bruxa') && statusUseds.curePotion === 0  && night && !jogador.dead || hasClass('Bruxa') && jogador.curePotion  && night && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'curePotion')">
                   <mat-icon  [ngClass]="{'icon-gray':!jogador.curePotion, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="cure"></mat-icon>
                 </button>
-                <button *ngIf="hasClass('Bruxa') && statusUseds.deathPotion === 0  && night || hasClass('Bruxa') && jogador.deathPotion  && night" mat-icon-button (click)="changeStatus(jogador, 'deathPotion')">
+                <button *ngIf="hasClass('Bruxa') && statusUseds.deathPotion === 0  && night && !jogador.dead || hasClass('Bruxa') && jogador.deathPotion  && night && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'deathPotion')">
                     <mat-icon [ngClass]="{'icon-gray':!jogador.deathPotion, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="venom"></mat-icon>
                 </button> 
 
                 <div class="side">
-                <button  *ngIf="hasClass('Lider do Culto') && jogador.job.name !== 'Lider do Culto'  && night" mat-icon-button (click)="changeStatus(jogador, 'enchant')">
+                <button  *ngIf="hasClass('Lider do Culto') && jogador.job.name !== 'Lider do Culto'  && night && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'enchant')">
                   <mat-icon  [ngClass]="{'icon-gray':!jogador.enchant,'icon-neutral':jogador.enchant }" class="example-tab-icon" svgIcon="elder-sign"></mat-icon>
                 </button>  
 
 
-                <button  *ngIf="hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && statusUseds.buddy === 0 || hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && jogador.buddy" mat-icon-button (click)="changeStatus(jogador, 'buddy')">
-                  <mat-icon  [ngClass]="{'icon-gray':!jogador.buddy, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="paw"></mat-icon>
+                <button  *ngIf="hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && statusUseds.buddy === 0 && !jogador.dead|| hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && jogador.buddy" mat-icon-button (click)="changeStatus(jogador, 'buddy')">
+                  <mat-icon  [ngClass]="{'icon-darkgray':jogador.dead,'icon-gray':!jogador.buddy, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="paw"></mat-icon>
                 </button>
 
                 
-                <button   *ngIf="hasClass('Cupido') && statusUseds.love < 2 || hasClass('Cupido') && jogador.love" mat-icon-button (click)="changeStatus(jogador, 'love')">
-                  <mat-icon [ngClass]="{'icon-gray':!jogador.love, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="rings"></mat-icon>
+                <button   *ngIf="hasClass('Cupido') && statusUseds.love < 2 && !jogador.dead|| hasClass('Cupido') && jogador.love" mat-icon-button (click)="changeStatus(jogador, 'love')">
+                  <mat-icon [ngClass]="{'icon-darkgray':jogador.dead,'icon-gray':!jogador.love, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="rings"></mat-icon>
                 </button> 
                 </div>
 
