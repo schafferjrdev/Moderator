@@ -17,6 +17,7 @@ export class Jogador {
   attacked: boolean = false;
   love: boolean = false;
   save: boolean = false;
+  saved: boolean = false;
   enchant: boolean = false;
   dead: boolean = false;
   curePotion: boolean = false;
@@ -71,6 +72,7 @@ export class TodoComponent implements OnInit {
   step: number = 0;
   night:boolean = true;
   showDead:boolean = false;
+  showDeadFlag :boolean = true;
 
   playerEditIndex: number =0;
   myControl = new FormControl();
@@ -82,6 +84,7 @@ export class TodoComponent implements OnInit {
 
   jogador: Jogador = new Jogador();
   jogadores: Jogador[] = [];
+  jogadoresFilter: Jogador[] = [];
 
   classesForSort: Classes[];
 
@@ -303,8 +306,6 @@ export class TodoComponent implements OnInit {
     
     this.classes = _.sortBy(this.classes, ['team', 'power']);  
     this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
-    this.classesInGame = _.concat(this.classesInGame,addMore("Aldeão", 3));
-    this.classesInGame = _.concat(this.classesInGame,addMore("Lobo", 3));
     this.classesInGame = _.pull(this.classesInGame,undefined);
     this.classesInGame = _.shuffle(this.classesInGame);
     this.getLocalFav();
@@ -372,6 +373,11 @@ export class TodoComponent implements OnInit {
   invertFlag(flag:boolean){
     // flag = !flag;
     console.log(flag);
+  }
+
+  showHideDead(){
+    this.showDeadFlag = !this.showDeadFlag;
+    this.filterDead();
   }
 
   delete(jogador: Jogador) {
@@ -488,12 +494,13 @@ export class TodoComponent implements OnInit {
     return index !== -1 ? true : false;
   }
 
-  changeAllStatus(stat:string, array, type:boolean){
+  changeAllStatus(stat:string, array, type){
       for (let i = 0; i < array.length; i++) {
         array[i][stat] = type;
         
       }
   }
+
 
   changeStatusWhere(stat:string, arrayToChange, arrayCompare, type:boolean){
     
@@ -523,6 +530,41 @@ export class TodoComponent implements OnInit {
     this.teamsUp();
   }
 
+  exit(){
+    this.resetGame();
+    this.toStep(1);
+  }
+
+  resetGame(){
+    this.jogador = new Jogador();
+    this.classesInGame =[];
+    this.jogadores = [];
+    this.showPlayer = false;
+    this.filterInGame = false;
+    this.sortGame = false;
+    this.night = true;
+    this.showDead = false;
+    this.playerEditIndex =0;
+    this.options = [];
+    this.jogadores = [];
+    this.showDeadFlag = false;
+
+
+    this.classesForSort = [];
+
+    this.statusUseds = new Status();
+    this.showDeadFlag = true;
+
+    this.times.aldeia = 0;
+    this.times.lobos = 0;
+    this.times.cult = 0;
+    this.times.balancing = 0;
+    this.times.totalClasses = 0;
+    this.changeAllStatus('qnt', this.classes, 0);
+
+
+  }
+
   show(){
     console.log("teste");
   }
@@ -540,7 +582,9 @@ export class TodoComponent implements OnInit {
 
   eliminate(){
     let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.name !== 'Gigante'; });
-    let indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Gigante' && o.target === true && o.save === false; });
+    playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.name !== 'Amaldiçoado' ; });
+    let indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Gigante' && o.target === true && o.save === false && o.curePotion === false; });
+    let indexCursedWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Amaldiçoado' && o.target === true && o.save === false && o.curePotion === false; });
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.lynch === true && o.job.name !== 'Príncipe'; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
@@ -553,6 +597,11 @@ export class TodoComponent implements OnInit {
     if(indexGiantWound != -1){
       this.jogadores[indexGiantWound].attacked = true;
     }
+    if(indexCursedWound != -1){
+      this.jogadores[indexCursedWound].attacked = true;
+    }
+
+    
 
     let lovers; 
     if(this.statusTrue('love',playerNotSaved)){
@@ -591,12 +640,12 @@ export class TodoComponent implements OnInit {
 
 
     
-    let indexCursed = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Amaldiçoado' && o.target === true; });
+    let indexCursed = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Amaldiçoado' && o.attacked === true; });
     
     let indexWolf = _.findIndex(this.classes, function(o) { return o.name === 'Lobisomem'; });
 
     if(indexCursed != -1){
-      this.jogadores[indexCursed].dead = false;
+      
       this.jogadores[indexCursed].job = this.classes[indexWolf];
       this.teamsUp();
 
@@ -612,6 +661,7 @@ export class TodoComponent implements OnInit {
     // }
     this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
     this.saveLocal();
+    
   }
 
   open(jogador: Jogador){
@@ -642,6 +692,7 @@ export class TodoComponent implements OnInit {
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
     this.times.cult = this.numberCult();
+    
   }
 
   nextStep(){
@@ -663,6 +714,7 @@ export class TodoComponent implements OnInit {
       times: this.times,
       status: this.statusUseds,
       night: this.night,
+      showDead: this.showDeadFlag,
     }
     if (typeof(Storage) !== "undefined") {
       
@@ -681,6 +733,7 @@ export class TodoComponent implements OnInit {
       this.times = save.times;
       this.statusUseds = save.status;
       this.night = save.night;
+      this.showDeadFlag = save.showDead;
       this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
       this.toStep(4);
     }else{
@@ -798,6 +851,15 @@ export class TodoComponent implements OnInit {
   //     document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
   //   }
   // }
+
+   filterDead(){
+    if(this.showDeadFlag === false){
+      this.jogadoresFilter = this.jogadores;
+      this.jogadores =  _.filter(this.jogadores, function(o) { return o.dead == false; });
+    }else{
+      this.jogadores = this.jogadoresFilter;
+    }
+  }
 
   filterClasses(){
     if(this.filterInGame == true && this.sortGame == true){

@@ -96,10 +96,18 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'revive',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/revive.svg'));
-
         iconRegistry.addSvgIcon(
           'menu',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg'));
+        iconRegistry.addSvgIcon(
+          'exit',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/exit.svg'));
+        iconRegistry.addSvgIcon(
+          'dont-see-dead',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/see-dead-line.svg'));
+        iconRegistry.addSvgIcon(
+          'see-dead',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/see-dead.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',
