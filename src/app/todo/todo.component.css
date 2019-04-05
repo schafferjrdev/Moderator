@@ -346,3 +346,14 @@ button{
     margin-right: 20px;
     margin-top: 5px;
 }
+
+/* Scroll de status */
+.icons-status{
+    display: flex;
+    flex-flow: row;
+    padding-bottom: 10px;
+    width: 220px;
+    overflow-x: auto;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}

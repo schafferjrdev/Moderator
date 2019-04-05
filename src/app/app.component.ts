@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -103,17 +104,17 @@ export class AppComponent {
           'exit',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/exit.svg'));
         iconRegistry.addSvgIcon(
-          'dont-see-dead',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/see-dead-line.svg'));
-        iconRegistry.addSvgIcon(
-          'see-dead',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/see-dead.svg'));
-        iconRegistry.addSvgIcon(
           'undo',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/undo.svg'));
         iconRegistry.addSvgIcon(
           'info',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/info.svg'));
+        iconRegistry.addSvgIcon(
+          'order',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/order.svg'));
+        iconRegistry.addSvgIcon(
+          'spell',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/spell.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',
@@ -181,6 +182,9 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'feiticeira',
         sanitizer.bypassSecurityTrustResourceUrl('assets/players/feiticeira.svg'));
+        iconRegistry.addSvgIcon(
+          'mago',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/players/mago.svg'));
        
   }
 }

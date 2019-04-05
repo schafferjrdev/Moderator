@@ -33,6 +33,7 @@ import {
   MatProgressBarModule,
   MatSelectModule,
   MatMenuModule,
+  MatSnackBarModule,
   MatAutocompleteModule
   
 } from '@angular/material';
@@ -74,6 +75,7 @@ import { environment } from '../environments/environment';
     MatProgressBarModule,
     MatAutocompleteModule,
     MatMenuModule,
+    MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [{

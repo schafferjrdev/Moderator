@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 
+import { MatSnackBar } from "@angular/material";
+
 import _ from "lodash";
-
-export class Todo {
-  desc: string;
-}
-
 
 export class Jogador {
   name: string;
@@ -25,6 +22,7 @@ export class Jogador {
   deathPotion: boolean = false;
   deathUsed: boolean = false;
   crowMark: boolean = false;
+  spell: boolean = false;
   foxPower: boolean = false;
   buddy: boolean = false;
   graveStyle: number = 0;
@@ -42,6 +40,7 @@ export class Status {
   curePotion: number = 0;
   deathPotion: number = 0;
   crowMark: number = 0;
+  spell: number = 0;
   foxPower: number = 0;
   buddy: number = 0;
 
@@ -65,6 +64,8 @@ export interface Classes {
 
 
 export class TodoComponent implements OnInit {
+  
+
   showPlayer: boolean = false;
   filterInGame: boolean = false;
   sortGame: boolean = false;
@@ -77,10 +78,7 @@ export class TodoComponent implements OnInit {
   playerEditIndex: number =0;
   myControl = new FormControl();
   options: string[] = [];
-
-  
-  todo: Todo = new Todo();
-  todos: Todo[] = [];
+  nameOfDead: string[] = [];
 
   jogador: Jogador = new Jogador();
   jogadores: Jogador[] = [];
@@ -129,7 +127,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Guardião', 
-      desc: 'Toda noite protege uma pessoa de ataque de lobo*. Não pode escolher a mesma pessoas duas vezes seguidas.',
+      desc: 'Toda noite protege uma pessoa de ataque de lobo. Não pode escolher a mesma pessoas duas vezes seguidas.',
       team: 'good',
       power: '+3',
       order: 3,
@@ -147,7 +145,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Feiticeira', 
-      desc: 'Toda noite você tentará adivinhar quem é a vidente, você vence com os lobos',
+      desc: 'Toda noite você tentará adivinhar quem é a vidente, você vence com os lobos.',
       team: 'bad',
       power: '-3',
       order: 3,
@@ -165,7 +163,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Licano', 
-      desc: 'Ele confunde o vidente aparecendo na vidência como se fosse Lobo, porém ele joga sempre pela vila',
+      desc: 'Ele confunde o vidente aparecendo na vidência como se fosse Lobo, porém ele joga sempre pela vila.',
       team: 'good',
       power: '-1',
       order: 100,
@@ -174,7 +172,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Amaldiçoado', 
-      desc: 'Luta pela vila, mas caso seja atacado pelos Lobos, se junta a eles.',
+      desc: 'Luta pela vila, mas caso seja atacado pelos Lobos, se junta a eles e se torna um Lobisomem.',
       team: 'good',
       power: '-3',
       order: 100,
@@ -201,7 +199,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Maçom', 
-      desc: 'Se reconhecem na primeira noite. Se alguém falar sobre, o moderador mata a pessoa durante a noite e avisa no dia seguinte',
+      desc: 'Se reconhecem na primeira noite. Se alguém falar sobre, o moderador mata a pessoa durante a noite.',
       team: 'good',
       power: '+2',
       order: 0,
@@ -228,7 +226,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Lobinho', 
-      desc: 'Se ele morrer, na próxima noite os lobos matam 2',
+      desc: 'Se ele morrer, na próxima noite os lobos matam 2.',
       team: 'bad',
       power: '-8',
       order: 100,
@@ -237,7 +235,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Lobo Mau', 
-      desc: 'Durante a noite, se estiver vivo deixa os lobos matarem um jogador adjacente ao alvo',
+      desc: 'Durante a noite, se estiver vivo, acorda mais uma vez sozinho escolhe um jogador adjacente ao alvo para morrer também.',
       team: 'bad',
       power: '-9',
       order: 100,
@@ -255,7 +253,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Urso', 
-      desc: 'Se de dia tiver um lobo ao lado dele o moderador diz "Urso sente cheiro de lobo". Quando um do lado dele morre, então o próximo é o novo vizinho dele',
+      desc: 'Se de dia um lobo estiver ao lado dele o moderador diz "Urso sente cheiro de lobo". Quando um do lado dele morre, então o próximo é o novo vizinho dele.',
       team: 'good',
       power: '+3',
       order: 100,
@@ -264,7 +262,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Raposa', 
-      desc: 'Escolhe 3 pessoas, se tiver um lobo entre eles o moderador indica positivamente, mas se não tiver a raposa perde seus poderes.',
+      desc: 'Escolhe 3 pessoas, se tiver um lobo entre eles o moderador indica positivamente, mas se não tiver a raposa perde seus poderes até o fim do jogo.',
       team: 'good',
       power: '+3',
       order: 2,
@@ -281,8 +279,17 @@ export class TodoComponent implements OnInit {
       icon:'corvo'
     },
     {
+      name: 'Mago', 
+      desc: 'Escolhe um jogador que não pode falar nada durante o próximo dia.',
+      team: 'good',
+      power: '+2',
+      order: 2,
+      qnt:0,
+      icon:'mago'
+    },
+    {
       name: 'Leprechaun', 
-      desc: 'Redireciona o ataque de um lobo para um alvo adjacente.',
+      desc: 'Redireciona o ataque de um lobo para um alvo adjacente ao atacado.',
       team: 'good',
       power: '+5',
       order: 5,
@@ -291,7 +298,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Lider do Culto', 
-      desc: 'Toda noite ele converte uma pessoas para seu culto e se todos os vivos tiverem no culto ele ganha o jogo sozinho. Depois de converter o moderador manda toda noite quem está convertido abri o olho e reconhecer, assim todos sabem se está ficando perto ou não.',
+      desc: 'Toda noite ele converte uma pessoa para seu culto e se todos os vivos estiverem no culto ele ganha o jogo sozinho. (Opcional) Depois de converter, o moderador manda toda noite quem está convertido abrir o olho e se reconhecerem, assim todos sabem se está ficando perto ou não.',
       team: 'neutral',
       power: '+1',
       order: 6,
@@ -302,7 +309,10 @@ export class TodoComponent implements OnInit {
   classesHelp: Classes[] = this.classes;
   classesInGame: Classes[] = this.classes;
   
-  constructor() {
+  
+  constructor(private snackBar: MatSnackBar) {
+
+    
     
     this.classes = _.sortBy(this.classes, ['team', 'power']);  
     this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
@@ -317,6 +327,7 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   save(jogador: Jogador) {
@@ -471,6 +482,11 @@ export class TodoComponent implements OnInit {
     return index !== -1 ? true : false;  
   }
 
+  hasClassArray(className:string, array){
+    let index = _.findIndex(array, function(o) { return o.job.name == className; });
+    return index !== -1 ? true : false;  
+  }
+
   playerWithStatus(stat:string, array, type:boolean){
     let playerWithStatus = _.filter(array, function(o) { return o[stat] == type; });
     
@@ -591,13 +607,30 @@ export class TodoComponent implements OnInit {
     this.changeAllStatus('deathPotion', this.jogadores, false);
     this.changeAllStatus('deathUsed', this.jogadores, false);
     this.changeAllStatus('crowMark', this.jogadores, false);
+    this.changeAllStatus('spell', this.jogadores, false);
     this.changeAllStatus('foxPower', this.jogadores, false);
     this.changeAllStatus('buddy', this.jogadores, false);
     this.changeAllStatus('dead', this.jogadores, false);
+    this.changeAllStatus('lynch', this.jogadores, false);
+
     this.teamsUp();
     this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
     this.saveLocal();
   }
+
+  openSnackBar(message: string) {
+    const snackBarRef = this.snackBar.open(message, "Ok", {
+       duration: 2000,
+    });
+
+    snackBarRef.afterDismissed().subscribe(() => {
+      // if(this.nameOfDead.length>0){
+      //   this.talkTheNames();
+      // }
+      
+    });
+    
+ } 
 
   show(){
     console.log("teste");
@@ -611,6 +644,7 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
     this.night = !this.night;
+    
     this.saveLocal();
   }
 
@@ -653,7 +687,31 @@ export class TodoComponent implements OnInit {
     
     
     playerNotSaved = this.playerWithStatus('dead',playerNotSaved,false);
+    // this.nameOfDead = [];
+    // if(playerNotSaved.length>0){
+    //   for (let i = 0; i < playerNotSaved.length; i++) {
+    //     this.nameOfDead.push(playerNotSaved[i].name);
+      
+    //   }
+    // }
+    // this.talkTheNames();
+    if(this.hasClassArray('Lobinho',playerNotSaved)){
+        let cubs = this.playerWithClass('Lobinho',playerNotSaved);
+        
+      if(this.statusTrue('lynch',cubs)){
+        this.openSnackBar("Na próxima noite os lobos podem matar 2!");
+      }
+      
+    }
+
+    if(this.hasClassArray('Caçador',playerNotSaved)){
+      this.openSnackBar("Caçador deve matar alguém!");
+    }
+
+    
     this.changeStatusWhere("dead",this.jogadores,playerNotSaved,true);
+    
+    
    
 
     let playerAlive = _.filter(this.jogadores, function(o){return o.dead === false; });
@@ -668,6 +726,7 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('toughTarget', this.jogadores, playerAlive, false);
     this.changeStatusWhere('save', this.jogadores, playerAlive, false);
     this.changeStatusWhere('crowMark', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('spell', this.jogadores, playerAlive, false);
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('deathPotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
@@ -697,6 +756,33 @@ export class TodoComponent implements OnInit {
     this.saveLocal();
     
   }
+
+  talkTheNames(){
+    if(this.nameOfDead.length > 0){
+      let frase ="";
+      if(this.nameOfDead.length == 1){
+        frase = this.nameOfDead[0]+" morreu!";
+      }else if(this.nameOfDead.length == 2){
+        frase = this.nameOfDead[0]+" e "+this.nameOfDead[1]+" morreram!";
+      }else if(this.nameOfDead.length > 2){
+        for (let i = 0; i < this.nameOfDead.length-1; i++) {
+        
+          frase = this.nameOfDead[i]+", "+frase;
+          
+        }
+        frase = frase+" e "+this.nameOfDead[this.nameOfDead.length-1]+" morreram!";
+
+      }
+
+      
+      this.openSnackBar(frase);
+      
+    }
+    
+  }
+
+  
+  
 
   open(jogador: Jogador){
     this.playerEditIndex = this.jogadores.indexOf(jogador);
@@ -842,6 +928,7 @@ export class TodoComponent implements OnInit {
     this.saveLocal();
 
     this.nextStep();
+    
   }
 
   
