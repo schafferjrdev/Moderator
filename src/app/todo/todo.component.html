@@ -336,11 +336,17 @@
           <span *ngIf="!night">Noite</span>
         </button>
 
+        <button mat-menu-item (click)="resetMatch()">
+          <mat-icon class="icon-btn example-tab-icon"  [ngClass]="{'icon-good':!night,'icon-bad':night}"   svgIcon="undo"></mat-icon>
+          <span>Reiniciar</span>
+        </button>
 
         <button mat-menu-item (click)="exit()">
             <mat-icon class="icon-btn example-tab-icon"  [ngClass]="{'icon-good':!night,'icon-bad':night}"   svgIcon="exit"></mat-icon>
             <span>Sair</span>
         </button>
+
+        
       </mat-menu>
               
     </div>

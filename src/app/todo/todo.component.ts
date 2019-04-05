@@ -531,8 +531,13 @@ export class TodoComponent implements OnInit {
   }
 
   exit(){
+    this.hasData = localStorage["gameSave"];
     this.resetGame();
     this.toStep(1);
+  }
+
+  resetMatch(){
+    this.softReset();
   }
 
   resetGame(){
@@ -560,9 +565,38 @@ export class TodoComponent implements OnInit {
     this.times.cult = 0;
     this.times.balancing = 0;
     this.times.totalClasses = 0;
+
     this.changeAllStatus('qnt', this.classes, 0);
 
 
+  }
+
+  softReset(){
+   
+    this.showPlayer = false;
+  
+    this.night = true;
+    this.playerEditIndex =0;
+    this.statusUseds= new Status();
+
+    this.changeAllStatus('target', this.jogadores, false);
+    this.changeAllStatus('toughTarget', this.jogadores, false);
+    this.changeAllStatus('attacked', this.jogadores, false);
+    this.changeAllStatus('love', this.jogadores, false);
+    this.changeAllStatus('save', this.jogadores, false);
+    this.changeAllStatus('saved', this.jogadores, false);
+    this.changeAllStatus('enchant', this.jogadores, false);
+    this.changeAllStatus('curePotion', this.jogadores, false);
+    this.changeAllStatus('cureUsed', this.jogadores, false);
+    this.changeAllStatus('deathPotion', this.jogadores, false);
+    this.changeAllStatus('deathUsed', this.jogadores, false);
+    this.changeAllStatus('crowMark', this.jogadores, false);
+    this.changeAllStatus('foxPower', this.jogadores, false);
+    this.changeAllStatus('buddy', this.jogadores, false);
+    this.changeAllStatus('dead', this.jogadores, false);
+    this.teamsUp();
+    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
+    this.saveLocal();
   }
 
   show(){

@@ -108,6 +108,12 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'see-dead',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/see-dead.svg'));
+        iconRegistry.addSvgIcon(
+          'undo',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/undo.svg'));
+        iconRegistry.addSvgIcon(
+          'info',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/info.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',
