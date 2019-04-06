@@ -84,7 +84,6 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'vote',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/gibbet.svg'));
-
         iconRegistry.addSvgIcon(
           'grave1',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icon-grave-1.svg'));
@@ -115,6 +114,9 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'spell',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/spell.svg'));
+        iconRegistry.addSvgIcon(
+          'masonry',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/masonry.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',

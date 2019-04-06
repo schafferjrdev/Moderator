@@ -482,6 +482,11 @@ export class TodoComponent implements OnInit {
     return index !== -1 ? true : false;  
   }
 
+  manyClass(className:string){
+    let many = _.filter(this.jogadores, function(o) { return o.job.name == className; });
+    return many.length;
+  }
+
   hasClassArray(className:string, array){
     let index = _.findIndex(array, function(o) { return o.job.name == className; });
     return index !== -1 ? true : false;  
@@ -502,6 +507,13 @@ export class TodoComponent implements OnInit {
     let playerWithClassAndStatus = _.filter(array, function(o) { return o.job.name == classe; });
     let index = _.findIndex(playerWithClassAndStatus, function(o) { return o[stat] == true; });
     return index !== -1 ? true : false;
+  }
+
+  atLastOne(classe:string,array,stat:string){
+    let playerWithClassAndStatus = _.filter(array, function(o) { return o.job.name == classe; });
+    let playersWithTrue = _.filter(playerWithClassAndStatus, function(o) { return o[stat] == false; });
+    
+    return playersWithTrue.length > 0 ? true : false;
   }
 
   statusTrue(stat:string, array){
@@ -620,7 +632,7 @@ export class TodoComponent implements OnInit {
 
   openSnackBar(message: string) {
     const snackBarRef = this.snackBar.open(message, "Ok", {
-       duration: 2000,
+       duration: 2500,
     });
 
     snackBarRef.afterDismissed().subscribe(() => {
@@ -667,6 +679,7 @@ export class TodoComponent implements OnInit {
     }
     if(indexCursedWound != -1){
       this.jogadores[indexCursedWound].attacked = true;
+      this.openSnackBar("Um novo lobisomem surge!");
     }
 
     
@@ -699,7 +712,7 @@ export class TodoComponent implements OnInit {
         let cubs = this.playerWithClass('Lobinho',playerNotSaved);
         
       if(this.statusTrue('lynch',cubs)){
-        this.openSnackBar("Na próxima noite os lobos podem matar 2!");
+        this.openSnackBar("Na noite os lobos podem matar 2!");
       }
       
     }
