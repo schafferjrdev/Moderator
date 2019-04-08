@@ -25,6 +25,7 @@ export class Jogador {
   spell: boolean = false;
   foxPower: boolean = false;
   buddy: boolean = false;
+  mason: boolean = false;
   graveStyle: number = 0;
 
 }
@@ -74,6 +75,7 @@ export class TodoComponent implements OnInit {
   night:boolean = true;
   showDead:boolean = false;
   showDeadFlag :boolean = true;
+  orderFlag :boolean = false;
 
   playerEditIndex: number =0;
   myControl = new FormControl();
@@ -363,7 +365,7 @@ export class TodoComponent implements OnInit {
     }
     this.showPlayer = false;
 
-    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']); 
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -391,6 +393,10 @@ export class TodoComponent implements OnInit {
     this.filterDead();
   }
 
+  showOrder(){
+    this.orderFlag = !this.orderFlag;
+  }
+
   delete(jogador: Jogador) {
     this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
     let quantity =0;
@@ -409,7 +415,7 @@ export class TodoComponent implements OnInit {
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
     this.showPlayer = false;
-    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']); 
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -624,21 +630,22 @@ export class TodoComponent implements OnInit {
     this.changeAllStatus('buddy', this.jogadores, false);
     this.changeAllStatus('dead', this.jogadores, false);
     this.changeAllStatus('lynch', this.jogadores, false);
+    this.changeAllStatus('mason', this.jogadores, false);
 
     this.teamsUp();
-    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
     this.saveLocal();
   }
 
   openSnackBar(message: string) {
     const snackBarRef = this.snackBar.open(message, "Ok", {
-       duration: 2500,
+       duration: 2000,
     });
 
     snackBarRef.afterDismissed().subscribe(() => {
-      // if(this.nameOfDead.length>0){
-      //   this.talkTheNames();
-      // }
+      if(this.nameOfDead.length>0){
+        this.talkTheNames();
+      }
       
     });
     
@@ -661,27 +668,40 @@ export class TodoComponent implements OnInit {
   }
 
   eliminate(){
+    this.nameOfDead = [];
+    this.changeAllStatus('saved',this.jogadores,false);
     let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.name !== 'Gigante'; });
     playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.name !== 'Amaldiçoado' ; });
     let indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Gigante' && o.target === true && o.save === false && o.curePotion === false; });
     let indexCursedWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Amaldiçoado' && o.target === true && o.save === false && o.curePotion === false; });
+    let saved = _.filter(this.jogadores, function(o) { return o.save === true; });
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.lynch === true && o.job.name !== 'Príncipe'; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
+    
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
     playerAttacked = _.uniqBy(playerAttacked, 'name');
 
     let playerNotSaved = _.filter(playerAttacked, function(o){return o.save === false; });
     playerNotSaved = _.filter(playerNotSaved, function(o){return o.curePotion === false; });
+    playerNotSaved = _.concat(playerNotSaved,_.filter(this.jogadores, function(o){return o.mason === true; }));
     playerNotSaved = _.uniqBy(playerNotSaved, 'name');
     
+    if(saved.length>0){
+      // this.jogadores[saved].saved = true;
+      this.changeStatusWhere("saved",this.jogadores,saved,true);
+    }
+
     if(indexGiantWound != -1){
       this.jogadores[indexGiantWound].attacked = true;
     }
     if(indexCursedWound != -1){
       this.jogadores[indexCursedWound].attacked = true;
-      this.openSnackBar("Um novo lobisomem surge!");
+      // this.openSnackBar("Um novo lobisomem surge!");
+      this.nameOfDead.push("Um novo lobisomem surge!");
     }
 
+    
+    
     
 
     let lovers; 
@@ -689,12 +709,27 @@ export class TodoComponent implements OnInit {
       lovers = this.playerWithStatus('love',this.jogadores,true);
       playerNotSaved = _.concat(playerNotSaved,lovers);
       playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+      // this.openSnackBar("O casal morreu!");
+      
+      if(this.playerWithStatus('dead',lovers,false).length > 0){
+        this.nameOfDead.push("O casal morreu!");
+      }
     }
+
     let buddy;
     if(this.statusTrue('buddy',playerNotSaved)){
       buddy = this.playerWithClass('Cachorro',this.jogadores)
       playerNotSaved = _.concat(playerNotSaved,buddy);
       playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+      // this.openSnackBar("O cachorro morreu!");
+
+      if(!this.playerWithClassAndStatusTrue("Cachorro",playerNotSaved,'dead')){
+        this.nameOfDead.push("O cachorro morreu!");
+
+      }
+      
+      
+
     }
 
     
@@ -712,18 +747,26 @@ export class TodoComponent implements OnInit {
         let cubs = this.playerWithClass('Lobinho',playerNotSaved);
         
       if(this.statusTrue('lynch',cubs)){
-        this.openSnackBar("Na noite os lobos podem matar 2!");
+        // this.openSnackBar("Na noite os lobos podem matar 2!");
+        this.nameOfDead.push("Na noite os lobos podem matar 2!");
+
       }
       
     }
 
-    if(this.hasClassArray('Caçador',playerNotSaved)){
-      this.openSnackBar("Caçador deve matar alguém!");
-    }
-
+    
+    
     
     this.changeStatusWhere("dead",this.jogadores,playerNotSaved,true);
-    
+
+    if(this.hasClassArray('Caçador',playerNotSaved)){
+      // this.openSnackBar("Caçador deve matar alguém!");
+      this.nameOfDead.push("Caçador deve matar alguém!");
+
+    }
+   
+    console.log(this.nameOfDead);
+    this.talkTheNames();
     
    
 
@@ -743,6 +786,7 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('deathPotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('mason', this.jogadores, playerAlive, false);
 
 
     
@@ -765,30 +809,39 @@ export class TodoComponent implements OnInit {
     //   this.jogadores[index].crowMark = false;
 
     // }
-    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
     this.saveLocal();
     
   }
 
-  talkTheNames(){
-    if(this.nameOfDead.length > 0){
-      let frase ="";
-      if(this.nameOfDead.length == 1){
-        frase = this.nameOfDead[0]+" morreu!";
-      }else if(this.nameOfDead.length == 2){
-        frase = this.nameOfDead[0]+" e "+this.nameOfDead[1]+" morreram!";
-      }else if(this.nameOfDead.length > 2){
-        for (let i = 0; i < this.nameOfDead.length-1; i++) {
+  // talkTheNames(){
+  //   if(this.nameOfDead.length > 0){
+  //     let frase ="";
+  //     if(this.nameOfDead.length == 1){
+  //       frase = this.nameOfDead[0]+" morreu!";
+  //     }else if(this.nameOfDead.length == 2){
+  //       frase = this.nameOfDead[0]+" e "+this.nameOfDead[1]+" morreram!";
+  //     }else if(this.nameOfDead.length > 2){
+  //       for (let i = 0; i < this.nameOfDead.length-1; i++) {
         
-          frase = this.nameOfDead[i]+", "+frase;
+  //         frase = this.nameOfDead[i]+", "+frase;
           
-        }
-        frase = frase+" e "+this.nameOfDead[this.nameOfDead.length-1]+" morreram!";
+  //       }
+  //       frase = frase+" e "+this.nameOfDead[this.nameOfDead.length-1]+" morreram!";
 
-      }
+  //     }
 
       
-      this.openSnackBar(frase);
+  //     this.openSnackBar(frase);
+      
+  //   }
+    
+  // }
+
+    talkTheNames(){
+    if(this.nameOfDead.length > 0){
+           
+      this.openSnackBar(this.nameOfDead.pop());
       
     }
     
@@ -805,7 +858,7 @@ export class TodoComponent implements OnInit {
 
   voltar(){
 
-    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
     this.saveLocal();
     this.showPlayer = false;
   }
@@ -867,7 +920,7 @@ export class TodoComponent implements OnInit {
       this.statusUseds = save.status;
       this.night = save.night;
       this.showDeadFlag = save.showDead;
-      this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
       this.toStep(4);
     }else{
       console.log("No data saved");
@@ -935,7 +988,7 @@ export class TodoComponent implements OnInit {
       this.jogadores[j].job = this.classesForSort[j];
       
     }
-    this.jogadores = _.sortBy(this.jogadores, ['dead','job.team', 'job.order','job.name']);
+    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
    
     this.teamsUp();
     this.saveLocal();

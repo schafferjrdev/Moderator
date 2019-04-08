@@ -336,7 +336,7 @@
           <span *ngIf="!night">Noite</span>
         </button>
 
-        <button mat-menu-item (click)="show()">
+        <button mat-menu-item (click)="showOrder()">
           <mat-icon class="icon-btn example-tab-icon"  [ngClass]="{'icon-good':!night,'icon-bad':night}"   svgIcon="order"></mat-icon>
           <span>Ordem</span>
         </button>
@@ -373,24 +373,16 @@
                 <mat-icon class="example-tab-icon" *ngIf="jogador.dead && jogador.graveStyle == 2" mat-card-avatar svgIcon="grave2"></mat-icon>  
                 <mat-icon class="example-tab-icon" *ngIf="jogador.dead && jogador.graveStyle == 3" mat-card-avatar svgIcon="grave3"></mat-icon>  
   
-                  <label *ngIf="night">
-                    <label *ngIf="!jogador.dead">{{jogador.job.name}}</label>
-                    <label *ngIf="jogador.dead">{{jogador.name}}</label>
+                  <label class="name-class-title">
+                    <label class="name-title" >{{jogador.name}}</label>
+                    <label class="class-title" >{{jogador.job.name}}</label>
+                    
                   </label>
-                  <label *ngIf="!night">
+                  <!-- <label *ngIf="!night">
                       <label>{{jogador.name}}</label>
-                  </label>
+                  </label> -->
               </mat-card-title> 
-              <mat-card-subtitle class="subtitle-player">
-                  <label *ngIf="night">
-                      <label *ngIf="jogador.dead">{{jogador.job.name}}</label>
-                  <label *ngIf="!jogador.dead">{{jogador.name}}</label>
-                    </label>
-                    <label *ngIf="!night">
-                        <label>{{jogador.job.name}}</label>
-                    </label>
-                  
-              </mat-card-subtitle>
+              
               
               <mat-card-content>
                 <!-- <div *ngIf="jogador.dead" class="extra">
@@ -421,7 +413,7 @@
                   </button>
   
   
-                  <button  *ngIf="hasClass('Guardião') && night && !jogador.dead && !jogador.dead && atLastOne('Guardião',jogadores,'dead')" mat-icon-button (click)="changeStatus(jogador, 'save')">
+                  <button  *ngIf="hasClass('Guardião') && night && !jogador.dead && !jogador.dead && atLastOne('Guardião',jogadores,'dead') && !jogador.saved" mat-icon-button (click)="changeStatus(jogador, 'save')">
                     <mat-icon  [ngClass]="{'icon-gray':!jogador.save, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="shield"></mat-icon>
                   </button>   
                   <button  *ngIf="hasClass('Corvo') && !jogador.dead && !jogador.dead && atLastOne('Corvo',jogadores,'dead')" mat-icon-button (click)="changeStatus(jogador, 'crowMark')">
@@ -439,7 +431,9 @@
                       <mat-icon [ngClass]="{'icon-gray':!jogador.deathPotion, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="venom"></mat-icon>
                   </button> 
   
-                  
+                  <button  *ngIf="hasClass('Maçom') && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'mason')">
+                    <mat-icon  [ngClass]="{'icon-gray':!jogador.mason, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="masonry"></mat-icon>
+                  </button>
   
                   </div>
 
@@ -529,5 +523,30 @@
                 </mat-card-actions>
               </mat-card>
         </div>
+
+</div>
+
+<div class="modal-help" *ngIf="orderFlag">
+    <mat-card class="card-help">
+        
+          <div>
+            Ordem de chamar
+          </div>
+          <mat-divider></mat-divider>
+            <button class="close-icon" mat-icon-button (click)="showOrder()">
+                     
+                <mat-icon matRipple>close</mat-icon>
+            </button>
+        
+        <mat-card-content class="content-help">
+            <mat-list role="list">
+                <mat-list-item role="listitem"  *ngFor="let class_jogador of classes">{{class_jogador.name}}</mat-list-item>
+              </mat-list>
+              
+        </mat-card-content>
+       
+      </mat-card>
+      
+
 
 </div>

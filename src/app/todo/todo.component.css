@@ -122,12 +122,34 @@
 .subtitle-player{
     width: 120px;
     font-size: 10pt;
+    
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
 }
 
+.name-class-title{
+    display: flex;
+    flex-flow: column;
+}
+
+.name-title{
+    font-size: 15pt;
+    font-weight: bold;
+    margin: 0;
+}
+
+.class-title{
+    font-size: 12pt;
+}
+
 .title-player{
     font-size: 20pt;
+    display: flex;
+    flex-flow: row;
+}
+
+.title-player .mat-icon{
+    margin-top: 5px;
 }
 
 .status-player{
@@ -357,3 +379,46 @@ button{
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
+
+.modal-help{
+    position: absolute;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.3);
+    top: 0;
+    transition: width 2s;
+    transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
+}
+
+.card-help{
+    margin: auto;
+    top: 80px;
+    width: 60vw;
+}
+
+.close-icon{
+    color: white;
+    background-color: #673ab7;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+}
+
+.content-help{
+    height: 300px;
+    overflow-y: auto;
+}
+
+.modal-help {
+    transform: translateY(130%);
+    transition-timing-function: ease-in;
+    transition: 0.2s;
+  }
+.modal-help {
+    transition: 0.25s;
+    transition-timing-function: ease-out;
+    
+    transform: translateY(0);
+    opacity: 1;
+  }
