@@ -443,12 +443,12 @@
                       </button>  
       
       
-                      <button  *ngIf="hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && statusUseds.buddy === 0 && !jogador.dead|| hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && jogador.buddy" mat-icon-button (click)="changeStatus(jogador, 'buddy')">
+                      <button [disabled]="jogador.dead" *ngIf="hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && statusUseds.buddy === 0 && !jogador.dead|| hasClass('Cachorro') && jogador.job.name !== 'Cachorro' && jogador.buddy" mat-icon-button (click)="changeStatus(jogador, 'buddy')">
                         <mat-icon  [ngClass]="{'icon-darkgray':jogador.dead,'icon-gray':!jogador.buddy, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="paw"></mat-icon>
                       </button>
       
                       
-                      <button   *ngIf="hasClass('Cupido') && statusUseds.love < 2 && !jogador.dead|| hasClass('Cupido') && jogador.love" mat-icon-button (click)="changeStatus(jogador, 'love')">
+                      <button [disabled]="jogador.dead" *ngIf="hasClass('Cupido') && statusUseds.love < 2 && !jogador.dead|| hasClass('Cupido') && jogador.love" mat-icon-button (click)="changeStatus(jogador, 'love')">
                         <mat-icon [ngClass]="{'icon-darkgray':jogador.dead,'icon-gray':!jogador.love, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="rings"></mat-icon>
                       </button> 
                       </div>
@@ -526,27 +526,32 @@
 
 </div>
 
-<div class="modal-help" *ngIf="orderFlag">
-    <mat-card class="card-help">
+<div class="modal-help" *ngIf="orderFlag" (click)="showOrder()">
+    <mat-card class="card-help" (click)="$event.stopPropagation()">
         
-          <div>
-            Ordem de chamar
+          <div *ngIf="!secondNight">
+            Primeira Noite
+            <mat-divider></mat-divider>
+            <div class="explanation">
+              Nessa noite cada um desses deve ser chamado para se reconhecer ou realizar sua ação.
+            </div>
+          </div>
+          <div *ngIf="secondNight">
+              Ordem de chamar
           </div>
           <mat-divider></mat-divider>
-            <button class="close-icon" mat-icon-button (click)="showOrder()">
+            <button class="close-icon" [ngClass]="{'primary-bgcolor':!night,'warn-bgcolor':night}"  mat-icon-button (click)="showOrder()">
                      
-                <mat-icon matRipple>close</mat-icon>
+                <mat-icon >close</mat-icon>
             </button>
         
-        <mat-card-content class="content-help">
+        <mat-card-content class="content-help" >
             <mat-list role="list">
-                <mat-list-item role="listitem"  *ngFor="let class_jogador of classes">{{class_jogador.name}}</mat-list-item>
+                
+                <mat-list-item role="listitem"  *ngFor="let class_jogador of classesHelp" [ngClass]="{'primary-color':class_jogador.team === 'good', 'warn-color':class_jogador.team === 'bad','accent-color':class_jogador.team === 'neutral'}"><mat-checkbox (change)="firstNightCheck()" class="example-tab-icon" [color]="getColor(class_jogador.team)">{{class_jogador.name}}<span *ngIf="!atLastOne(class_jogador.name,jogadores,'dead') && class_jogador.name != 'Lobisomem'"> (Morto)</span></mat-checkbox></mat-list-item>
               </mat-list>
               
         </mat-card-content>
        
       </mat-card>
-      
-
-
 </div>

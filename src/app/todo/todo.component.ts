@@ -55,6 +55,7 @@ export interface Classes {
   order: number;
   qnt: number;
   icon: string;
+  first: boolean;
 }
 
 @Component({
@@ -82,6 +83,9 @@ export class TodoComponent implements OnInit {
   options: string[] = [];
   nameOfDead: string[] = [];
 
+  firstNight: boolean = true;
+  secondNight: boolean = false;
+
   jogador: Jogador = new Jogador();
   jogadores: Jogador[] = [];
   jogadoresFilter: Jogador[] = [];
@@ -105,9 +109,10 @@ export class TodoComponent implements OnInit {
       desc: 'Toda noite, junto dos outros Lobos, ele escolhe alguém da aldeia para atacar e matar',
       team: 'bad',
       power: '-6',
-      order: 4,
+      order: 5,
       qnt:0,
-      icon:'lobisomem'
+      icon:'lobisomem',
+      first: true
     },
     {
       name: 'Cachorro', 
@@ -116,7 +121,8 @@ export class TodoComponent implements OnInit {
       power: '-4',
       order: 0,
       qnt:0,
-      icon:'cao'
+      icon:'cao',
+      first: true
     },
     {
       name: 'Aldeão', 
@@ -125,16 +131,18 @@ export class TodoComponent implements OnInit {
       power: '+1',
       order: 100,
       qnt:0,
-      icon:'aldeao'
+      icon:'aldeao',
+      first: false
     },
     {
       name: 'Guardião', 
       desc: 'Toda noite protege uma pessoa de ataque de lobo. Não pode escolher a mesma pessoas duas vezes seguidas.',
       team: 'good',
       power: '+3',
-      order: 3,
+      order: 4,
       qnt:0,
-      icon:'guardiao'
+      icon:'guardiao',
+      first: false
     },
     {
       name: 'Vidente', 
@@ -143,7 +151,8 @@ export class TodoComponent implements OnInit {
       power: '+7',
       order: 2,
       qnt:0,
-      icon:'vidente'
+      icon:'vidente',
+      first: false
     },
     {
       name: 'Feiticeira', 
@@ -152,16 +161,18 @@ export class TodoComponent implements OnInit {
       power: '-3',
       order: 3,
       qnt:0,
-      icon:'feiticeira'
+      icon:'feiticeira',
+      first: false
     },
     {
       name: 'Bruxa', 
       desc: 'Tem duas poções que podem ser usadas uma vez durante o jogo, com a cura ela sabe quem foi atacado a noite e salva, e com o veneno ela elimina um jogador.',
       team: 'good',
       power: '+4',
-      order: 7,
+      order: 8,
       qnt:0,
-      icon:'bruxa'
+      icon:'bruxa',
+      first: false
     },
     {
       name: 'Licano', 
@@ -170,7 +181,8 @@ export class TodoComponent implements OnInit {
       power: '-1',
       order: 100,
       qnt:0,
-      icon:'licano'
+      icon:'licano',
+      first: false
     },
     {
       name: 'Amaldiçoado', 
@@ -179,7 +191,8 @@ export class TodoComponent implements OnInit {
       power: '-3',
       order: 100,
       qnt:0,
-      icon:'amaldicoado'
+      icon:'amaldicoado',
+      first: false
     },
     {
       name: 'Gigante', 
@@ -188,16 +201,18 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt:0,
-      icon:'gigante'
+      icon:'gigante',
+      first: false
     },
     {
       name: 'Caçador', 
       desc: 'Se morrer em algum momento ele escolhe alguém pra matar, sem influencia da vila. Se morrer de dia todo mundo sabe, se for de noite fica secreto',
       team: 'good',
       power: '+3',
-      order: 0,
+      order: 100,
       qnt:0,
-      icon:'cacador'
+      icon:'cacador',
+      first: false
     },
     {
       name: 'Maçom', 
@@ -206,7 +221,8 @@ export class TodoComponent implements OnInit {
       power: '+2',
       order: 0,
       qnt:0,
-      icon:'macom'
+      icon:'macom',
+      first: true
     },
     {
       name: 'Príncipe', 
@@ -215,7 +231,8 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt:0,
-      icon:'principe'
+      icon:'principe',
+      first: false
     },
     {
       name: 'Lupino', 
@@ -224,7 +241,8 @@ export class TodoComponent implements OnInit {
       power: '-9',
       order: 100,
       qnt:0,
-      icon:'lupino'
+      icon:'lupino',
+      first: true
     },
     {
       name: 'Lobinho', 
@@ -233,25 +251,28 @@ export class TodoComponent implements OnInit {
       power: '-8',
       order: 100,
       qnt:0,
-      icon:'lobinho'
+      icon:'lobinho',
+      first: true
     },
     {
       name: 'Lobo Mau', 
       desc: 'Durante a noite, se estiver vivo, acorda mais uma vez sozinho escolhe um jogador adjacente ao alvo para morrer também.',
       team: 'bad',
       power: '-9',
-      order: 100,
+      order: 6,
       qnt:0,
-      icon:'lobo-mau'
+      icon:'lobo-mau',
+      first: false
     },
     {
       name: 'Cupido', 
       desc: 'No começo do jogo, ele escolhe duas pessoas para se apaixonarem. A partir dai, essas duas pessoas jogam juntas, mas não sabem o que a outra pessoa é. Se uma morrer, a outra morre automaticamente.',
       team: 'good',
       power: '-3',
-      order: 1,
+      order: 0,
       qnt:0,
-      icon:'cupido'
+      icon:'cupido',
+      first: true
     },
     {
       name: 'Urso', 
@@ -260,52 +281,58 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt:0,
-      icon:'urso'
+      icon:'urso',
+      first: false
     },
     {
       name: 'Raposa', 
       desc: 'Escolhe 3 pessoas, se tiver um lobo entre eles o moderador indica positivamente, mas se não tiver a raposa perde seus poderes até o fim do jogo.',
       team: 'good',
       power: '+3',
-      order: 2,
+      order: 3,
       qnt:0,
-      icon:'raposa'
+      icon:'raposa',
+      first: false
     },
     {
       name: 'Corvo', 
       desc: 'Escolhe um jogador para começar com 2 votos de dia.',
       team: 'good',
       power: '+2',
-      order: 2,
+      order: 1,
       qnt:0,
-      icon:'corvo'
+      icon:'corvo',
+      first: false
     },
     {
       name: 'Mago', 
       desc: 'Escolhe um jogador que não pode falar nada durante o próximo dia.',
       team: 'good',
       power: '+2',
-      order: 2,
+      order: 1,
       qnt:0,
-      icon:'mago'
+      icon:'mago',
+      first: false
     },
     {
       name: 'Leprechaun', 
       desc: 'Redireciona o ataque de um lobo para um alvo adjacente ao atacado.',
       team: 'good',
       power: '+5',
-      order: 5,
+      order: 7,
       qnt:0,
-      icon: 'leprechaun'
+      icon: 'leprechaun',
+      first: false
     },
     {
       name: 'Lider do Culto', 
       desc: 'Toda noite ele converte uma pessoa para seu culto e se todos os vivos estiverem no culto ele ganha o jogo sozinho. (Opcional) Depois de converter, o moderador manda toda noite quem está convertido abrir o olho e se reconhecerem, assim todos sabem se está ficando perto ou não.',
       team: 'neutral',
       power: '+1',
-      order: 6,
+      order: 9,
       qnt:0,
-      icon: 'liderdoculto'
+      icon: 'liderdoculto',
+      first: false
     }
   ];
   classesHelp: Classes[] = this.classes;
@@ -394,6 +421,10 @@ export class TodoComponent implements OnInit {
   }
 
   showOrder(){
+    this.filterOrder();
+    if(!this.firstNight){
+      this.secondNight = true;
+    }
     this.orderFlag = !this.orderFlag;
   }
 
@@ -522,6 +553,8 @@ export class TodoComponent implements OnInit {
     return playersWithTrue.length > 0 ? true : false;
   }
 
+  
+
   statusTrue(stat:string, array){
     let index = _.findIndex(array, function(o) { return o[stat] == true; });
     
@@ -587,6 +620,7 @@ export class TodoComponent implements OnInit {
     this.options = [];
     this.jogadores = [];
     this.showDeadFlag = false;
+    this.firstNight = true;
 
 
     this.classesForSort = [];
@@ -608,7 +642,7 @@ export class TodoComponent implements OnInit {
   softReset(){
    
     this.showPlayer = false;
-  
+    this.firstNight = true;
     this.night = true;
     this.playerEditIndex =0;
     this.statusUseds= new Status();
@@ -901,6 +935,7 @@ export class TodoComponent implements OnInit {
       status: this.statusUseds,
       night: this.night,
       showDead: this.showDeadFlag,
+      firstNight: this.firstNight
     }
     if (typeof(Storage) !== "undefined") {
       
@@ -920,6 +955,7 @@ export class TodoComponent implements OnInit {
       this.statusUseds = save.status;
       this.night = save.night;
       this.showDeadFlag = save.showDead;
+      this.firstNight = save.firstNight;
       this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
       this.toStep(4);
     }else{
@@ -1046,6 +1082,52 @@ export class TodoComponent implements OnInit {
     }else{
       this.jogadores = this.jogadoresFilter;
     }
+  }
+
+  filterOrder(){
+    this.firstNightCheck();
+    let classTemp=[];
+      
+        for (let i = 0; i < this.jogadores.length; i++) {
+          
+          
+          add(classTemp,this.jogadores[i].job);
+          
+          
+          
+        }
+        let indexWolf = _.findIndex(this.classes, { 'name': 'Lobisomem' });
+        
+        
+          
+        this.classesHelp = classTemp;
+        this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order < 99; });
+
+        if(this.times.lobos > 0){
+          if(this.times.lobos == 1 && this.playerWithClassAndStatusTrue('Feiticeira',this.jogadores,'dead')){
+            this.classesHelp = _.concat(this.classesHelp,this.classes[indexWolf]);
+          }
+          
+        }
+        
+        if(this.firstNight == true){
+          this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.first == true; });
+          this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.name != 'Lobo Mau'; });
+        }else{
+          this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order > 0; });
+        }
+        
+        this.classesHelp = _.sortBy(this.classesHelp, ['order']);
+        this.classesHelp = _.uniqBy(this.classesHelp, 'name');
+  }
+
+  firstNightCheck(){
+    if(this.statusUseds.buddy>0 && this.statusUseds.love>1){
+      this.firstNight = false;
+    }else{
+      this.firstNight = true;
+    }
+    
   }
 
   filterClasses(){
