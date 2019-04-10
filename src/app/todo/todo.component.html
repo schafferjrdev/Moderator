@@ -181,8 +181,8 @@
 <div *ngIf="step == 1" class="content newgame-screen" fxLayout="column" >
     <mat-icon class="icon-start icon-primary" svgIcon="white-wolf"></mat-icon>
     <h2 class="primary-color wolf-font" >Lobisomem</h2>
-    <button mat-raised-button color="primary" (click)="nextStep()">Novo jogo</button>
-    <button [disabled]="!hasData" mat-stroked-button color="primary" (click)="restart()">Continuar</button>
+    <button class="btn-start" mat-raised-button color="primary" (click)="nextStep()">Novo jogo</button>
+    <button class="btn-start" [disabled]="!hasData" mat-stroked-button color="primary" (click)="restart()">Continuar</button>
 
 </div>
 
@@ -529,15 +529,8 @@
 <div class="modal-help" *ngIf="orderFlag" (click)="showOrder()">
     <mat-card class="card-help" (click)="$event.stopPropagation()">
         
-          <div *ngIf="!secondNight">
-            Primeira Noite
-            <mat-divider></mat-divider>
-            <div class="explanation">
-              Nessa noite cada um desses deve ser chamado para se reconhecer ou realizar sua ação.
-            </div>
-          </div>
-          <div *ngIf="secondNight">
-              Ordem de chamar
+          <div>
+            Ordem de chamar
           </div>
           <mat-divider></mat-divider>
             <button class="close-icon" [ngClass]="{'primary-bgcolor':!night,'warn-bgcolor':night}"  mat-icon-button (click)="showOrder()">

@@ -206,7 +206,7 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Caçador', 
-      desc: 'Se morrer em algum momento ele escolhe alguém pra matar, sem influencia da vila. Se morrer de dia todo mundo sabe, se for de noite fica secreto',
+      desc: 'Se morrer em algum momento ele escolhe alguém pra matar, sem influencia da vila. (Se morrer de dia todo mundo sabe, se for de noite fica secreto',
       team: 'good',
       power: '+3',
       order: 100,
@@ -256,12 +256,22 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Lobo Mau', 
-      desc: 'Durante a noite, se estiver vivo, acorda mais uma vez sozinho escolhe um jogador adjacente ao alvo para morrer também.',
+      desc: 'Durante a noite, acorda mais uma vez sozinho escolhe um jogador adjacente ao alvo para morrer também.',
       team: 'bad',
       power: '-9',
       order: 6,
       qnt:0,
       icon:'lobo-mau',
+      first: false
+    },
+    {
+      name: 'Psicopata', 
+      desc: 'Durante a noite escolhe um jogador para morrer, ele não morre com ataque de lobo. Não vence o jogo e nem perde, só cria caos.',
+      team: 'neutral',
+      power: '-3',
+      order: 6.5,
+      qnt:0,
+      icon:'psicopata',
       first: false
     },
     {
@@ -392,7 +402,11 @@ export class TodoComponent implements OnInit {
     }
     this.showPlayer = false;
 
-    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    }
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -422,9 +436,7 @@ export class TodoComponent implements OnInit {
 
   showOrder(){
     this.filterOrder();
-    if(!this.firstNight){
-      this.secondNight = true;
-    }
+    
     this.orderFlag = !this.orderFlag;
   }
 
@@ -446,7 +458,11 @@ export class TodoComponent implements OnInit {
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
     this.showPlayer = false;
-    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    } 
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -667,7 +683,11 @@ export class TodoComponent implements OnInit {
     this.changeAllStatus('mason', this.jogadores, false);
 
     this.teamsUp();
-    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    }
     this.saveLocal();
   }
 
@@ -697,6 +717,12 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
     this.night = !this.night;
+
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    }
     
     this.saveLocal();
   }
@@ -843,7 +869,11 @@ export class TodoComponent implements OnInit {
     //   this.jogadores[index].crowMark = false;
 
     // }
-    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    }
     this.saveLocal();
     
   }
@@ -892,7 +922,11 @@ export class TodoComponent implements OnInit {
 
   voltar(){
 
-    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    }
     this.saveLocal();
     this.showPlayer = false;
   }
@@ -956,7 +990,11 @@ export class TodoComponent implements OnInit {
       this.night = save.night;
       this.showDeadFlag = save.showDead;
       this.firstNight = save.firstNight;
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
+      if(this.night){
+        this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+      }else{
+        this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+      }
       this.toStep(4);
     }else{
       console.log("No data saved");
@@ -1024,7 +1062,11 @@ export class TodoComponent implements OnInit {
       this.jogadores[j].job = this.classesForSort[j];
       
     }
-    this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']);
+    if(this.night){
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    }else{
+      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
+    }
    
     this.teamsUp();
     this.saveLocal();
@@ -1110,12 +1152,7 @@ export class TodoComponent implements OnInit {
           
         }
         
-        if(this.firstNight == true){
-          this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.first == true; });
-          this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.name != 'Lobo Mau'; });
-        }else{
-          this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order > 0; });
-        }
+        
         
         this.classesHelp = _.sortBy(this.classesHelp, ['order']);
         this.classesHelp = _.uniqBy(this.classesHelp, 'name');

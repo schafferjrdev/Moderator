@@ -386,7 +386,7 @@ button{
     z-index: 999;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.5);
     top: 0;
     transition: width 2s;
     transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1);
@@ -416,3 +416,18 @@ button{
     overflow-y: auto;
 }
 
+.btn-start{
+    width: 200px;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+@media (min-width: 910px){
+    .player{
+        width: 90vw;
+    }
+    .icons-status{
+        width: 80vw;
+    }
+}

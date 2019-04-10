@@ -187,6 +187,9 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'mago',
         sanitizer.bypassSecurityTrustResourceUrl('assets/players/mago.svg'));
+        iconRegistry.addSvgIcon(
+          'psicopata',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/players/psicopata.svg'));
        
   }
 }
