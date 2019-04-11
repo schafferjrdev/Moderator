@@ -12,6 +12,8 @@
 ::ng-deep .mat-snack-bar-container{
     position: absolute;
     top: 50px;
+    width: 95% !important;
+    margin: auto;
 }
 
 .tutorials{
@@ -77,6 +79,7 @@
 .dotActive{
     background-color: #fff; 
 }
+
 
 .skills{
     display: flex;
@@ -456,6 +459,8 @@ button{
     padding-bottom: 10px;
     width: 220px;
     overflow-x: auto;
+    -webkit-overflow-x: auto;
+    -moz-overflow-x: auto;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
@@ -509,4 +514,37 @@ button{
     .icons-status{
         width: 80vw;
     }
+}
+
+
+@media(max-height:400px){
+    .tutorials{
+        font-size: 9pt;
+    }
+    .tutorials p{
+        padding: 0;
+    }
+    .pagination{
+        
+        bottom: 10px;
+    
+    }
+    .lista-overflow {
+        height: 45vh;
+    }
+    .lista-overflow-classes{
+        height: 60vh;
+    }
+    .lista-overflow-game{
+        max-height: 80vh;
+    }
+    .player-edit{
+        overflow-y: auto;
+    }
+    .card-help{
+        top: 20px;
+        
+    }
+    
+
 }

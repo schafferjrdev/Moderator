@@ -16,7 +16,7 @@
 </div>
 
 <!-- TUTORIAL -->
-<div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" class="tutorials">
+<div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" (click)="nextTutorial()" class="tutorials">
     
     <div *ngIf="tutorialScreen == 0">
         <div  class="content" fxLayout="column" >
@@ -503,7 +503,7 @@
 
         <!-- Tela Editar Jogador -->
 
-        <div *ngIf="showPlayer">
+        <div *ngIf="showPlayer" class="player-edit">
             <mat-card  [ngClass]="{'dead':jogadores[playerEditIndex].dead}">
                 <mat-card-header>
                    
