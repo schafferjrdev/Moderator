@@ -4,6 +4,7 @@
 
 .body{
     overflow-y: hidden !important;
+    overflow-x: hidden !important;
 }
 
 
@@ -16,8 +17,8 @@
     background: linear-gradient(135deg, #673ab7 0%,#9665b2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#673ab7', endColorstr='#9665b2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     height: 100%;
-    padding: 20px;
-    font-size: 17pt;
+    padding: 5px;
+    font-size: 12pt;
     color: #fff;
     text-align: center;
 
@@ -27,6 +28,9 @@
     /* Quick on the way out */
     transition: 0.2s;
     z-index: 999;
+}
+.tutorials p{
+    padding: 10px;
 }
 
 .dividerTutorial{
@@ -49,7 +53,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 100px;
+    bottom: 20px;
     margin-left: auto;
     margin-right: auto;
     display: flex;
