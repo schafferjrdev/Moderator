@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LongpressDirective } from './longpress.directive';
 import 'hammerjs';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+import { SwiperModule } from 'angular2-useful-swiper';
 
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any> {
@@ -34,6 +35,7 @@ import {
   MatSelectModule,
   MatMenuModule,
   MatSnackBarModule,
+  MatStepperModule,
   MatAutocompleteModule
   
 } from '@angular/material';
@@ -76,6 +78,8 @@ import { environment } from '../environments/environment';
     MatAutocompleteModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatStepperModule,
+    SwiperModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [{

@@ -5,6 +5,8 @@ import { MatSnackBar } from "@angular/material";
 
 import _ from "lodash";
 
+
+
 export class Jogador {
   name: string;
   job: Classes;
@@ -66,7 +68,9 @@ export interface Classes {
 
 
 export class TodoComponent implements OnInit {
-  
+
+  tutorial: boolean = true;
+  tutorialScreen: number = 0;
 
   showPlayer: boolean = false;
   filterInGame: boolean = false;
@@ -93,6 +97,8 @@ export class TodoComponent implements OnInit {
   classesForSort: Classes[];
 
   statusUseds: Status = new Status();
+
+  
 
   times = {
     aldeia:0,
@@ -358,6 +364,7 @@ export class TodoComponent implements OnInit {
     this.classesInGame = _.pull(this.classesInGame,undefined);
     this.classesInGame = _.shuffle(this.classesInGame);
     this.getLocalFav();
+    this.getLocalTutorial();
     
     // var pulled = _.pullAt(array, 0);
     // console.log(this.classesInGame);
@@ -949,6 +956,26 @@ export class TodoComponent implements OnInit {
     
   }
 
+  
+
+  nextTutorial(){
+    if(this.tutorialScreen<3){
+      if(this.tutorialScreen == 2){
+        this.tutorial = false;
+        this.saveLocalTutorial();
+      }else{
+        this.tutorialScreen++;
+      }
+    }
+    console.log(this.tutorialScreen);
+  }
+  prevTutorial(){
+    if(this.tutorialScreen>0){
+      this.tutorialScreen--;
+    }
+    console.log(this.tutorialScreen);
+  }
+
   nextStep(){
     this.step++;
   }
@@ -1003,6 +1030,20 @@ export class TodoComponent implements OnInit {
     
   }
 
+  saveLocalTutorial(){
+    if (typeof(Storage) !== "undefined") {
+      localStorage.setItem("tutorial", JSON.stringify(this.tutorial));
+    }
+  }
+
+  getLocalTutorial(){
+    if (typeof(Storage) !== "undefined" && localStorage["tutorial"]) {
+      this.tutorial = JSON.parse(localStorage.getItem("tutorial"));
+      
+    }else{
+      console.log("No data tutorial saved");
+    }
+  }
 
   saveLocalFav(){
     if (typeof(Storage) !== "undefined") {

@@ -11,6 +11,8 @@ import {MatIconRegistry} from '@angular/material';
 export class AppComponent {
   title = 'Moderator';
 
+  
+
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
         'wolf_head',
