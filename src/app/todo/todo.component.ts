@@ -868,10 +868,10 @@ export class TodoComponent implements OnInit {
 
     if(playerNotSaved.length ==0){
       if(this.night){
-        this.nameOfDead.push("Ninguém morreu essa noite!");
+        this.nameOfDead.push("Ninguém morreu nessa noite!");
 
       }else{
-        this.nameOfDead.push("Ninguém morreu esse dia!");
+        this.nameOfDead.push("Ninguém morreu nesse dia!");
 
       }
     }
