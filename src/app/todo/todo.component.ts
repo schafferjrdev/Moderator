@@ -28,6 +28,7 @@ export class Jogador {
   foxPower: boolean = false;
   buddy: boolean = false;
   mason: boolean = false;
+  psycho: boolean = false;
   graveStyle: number = 0;
 
 }
@@ -58,6 +59,8 @@ export interface Classes {
   qnt: number;
   icon: string;
   first: boolean;
+  oneTime: boolean;
+  skills: string[];
 }
 
 @Component({
@@ -99,6 +102,7 @@ export class TodoComponent implements OnInit {
   statusUseds: Status = new Status();
 
   
+  // skills = ['atk','shield'];
 
   times = {
     aldeia:0,
@@ -118,7 +122,9 @@ export class TodoComponent implements OnInit {
       order: 5,
       qnt:0,
       icon:'lobisomem',
-      first: true
+      first: true,
+      oneTime: false,
+      skills: ['atk']
     },
     {
       name: 'Cachorro', 
@@ -128,7 +134,9 @@ export class TodoComponent implements OnInit {
       order: 0,
       qnt:0,
       icon:'cao',
-      first: true
+      first: true,
+      oneTime: true,
+      skills: ['atk','paw']
     },
     {
       name: 'Aldeão', 
@@ -138,7 +146,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'aldeao',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Guardião', 
@@ -148,7 +158,9 @@ export class TodoComponent implements OnInit {
       order: 4,
       qnt:0,
       icon:'guardiao',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['shield']
     },
     {
       name: 'Vidente', 
@@ -158,7 +170,9 @@ export class TodoComponent implements OnInit {
       order: 2,
       qnt:0,
       icon:'vidente',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Feiticeira', 
@@ -168,7 +182,9 @@ export class TodoComponent implements OnInit {
       order: 3,
       qnt:0,
       icon:'feiticeira',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Bruxa', 
@@ -178,7 +194,9 @@ export class TodoComponent implements OnInit {
       order: 8,
       qnt:0,
       icon:'bruxa',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['cure','venom']
     },
     {
       name: 'Licano', 
@@ -188,7 +206,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'licano',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Amaldiçoado', 
@@ -198,7 +218,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'amaldicoado',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Gigante', 
@@ -208,7 +230,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'gigante',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['double-claw']
     },
     {
       name: 'Caçador', 
@@ -218,7 +242,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'cacador',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Maçom', 
@@ -228,7 +254,9 @@ export class TodoComponent implements OnInit {
       order: 0,
       qnt:0,
       icon:'macom',
-      first: true
+      first: true,
+      oneTime: true,
+      skills: ['masonry']
     },
     {
       name: 'Príncipe', 
@@ -238,7 +266,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'principe',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Lupino', 
@@ -248,7 +278,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'lupino',
-      first: true
+      first: true,
+      oneTime: false,
+      skills: ['atk']
     },
     {
       name: 'Lobinho', 
@@ -258,7 +290,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'lobinho',
-      first: true
+      first: true,
+      oneTime: false,
+      skills: ['atk']
     },
     {
       name: 'Lobo Mau', 
@@ -268,7 +302,9 @@ export class TodoComponent implements OnInit {
       order: 6,
       qnt:0,
       icon:'lobo-mau',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['atk']
     },
     {
       name: 'Psicopata', 
@@ -278,7 +314,9 @@ export class TodoComponent implements OnInit {
       order: 6.5,
       qnt:0,
       icon:'psicopata',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['knife']
     },
     {
       name: 'Cupido', 
@@ -288,7 +326,9 @@ export class TodoComponent implements OnInit {
       order: 0,
       qnt:0,
       icon:'cupido',
-      first: true
+      first: true,
+      oneTime: true,
+      skills: ['rings']
     },
     {
       name: 'Urso', 
@@ -298,7 +338,9 @@ export class TodoComponent implements OnInit {
       order: 100,
       qnt:0,
       icon:'urso',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Raposa', 
@@ -308,7 +350,9 @@ export class TodoComponent implements OnInit {
       order: 3,
       qnt:0,
       icon:'raposa',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['fox-tail']
     },
     {
       name: 'Corvo', 
@@ -318,7 +362,9 @@ export class TodoComponent implements OnInit {
       order: 1,
       qnt:0,
       icon:'corvo',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['feather']
     },
     {
       name: 'Mago', 
@@ -328,7 +374,9 @@ export class TodoComponent implements OnInit {
       order: 1,
       qnt:0,
       icon:'mago',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['spell']
     },
     {
       name: 'Leprechaun', 
@@ -338,7 +386,9 @@ export class TodoComponent implements OnInit {
       order: 7,
       qnt:0,
       icon: 'leprechaun',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: []
     },
     {
       name: 'Lider do Culto', 
@@ -348,7 +398,9 @@ export class TodoComponent implements OnInit {
       order: 9,
       qnt:0,
       icon: 'liderdoculto',
-      first: false
+      first: false,
+      oneTime: false,
+      skills: ['elder-sign']
     }
   ];
   classesHelp: Classes[] = this.classes;
@@ -409,11 +461,7 @@ export class TodoComponent implements OnInit {
     }
     this.showPlayer = false;
 
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -465,11 +513,7 @@ export class TodoComponent implements OnInit {
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
     this.showPlayer = false;
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    } 
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
 
     if(this.filterInGame == true){
       let classTemp=[];
@@ -687,14 +731,11 @@ export class TodoComponent implements OnInit {
     this.changeAllStatus('buddy', this.jogadores, false);
     this.changeAllStatus('dead', this.jogadores, false);
     this.changeAllStatus('lynch', this.jogadores, false);
+    this.changeAllStatus('psycho', this.jogadores, false);
     this.changeAllStatus('mason', this.jogadores, false);
 
     this.teamsUp();
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
     this.saveLocal();
   }
 
@@ -723,13 +764,10 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('save', this.jogadores, playerAlive, false);
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('psycho', this.jogadores, playerAlive, false);
     this.night = !this.night;
 
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
     
     this.saveLocal();
   }
@@ -739,11 +777,13 @@ export class TodoComponent implements OnInit {
     this.changeAllStatus('saved',this.jogadores,false);
     let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.name !== 'Gigante'; });
     playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.name !== 'Amaldiçoado' ; });
+    playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.name !== 'Psicopata' ; });
     let indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Gigante' && o.target === true && o.save === false && o.curePotion === false; });
     let indexCursedWound = _.findIndex(this.jogadores, function(o) { return o.job.name === 'Amaldiçoado' && o.target === true && o.save === false && o.curePotion === false; });
     let saved = _.filter(this.jogadores, function(o) { return o.save === true; });
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.lynch === true && o.job.name !== 'Príncipe'; }));
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.psycho === true; }));
     
     playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
     playerAttacked = _.uniqBy(playerAttacked, 'name');
@@ -826,6 +866,16 @@ export class TodoComponent implements OnInit {
     
     this.changeStatusWhere("dead",this.jogadores,playerNotSaved,true);
 
+    if(playerNotSaved.length ==0){
+      if(this.night){
+        this.nameOfDead.push("Ninguém morreu essa noite!");
+
+      }else{
+        this.nameOfDead.push("Ninguém morreu esse dia!");
+
+      }
+    }
+
     if(this.hasClassArray('Caçador',playerNotSaved)){
       // this.openSnackBar("Caçador deve matar alguém!");
       this.nameOfDead.push("Caçador deve matar alguém!");
@@ -853,6 +903,7 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('deathPotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
+    this.changeStatusWhere('psycho', this.jogadores, playerAlive, false);
     this.changeStatusWhere('mason', this.jogadores, playerAlive, false);
 
 
@@ -876,11 +927,7 @@ export class TodoComponent implements OnInit {
     //   this.jogadores[index].crowMark = false;
 
     // }
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
     this.saveLocal();
     
   }
@@ -929,11 +976,7 @@ export class TodoComponent implements OnInit {
 
   voltar(){
 
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
     this.saveLocal();
     this.showPlayer = false;
   }
@@ -1017,11 +1060,7 @@ export class TodoComponent implements OnInit {
       this.night = save.night;
       this.showDeadFlag = save.showDead;
       this.firstNight = save.firstNight;
-      if(this.night){
-        this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-      }else{
-        this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-      }
+      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
       this.toStep(4);
     }else{
       console.log("No data saved");
@@ -1103,11 +1142,7 @@ export class TodoComponent implements OnInit {
       this.jogadores[j].job = this.classesForSort[j];
       
     }
-    if(this.night){
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
-    }else{
-      this.jogadores = _.sortBy(this.jogadores, ['job.team', 'job.order','job.name']); 
-    }
+    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
    
     this.teamsUp();
     this.saveLocal();
@@ -1185,11 +1220,15 @@ export class TodoComponent implements OnInit {
           
         this.classesHelp = classTemp;
         this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order < 99; });
+        let wolfpack = this.times.lobos;
 
-        if(this.times.lobos > 0){
-          if(this.times.lobos == 1 && this.playerWithClassAndStatusTrue('Feiticeira',this.jogadores,'dead')){
-            this.classesHelp = _.concat(this.classesHelp,this.classes[indexWolf]);
-          }
+        if(this.hasClass('Feiticeira') && this.atLastOne('Feiticeira',this.jogadores,'dead')){
+         wolfpack--;
+        }
+        if(wolfpack > 0){
+         
+        this.classesHelp = _.concat(this.classesHelp,this.classes[indexWolf]);
+        
           
         }
         

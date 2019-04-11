@@ -6,8 +6,13 @@
     overflow-y: hidden !important;
     overflow-x: hidden !important;
 }
+/* position: absolute;
+    top: 50px; */
 
-
+::ng-deep .mat-snack-bar-container{
+    position: absolute;
+    top: 50px;
+}
 
 .tutorials{
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#673ab7+0,9665b2+100 */
@@ -73,6 +78,10 @@
     background-color: #fff; 
 }
 
+.skills{
+    display: flex;
+    flex-flow: row;
+}
 .wolf-font{
     font-family: 'Germania One', cursive;
 }

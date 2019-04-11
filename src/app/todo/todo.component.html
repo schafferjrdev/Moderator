@@ -320,6 +320,8 @@
                         {{class.desc}}
                     </p>
                     <p>Balanceamento: {{class.power}}</p>
+                    
+                    
                   </mat-card-content>
                   <mat-card-actions>
                       
@@ -397,7 +399,7 @@
         <div  *ngFor="let jogador of jogadores">
           
           
-          <mat-card  (press)="{event:open(jogador), time:500}" [ngClass]="{'lupin-border':jogador.job.name === 'Lupino','lycan-border':jogador.job.name === 'Licano','good-border':jogador.job.team === 'good' ||jogador.job.name === 'Lider do Culto' , 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" class="player mat-elevation-z6"  >
+          <mat-card  (press)="{event:open(jogador), time:500}" [ngClass]="{'lupin-border':jogador.job.name === 'Lupino','lycan-border':jogador.job.name === 'Licano','good-border':jogador.job.team === 'good' ||jogador.job.name === 'Lider do Culto' ||jogador.job.name === 'Psicopata', 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" class="player mat-elevation-z6"  >
              
   
               <mat-card-title class="title-player"  [ngClass]="{'primary-color':jogador.job.team === 'good', 'warn-color':jogador.job.team === 'bad','accent-color':jogador.job.team === 'neutral'}">
@@ -463,7 +465,11 @@
                   <button *ngIf="hasClass('Bruxa') && statusUseds.deathPotion === 0  && night && !jogador.dead && atLastOne('Bruxa',jogadores,'dead')|| hasClass('Bruxa') && jogador.deathPotion  && night && !jogador.dead && atLastOne('Bruxa',jogadores,'dead')" mat-icon-button (click)="changeStatus(jogador, 'deathPotion')">
                       <mat-icon [ngClass]="{'icon-gray':!jogador.deathPotion, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="venom"></mat-icon>
                   </button> 
-  
+                  
+                  <button  *ngIf="hasClass('Psicopata') && !jogador.dead && night" mat-icon-button (click)="changeStatus(jogador, 'psycho')">
+                      <mat-icon  [ngClass]="{'icon-gray':!jogador.psycho, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="knife"></mat-icon>
+                    </button>
+
                   <button  *ngIf="hasClass('Maçom') && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'mason')">
                     <mat-icon  [ngClass]="{'icon-gray':!jogador.mason, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="masonry"></mat-icon>
                   </button>
@@ -526,6 +532,7 @@
 
                   
                   <p>{{jogadores && jogadores[playerEditIndex].job.desc}}</p>
+                  <p >Ícone: <span *ngIf="jogadores[playerEditIndex].job.skills.length <= 0" >Nenhum</span><mat-icon  *ngFor="let ico of jogadores[playerEditIndex].job.skills" [ngClass]="{'icon-good':jogadores[playerEditIndex].job.team === 'good','icon-bad':jogadores[playerEditIndex].job.team === 'bad','icon-neutral':jogadores[playerEditIndex].job.team === 'neutral'}" class="example-tab-icon" svgIcon="{{ico}}"></mat-icon> </p>
 
                   <!-- <mat-checkbox (change)="kill()" [(ngModel)]="jogadores[playerEditIndex].dead" class="example-tab-icon" [color]="jogadores[playerEditIndex].job.team === 'good' ? 'primary' : 'warn'">Matar</mat-checkbox> -->
 
@@ -574,7 +581,7 @@
         <mat-card-content class="content-help" >
             <mat-list role="list">
                 
-                <mat-list-item role="listitem"  *ngFor="let class_jogador of classesHelp" [ngClass]="{'primary-color':class_jogador.team === 'good', 'warn-color':class_jogador.team === 'bad','accent-color':class_jogador.team === 'neutral'}"><mat-checkbox (change)="firstNightCheck()" class="example-tab-icon" [color]="getColor(class_jogador.team)">{{class_jogador.name}}<span *ngIf="!atLastOne(class_jogador.name,jogadores,'dead') && class_jogador.name != 'Lobisomem'"> (Morto)</span></mat-checkbox></mat-list-item>
+                <mat-list-item role="listitem"  *ngFor="let class_jogador of classesHelp" [ngClass]="{'primary-color':class_jogador.team === 'good', 'warn-color':class_jogador.team === 'bad','accent-color':class_jogador.team === 'neutral'}"><mat-checkbox (change)="firstNightCheck()" class="example-tab-icon" [color]="getColor(class_jogador.team)">{{class_jogador.name}}<span *ngIf="class_jogador.oneTime"> (1x)</span><span *ngIf="!atLastOne(class_jogador.name,jogadores,'dead') && hasClass('Lobisomem') || !atLastOne(class_jogador.name,jogadores,'dead') && class_jogador.name != 'Lobisomem' "> (Morto)</span></mat-checkbox></mat-list-item>
               </mat-list>
               
         </mat-card-content>

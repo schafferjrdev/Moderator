@@ -119,6 +119,9 @@ export class AppComponent {
         iconRegistry.addSvgIcon(
           'masonry',
         sanitizer.bypassSecurityTrustResourceUrl('assets/icons/masonry.svg'));
+        iconRegistry.addSvgIcon(
+          'knife',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/knife.svg'));
         
         iconRegistry.addSvgIcon(
           'amaldicoado',
