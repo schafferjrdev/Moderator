@@ -463,6 +463,8 @@ button{
     width: 220px;
     overflow-x: scroll; /* has to be scroll, not auto */
     -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    overflow:scroll;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
