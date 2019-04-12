@@ -119,15 +119,18 @@
 
 .lista-overflow{
     height: 60vh;
-    overflow-y: auto;
+    overflow-y: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
 }
 .lista-overflow-classes{
     height: 70vh;
-    overflow-y: auto;
+    overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 .lista-overflow-game{
     max-height: 90vh;
-    overflow-y: auto;
+    overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
     display: flex;
     flex-flow: wrap;
     justify-content: space-evenly;
@@ -458,9 +461,8 @@ button{
     flex-flow: row;
     padding-bottom: 10px;
     width: 220px;
-    overflow-x: auto;
-    -webkit-overflow-x: auto;
-    -moz-overflow-x: auto;
+    overflow-x: scroll; /* has to be scroll, not auto */
+    -webkit-overflow-scrolling: touch;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
@@ -517,7 +519,7 @@ button{
 }
 
 
-@media(max-height:400px){
+@media(max-height:490px){
     .tutorials{
         font-size: 9pt;
     }
@@ -544,6 +546,13 @@ button{
     .card-help{
         top: 20px;
         
+    }
+    .pagination{
+        position: relative;
+    
+    }
+    .tips{
+        height: 340px;
     }
     
 

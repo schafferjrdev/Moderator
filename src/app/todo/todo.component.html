@@ -18,7 +18,7 @@
 <!-- TUTORIAL -->
 <div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" (click)="nextTutorial()" class="tutorials">
     
-    <div *ngIf="tutorialScreen == 0">
+    <div *ngIf="tutorialScreen == 0" class="tips">
         <div  class="content" fxLayout="column" >
 
             <div fxFlex>
@@ -64,10 +64,11 @@
         
         </div>
     </div>
-    <div *ngIf="tutorialScreen == 1" >
-        <p>Esse é um card de jogador, ao segurar você pode abrir configurações e explicação da classe.</p>
+    <div *ngIf="tutorialScreen == 1" class="tips">
+        
         <div  class="content" fxLayout="column" >
             <div fxFlex>
+                <p>Esse é um card de jogador, ao segurar você pode abrir configurações e explicação da classe.</p>
         <mat-card  ngClass="bad-border" class="player mat-elevation-z6 playerCardTutorial"  >
            
 
@@ -125,20 +126,22 @@
               </div>
               </mat-card-content>
           </mat-card>
+          <p>Os icones presentes vão depender das classes colocadas em jogo, ao tocar no icone você deixará marcado.</p>
+          <p>A borda indica qual time o jogador <b>Vidente</b> vê ao consultar.</p>
           </div>
           </div>
           
-          <p>Os icones presentes vão depender das classes colocadas em jogo, ao tocar no icone você deixará marcado.</p>
-          <p>A borda indica qual time o jogador <b>Vidente</b> vê ao consultar.</p>
+          
 
 
 
     </div>
-    <div *ngIf="tutorialScreen == 2">
+    <div *ngIf="tutorialScreen == 2" class="tips">
       
-        <p>Algumas classes são vistas de forma diferente pela <b>Vidente</b></p>
+        
         <div  class="content" fxLayout="column" >
             <div fxFlex>
+                <p>Algumas classes são vistas de forma diferente pela <b>Vidente</b></p>
         <mat-card  ngClass="bad-border" class="player mat-elevation-z6 playerCardTutorial"  >
            
 
@@ -198,11 +201,12 @@
               </div>
               </mat-card-content>
           </mat-card>
+          <p>Nesse caso o <b>Moderador</b> indica que o <b>Licano</b> é do time dos <b>Lobos</b>.</p>
+          <p>Essas foram apenas algumas dicas básicas, bom jogo!</p>
           </div>
           </div>
           
-          <p>Nesse caso o <b>Moderador</b> indica que o <b>Licano</b> é do time dos <b>Lobos</b>.</p>
-          <p>Essas foram apenas algumas dicas básicas, bom jogo!</p>
+          
 
     </div>
 
