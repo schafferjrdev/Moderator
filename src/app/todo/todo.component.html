@@ -471,7 +471,7 @@
                       <mat-icon [ngClass]="{'icon-gray':!jogador.deathPotion, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="venom"></mat-icon>
                   </button> 
                   
-                  <button  *ngIf="hasClass('Psicopata') && !jogador.dead && night" mat-icon-button (click)="changeStatus(jogador, 'psycho')">
+                  <button  *ngIf="hasClass('Psicopata') && !jogador.dead && night && !jogador.dead && atLastOne('Psicopata',jogadores,'dead')" mat-icon-button (click)="changeStatus(jogador, 'psycho')">
                       <mat-icon  [ngClass]="{'icon-gray':!jogador.psycho, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="knife"></mat-icon>
                     </button>
 
