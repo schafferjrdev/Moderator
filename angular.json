@@ -20,6 +20,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
+              "src/apple-touch-icon.png",
+              "src/safari-pinned-tab.svg",
               "src/assets",
               "src/manifest.json",
               "src/_redirects"
