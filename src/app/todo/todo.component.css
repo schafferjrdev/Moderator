@@ -180,7 +180,7 @@
 .player{
     
     width: 300px;
-    height: 150px;
+    max-height: 230px;
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -458,13 +458,9 @@ button{
 /* Scroll de status */
 .icons-status{
     display: flex;
-    flex-flow: row;
+    flex-flow: wrap;
     padding-bottom: 10px;
     width: 220px;
-    overflow-x: scroll; /* has to be scroll, not auto */
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-    overflow:scroll;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
