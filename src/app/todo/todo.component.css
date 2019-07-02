@@ -16,10 +16,10 @@
     margin: auto;
 }
 
-::ng-deep .mat-icon-button:hover{
+/* ::ng-deep .mat-icon-button:hover{
     transition: all ease 0.3s;
-    transform: scale(1.5);
-}
+    transform: scale(1.25);
+} */
 
 ::ng-deep .mat-icon-button:active{
     transition: all ease 0.3s;
@@ -195,14 +195,18 @@
     margin-bottom: 10px;
     transition: all ease 0.3s;
 }
-
-.player:hover{
+.player:active:not(:focus):not(:focus-within) {
+    transform: scale(0.9);
+}
+/* .player:hover{
     transform: scale(1.1);
 }
 
 .player:active{
     transform: scale(0.9);
-}
+} */
+
+
 
 .good-border{
     border: 2px solid #673ab7;

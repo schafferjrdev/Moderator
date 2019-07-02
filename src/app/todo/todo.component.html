@@ -437,7 +437,7 @@
                   <div class='status-player-title'>Status do jogador</div>
                   <div class="icons-status">
                   
-                  <button disableRipple  *ngIf="!night && jogador.job.id !== 'principe' && !jogador.dead" mat-icon-button (click)="changeStatus(jogador, 'lynch')">
+                  <button disableRipple  *ngIf="!night && jogador.job.id !== 'principe' && !jogador.dead" mat-icon-button  (click)="changeStatus(jogador, 'lynch')">
                     <mat-icon  [ngClass]="{'icon-gray':!jogador.lynch, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="vote"></mat-icon>
                   </button>
   
@@ -445,7 +445,7 @@
                     <mat-icon [ngClass]="{'icon-gray':jogador.foxPower, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="fox-tail"></mat-icon>
                   </button>
   
-                  <button disableRipple [disabled]="jogador.attacked && jogador.job.id === 'gigante'" *ngIf="night && !jogador.dead"  mat-icon-button (click)="changeStatus(jogador, 'target')">
+                  <button disableRipple   [disabled]="jogador.attacked && jogador.job.id === 'gigante'" *ngIf="night && !jogador.dead"  mat-icon-button (click)="changeStatus(jogador, 'target')">
                     <mat-icon  [ngClass]="{'icon-gray':!jogador.target, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="atk"></mat-icon>
                   </button>
   
