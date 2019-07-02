@@ -84,4 +84,7 @@
     fill: #fff !important;
   }
 
+  .modal-btn:hover{
+    background-color: #673ab7 !important;
+  }
 

@@ -31,6 +31,7 @@ import {
   MatSelectModule,
   MatMenuModule,
   MatSnackBarModule,
+  MatTooltipModule,
   MatAutocompleteModule
   
 } from '@angular/material';
@@ -51,6 +52,7 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserAnimationsModule,
     FormsModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     MatListModule,
     MatButtonModule,

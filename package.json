@@ -31,9 +31,12 @@
     "hammerjs": "^2.0.8",
     "lodash": "^4.17.11",
     "material-design-icons": "^3.0.1",
+    "materialize-css": "^1.0.0-rc.2",
     "ng-number-picker": "^1.1.6",
     "ngx-long-press": "0.0.1",
     "rxjs": "~6.3.3",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^8.13.0",
     "swiper": "^3.4.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

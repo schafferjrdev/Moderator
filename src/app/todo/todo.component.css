@@ -26,6 +26,11 @@
     transform: scale(0.5);
 }
 
+::ng-deep .mat-raised-button:active, ::ng-deep .mat-stroked-button:active{
+    transition: all ease 0.3s;
+    transform: scale(0.9);
+}
+
 .tutorials{
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#673ab7+0,9665b2+100 */
     background: #673ab7; /* Old browsers */

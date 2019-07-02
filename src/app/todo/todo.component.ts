@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
-
 import { MatSnackBar } from "@angular/material";
+import swal from 'sweetalert';
+
 
 import _ from "lodash";
 
@@ -453,6 +454,10 @@ export class TodoComponent implements OnInit {
     
   }
 
+  openDialog() {
+    
+  }
+
   save(jogador: Jogador) {
     document.getElementById('input-player-name').focus();
     if(jogador.name !== undefined){
@@ -521,44 +526,91 @@ export class TodoComponent implements OnInit {
   }
 
   delete(jogador: Jogador) {
-    this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
-    let quantity =0;
-    let dead =0;
-    let balance =0;
-    for (let index = 0; index < this.jogadores.length; index++) {
-      balance = balance+Number(this.jogadores[index].job.power);
-      if(this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead){
-        quantity++;
-      }
-      if(this.jogadores[index].dead){
-        dead++;
-      }  
-    }
-    // this.times.balance = balance;
-    this.times.lobos = quantity;
-    this.times.aldeia = this.jogadores.length - dead - quantity;
-    this.showPlayer = false;
-    this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+    swal({
+      title: "Deletar "+jogador.name+"?",
+      text: "Uma vez deletado, você não poderá recuperar este jogador!",
+      icon: "warning",
+      buttons: {
+        cancel: {
+          text: "Cancelar",
+          value: null,
+          visible: true,
+          className: "mat-stroked-button",
+          closeModal: true,
+        },
+        confirm: {
+          text: "OK",
+          value: true,
+          visible: true,
+          className: "mat-raised-button mat-warn",
+          closeModal: true
+        }
+      },
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Poof! "+jogador.name+" foi deletado!", {
+          icon: "success",
+          button: {
+            text: "Obrigado",
+            value: true,
+            visible: true,
+            className: "mat-raised-button mat-primary modal-btn",
+            closeModal: true,
+          },
+        });
 
-    if(this.filterInGame == true){
-      let classTemp=[];
-      
-        for (let i = 0; i < this.jogadores.length; i++) {
+        this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
+        let quantity =0;
+        let dead =0;
+        let balance =0;
+        for (let index = 0; index < this.jogadores.length; index++) {
+          balance = balance+Number(this.jogadores[index].job.power);
+          if(this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead){
+            quantity++;
+          }
+          if(this.jogadores[index].dead){
+            dead++;
+          }  
+        }
+        // this.times.balance = balance;
+        this.times.lobos = quantity;
+        this.times.aldeia = this.jogadores.length - dead - quantity;
+        this.showPlayer = false;
+        this.jogadores = _.sortBy(this.jogadores, ['job.order']); 
+
+        if(this.filterInGame == true){
+          let classTemp=[];
           
-          add(classTemp,this.jogadores[i].job);
+            for (let i = 0; i < this.jogadores.length; i++) {
+              
+              add(classTemp,this.jogadores[i].job);
+              
+            }
+              
+            this.classesHelp = classTemp;
+            this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);  
+        }
+
+        if(this.jogadores.length - this.times.totalClasses <0){
+          this.classesInGame = _.sortBy(this.classesInGame, ['qnt']);
+          this.classesInGame[0].qnt--;
+          this.changeBalance();
           
         }
-          
-        this.classesHelp = classTemp;
-        this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);  
-    }
+      } else {
+        swal(jogador.name+" está salvo!",{button: {
+          text: "Certo!",
+          value: true,
+          visible: true,
+          className: "mat-raised-button mat-primary modal-btn",
+          closeModal: true,
+        },});
+      }
+    });
 
-    if(this.jogadores.length - this.times.totalClasses <0){
-      this.classesInGame = _.sortBy(this.classesInGame, ['qnt']);
-      this.classesInGame[0].qnt--;
-      this.changeBalance();
-      
-    }
+    
   }
 
   teamsUp() {
@@ -690,13 +742,65 @@ export class TodoComponent implements OnInit {
   }
 
   exit(){
-    this.hasData = localStorage["gameSave"];
-    this.resetGame();
-    this.toStep(1);
+    swal({
+      title: "Você quer sair?",
+      
+      buttons: {
+        cancel: {
+          text: "Não",
+          value: null,
+          visible: true,
+          className: "mat-stroked-button",
+          closeModal: true,
+        },
+        confirm: {
+          text: "Sim",
+          value: true,
+          visible: true,
+          className: "mat-raised-button mat-primary modal-btn",
+          closeModal: true
+        }
+      },
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        this.hasData = localStorage["gameSave"];
+        this.resetGame();
+        this.toStep(1);
+      } 
+    });
+
+
+    
   }
 
   resetMatch(){
-    this.softReset();
+    swal({
+      title: "Você quer reiniciar?",
+      
+      buttons: {
+        cancel: {
+          text: "Não",
+          value: null,
+          visible: true,
+          className: "mat-stroked-button",
+          closeModal: true,
+        },
+        confirm: {
+          text: "Sim",
+          value: true,
+          visible: true,
+          className: "mat-raised-button mat-primary modal-btn",
+          closeModal: true
+        }
+      },
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        this.softReset();
+      } 
+    });
+    
   }
 
   resetGame(){
