@@ -552,13 +552,7 @@ export class TodoComponent implements OnInit {
       if (willDelete) {
         swal('Poof! '+ jogador.name +' foi deletado!', {
           icon: 'success',
-          button: {
-            text: 'Obrigado',
-            value: true,
-            visible: true,
-            className: 'mat-raised-button mat-primary modal-btn',
-            closeModal: true,
-          },
+          buttons:{confirm:{text: 'Obrigado', value: true,visible: true,className: 'mat-raised-button mat-primary modal-btn',closeModal: true}},
         });
 
         this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
@@ -600,13 +594,13 @@ export class TodoComponent implements OnInit {
 
         }
       } else {
-        swal(jogador.name + " está salvo!", {button: {
+        swal(jogador.name + " está salvo!", {buttons:{ confirm: {
           text: 'Certo!',
           value: true,
           visible: true,
           className: 'mat-raised-button mat-primary modal-btn',
           closeModal: true,
-        }, });
+        }, }});
       }
     });
 
