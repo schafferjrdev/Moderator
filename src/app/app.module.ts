@@ -11,7 +11,8 @@ import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-br
 export class MyHammerConfig extends HammerGestureConfig {
     overrides = <any> {
         'pinch': { enable: false },
-        'rotate': { enable: false }
+        'rotate': { enable: false },
+        'press':{time:500}
     }
 }
 

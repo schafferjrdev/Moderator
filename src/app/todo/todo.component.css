@@ -16,6 +16,16 @@
     margin: auto;
 }
 
+::ng-deep .mat-icon-button:hover{
+    transition: all ease 0.3s;
+    transform: scale(1.5);
+}
+
+::ng-deep .mat-icon-button:active{
+    transition: all ease 0.3s;
+    transform: scale(0.5);
+}
+
 .tutorials{
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#673ab7+0,9665b2+100 */
     background: #673ab7; /* Old browsers */
@@ -178,14 +188,22 @@
 }
 
 .player{
-    
     width: 300px;
     max-height: 230px;
     border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-
+    transition: all ease 0.3s;
 }
+
+.player:hover{
+    transform: scale(1.1);
+}
+
+.player:active{
+    transform: scale(0.9);
+}
+
 .good-border{
     border: 2px solid #673ab7;
 }
@@ -353,8 +371,7 @@ button{
   padding: 5px;
   width: 100vw;
   background-color: #fff;
-  
-
+  box-shadow: 0 0 10px rgba(150,150,150,0.5);
 }
 
 .btn-footer button{
@@ -463,6 +480,12 @@ button{
     width: 220px;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+    min-height: 92px;
+}
+
+.status-player-title{
+    font-size: 11pt;
+    color: #777;
 }
 
 .modal-help{
