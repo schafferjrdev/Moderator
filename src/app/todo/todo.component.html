@@ -350,11 +350,12 @@
 
 <!-- tela de Jogo -->
 
-<div *ngIf="step == 4" class="content" fxLayout="column">
+<div *ngIf="step == 4" class="content game-body" [ngClass]="{'day':!night,'night':night}" fxLayout="column">
+  <div *ngIf="night" class='stars'></div>
+  <div *ngIf="!night"  class='cloud'></div>
 
-    
   
-  <div class="header">
+  <div class="header" style="background-color: #fff">
     
     <h5 *ngIf="jogadores.length>0"><label class="primary-color">Aldeia {{times.aldeia}} </label><mat-icon class="icon-text">close</mat-icon><label class="warn-color"> {{times.lobos}} Lobos</label></h5>
     <h5 *ngIf="hasClass('liderdoculto') && atLastOne('liderdoculto',jogadores,'dead')" class="accent-color">({{times.cult}}/{{times.lobos+times.aldeia}})</h5>

@@ -35,7 +35,6 @@
     "ng-number-picker": "^1.1.6",
     "ngx-long-press": "0.0.1",
     "rxjs": "~6.3.3",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^8.13.0",
     "swiper": "^3.4.2",
     "tslib": "^1.9.0",

@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import swal from 'sweetalert';
-
-
 import _ from 'lodash';
-
-
+import Swal from 'sweetalert2';
 
 export class Jogador {
   name: string;
@@ -73,7 +69,7 @@ export interface Classes {
 
 
 export class TodoComponent implements OnInit {
-
+  
   tutorial = true;
   tutorialScreen = 0;
 
@@ -526,83 +522,83 @@ export class TodoComponent implements OnInit {
   }
 
   delete(jogador: Jogador) {
-    swal({
-      title: 'Deletar '+ jogador.name + "?",
-      text: 'Uma vez deletado, você não poderá recuperar este jogador!',
-      icon: 'warning',
-      buttons: {
-        cancel: {
-          text: 'Cancelar',
-          value: null,
-          visible: true,
-          className: 'mat-stroked-button',
-          closeModal: true,
-        },
-        confirm: {
-          text: 'OK',
-          value: true,
-          visible: true,
-          className: 'mat-raised-button mat-warn',
-          closeModal: true
-        }
-      },
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        swal('Poof! '+ jogador.name +' foi deletado!', {
-          icon: 'success',
-          buttons:{confirm:{text: 'Obrigado', value: true,visible: true,className: 'mat-raised-button mat-primary modal-btn',closeModal: true}},
-        });
+    // swal({
+    //   title: 'Deletar '+ jogador.name + "?",
+    //   text: 'Uma vez deletado, você não poderá recuperar este jogador!',
+    //   icon: 'warning',
+    //   buttons: {
+    //     cancel: {
+    //       text: 'Cancelar',
+    //       value: null,
+    //       visible: true,
+    //       className: 'mat-stroked-button',
+    //       closeModal: true,
+    //     },
+    //     confirm: {
+    //       text: 'OK',
+    //       value: true,
+    //       visible: true,
+    //       className: 'mat-raised-button mat-warn',
+    //       closeModal: true
+    //     }
+    //   },
+    //   dangerMode: true,
+    // })
+    // .then((willDelete) => {
+    //   if (willDelete) {
+    //     swal('Poof! '+ jogador.name +' foi deletado!', {
+    //       icon: 'success',
+    //       buttons:{confirm:{text: 'Obrigado', value: true,visible: true,className: 'mat-raised-button mat-primary modal-btn',closeModal: true}},
+    //     });
 
-        this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
-        let quantity = 0;
-        let dead = 0;
-        let balance = 0;
-        for (let index = 0; index < this.jogadores.length; index++) {
-          balance = balance + Number(this.jogadores[index].job.power);
-          if (this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead) {
-            quantity++;
-          }
-          if (this.jogadores[index].dead) {
-            dead++;
-          }
-        }
-        // this.times.balance = balance;
-        this.times.lobos = quantity;
-        this.times.aldeia = this.jogadores.length - dead - quantity;
-        this.showPlayer = false;
-        this.jogadores = _.sortBy(this.jogadores, ['job.order']);
+    //     this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
+    //     let quantity = 0;
+    //     let dead = 0;
+    //     let balance = 0;
+    //     for (let index = 0; index < this.jogadores.length; index++) {
+    //       balance = balance + Number(this.jogadores[index].job.power);
+    //       if (this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead) {
+    //         quantity++;
+    //       }
+    //       if (this.jogadores[index].dead) {
+    //         dead++;
+    //       }
+    //     }
+    //     // this.times.balance = balance;
+    //     this.times.lobos = quantity;
+    //     this.times.aldeia = this.jogadores.length - dead - quantity;
+    //     this.showPlayer = false;
+    //     this.jogadores = _.sortBy(this.jogadores, ['job.order']);
 
-        if (this.filterInGame == true) {
-          const classTemp = [];
+    //     if (this.filterInGame == true) {
+    //       const classTemp = [];
 
-          for (let i = 0; i < this.jogadores.length; i++) {
+    //       for (let i = 0; i < this.jogadores.length; i++) {
 
-              add(classTemp, this.jogadores[i].job);
+    //           add(classTemp, this.jogadores[i].job);
 
-            }
+    //         }
 
-          this.classesHelp = classTemp;
-          this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
-        }
+    //       this.classesHelp = classTemp;
+    //       this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
+    //     }
 
-        if (this.jogadores.length - this.times.totalClasses < 0) {
-          this.classesInGame = _.sortBy(this.classesInGame, ['qnt']);
-          this.classesInGame[0].qnt--;
-          this.changeBalance();
+    //     if (this.jogadores.length - this.times.totalClasses < 0) {
+    //       this.classesInGame = _.sortBy(this.classesInGame, ['qnt']);
+    //       this.classesInGame[0].qnt--;
+    //       this.changeBalance();
 
-        }
-      } else {
-        swal(jogador.name + " está salvo!", {buttons:{ confirm: {
-          text: 'Certo!',
-          value: true,
-          visible: true,
-          className: 'mat-raised-button mat-primary modal-btn',
-          closeModal: true,
-        }, }});
-      }
-    });
+    //     }
+    //   } else {
+    //     swal(jogador.name + " está salvo!", {buttons:{ confirm: {
+    //       text: 'Certo!',
+    //       value: true,
+    //       visible: true,
+    //       className: 'mat-raised-button mat-primary modal-btn',
+    //       closeModal: true,
+    //     }, }});
+    //   }
+    // });
 
 
   }
@@ -736,64 +732,76 @@ export class TodoComponent implements OnInit {
   }
 
   exit() {
-    swal({
-      title: 'Você quer sair?',
+    // swal({
+    //   title: 'Você quer sair?',
 
-      buttons: {
-        cancel: {
-          text: 'Não',
-          value: null,
-          visible: true,
-          className: 'mat-stroked-button',
-          closeModal: true,
-        },
-        confirm: {
-          text: 'Sim',
-          value: true,
-          visible: true,
-          className: 'mat-raised-button mat-primary modal-btn',
-          closeModal: true
-        }
-      },
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        this.hasData = localStorage['gameSave'];
-        this.resetGame();
-        this.toStep(1);
-      }
-    });
+    //   buttons: {
+    //     cancel: {
+    //       text: 'Não',
+    //       value: null,
+    //       visible: true,
+    //       className: 'mat-stroked-button',
+    //       closeModal: true,
+    //     },
+    //     confirm: {
+    //       text: 'Sim',
+    //       value: true,
+    //       visible: true,
+    //       className: 'mat-raised-button mat-primary modal-btn',
+    //       closeModal: true
+    //     }
+    //   },
+    // })
+    // .then((willDelete) => {
+    //   if (willDelete) {
+    //     this.hasData = localStorage['gameSave'];
+    //     this.resetGame();
+    //     this.toStep(1);
+    //   }
+    // });
 
 
 
   }
 
-  resetMatch() {
-    swal({
-      title: 'Você quer reiniciar?',
-
-      buttons: {
-        cancel: {
-          text: 'Não',
-          value: null,
-          visible: true,
-          className: 'mat-stroked-button',
-          closeModal: true,
-        },
-        confirm: {
-          text: 'Sim',
-          value: true,
-          visible: true,
-          className: 'mat-raised-button mat-primary modal-btn',
-          closeModal: true
-        }
-      },
+  callToast(msg:string, time:number){
+    Swal.fire({
+      title: msg,
+      showConfirmButton: false,
+      position: 'top',
+      toast:true,
+      timer: time,
+      width:'95vw'
     })
-    .then((willDelete) => {
-      if (willDelete) {
-        this.softReset();
-      }
-    });
+  }
+
+  resetMatch() {
+    
+    // swal({
+    //   title: 'Você quer reiniciar?',
+
+    //   buttons: {
+    //     cancel: {
+    //       text: 'Não',
+    //       value: null,
+    //       visible: true,
+    //       className: 'mat-stroked-button',
+    //       closeModal: true,
+    //     },
+    //     confirm: {
+    //       text: 'Sim',
+    //       value: true,
+    //       visible: true,
+    //       className: 'mat-raised-button mat-primary modal-btn',
+    //       closeModal: true
+    //     }
+    //   },
+    // })
+    // .then((willDelete) => {
+    //   if (willDelete) {
+    //     this.softReset();
+    //   }
+    // });
 
   }
 
@@ -862,17 +870,31 @@ export class TodoComponent implements OnInit {
     this.saveLocal();
   }
 
-  openSnackBar(message: string) {
-    const snackBarRef = this.snackBar.open(message, 'Ok', {
-       duration: 2000,
-    });
-
-    snackBarRef.afterDismissed().subscribe(() => {
+  openSnackBar(message: string, icon:any = 'warning') {
+    Swal.fire({
+      title: message,
+      type: icon,
+      showConfirmButton: false,
+      position: 'top',
+      toast:true,
+      timer: 3000,
+      width:'95vw'
+    }).then(() =>{
       if (this.nameOfDead.length > 0) {
         this.talkTheNames();
       }
 
     });
+    // const snackBarRef = this.snackBar.open(message, 'Ok', {
+    //    duration: 2000,
+    // });
+
+    // snackBarRef.afterDismissed().subscribe(() => {
+    //   if (this.nameOfDead.length > 0) {
+    //     this.talkTheNames();
+    //   }
+
+    // });
 
  }
 
@@ -889,7 +911,12 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
     this.changeStatusWhere('psycho', this.jogadores, playerAlive, false);
     this.night = !this.night;
+    if(this.night){
+      this.callToast('Está anoitecendo', 1000);
+    }else{
+      this.callToast('Está amanhecendo', 1000);
 
+    }
     this.jogadores = _.sortBy(this.jogadores, ['job.order']);
 
     this.saveLocal();
@@ -901,7 +928,7 @@ export class TodoComponent implements OnInit {
     let playerAttacked = _.filter(this.jogadores, function(o) {return o.target === true && o.job.id !== 'gigante'; });
     playerAttacked = _.filter(playerAttacked, function(o) {return o.target === true && o.job.id !== 'amaldicoado' ; });
     playerAttacked = _.filter(playerAttacked, function(o) {return o.target === true && o.job.id !== 'psicopata' ; });
-    const indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.target === true && o.save === false && o.curePotion === false; });
+    const indexGiantWound = _.findIndex(this.jogadores, (o) => { o.job.id === 'gigante' && o.target === true && o.save === false && o.curePotion === false; });
     const indexCursedWound = _.findIndex(this.jogadores, function(o) { return o.job.id === 'amaldicoado' && o.target === true && o.save === false && o.curePotion === false; });
     const saved = _.filter(this.jogadores, function(o) { return o.save === true; });
     playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.lynch === true && o.job.id !== 'principe'; }));
@@ -927,22 +954,26 @@ export class TodoComponent implements OnInit {
     if (indexCursedWound != -1) {
       this.jogadores[indexCursedWound].attacked = true;
       // this.openSnackBar("Um novo lobisomem surge!");
-      this.nameOfDead.push('Um novo lobisomem surge!');
+      this.nameOfDead.push('Um novo<b class="primary-color">&nbsplobisomem&nbsp</b>surge!');
+      
     }
-
+    console.log('Before', playerNotSaved);
 
 
 
 
     let lovers;
     if (this.statusTrue('love', playerNotSaved)) {
+    console.log('Inside', this.jogadores);
+
       lovers = this.playerWithStatus('love', this.jogadores, true);
       playerNotSaved = _.concat(playerNotSaved, lovers);
-      playerNotSaved = _.uniqBy(playerNotSaved, 'id');
+      playerNotSaved = _.uniqBy(playerNotSaved, 'name');
       // this.openSnackBar("O casal morreu!");
+      
 
       if (this.playerWithStatus('dead', lovers, false).length > 0) {
-        this.nameOfDead.push('O casal morreu!');
+        this.nameOfDead.push('O<b class="primary-color">&nbspcasal&nbsp</b>morreu!');
       }
     }
 
@@ -950,11 +981,11 @@ export class TodoComponent implements OnInit {
     if (this.statusTrue('buddy', playerNotSaved)) {
       buddy = this.playerWithClass('cachorro', this.jogadores);
       playerNotSaved = _.concat(playerNotSaved, buddy);
-      playerNotSaved = _.uniqBy(playerNotSaved, 'id');
+      playerNotSaved = _.uniqBy(playerNotSaved, 'name');
       // this.openSnackBar("O cachorro morreu!");
 
       if (!this.playerWithClassAndStatusTrue('cachorro', playerNotSaved, 'dead')) {
-        this.nameOfDead.push('O cachorro morreu!');
+        this.nameOfDead.push('O<b class="primary-color">&nbspcachorro&nbsp</b>morreu!');
 
       }
 
@@ -978,8 +1009,8 @@ export class TodoComponent implements OnInit {
 
         if (this.statusTrue('lynch', cubs)) {
         // this.openSnackBar("Na noite os lobos podem matar 2!");
-        this.nameOfDead.push('Na noite os lobos podem matar 2!');
-
+        this.nameOfDead.push('Na noite os<b class="primary-color">&nbsplobos&nbsp</b>podem matar 2!');
+        
       }
 
     }
@@ -991,21 +1022,21 @@ export class TodoComponent implements OnInit {
 
     if (playerNotSaved.length == 0) {
       if (this.night) {
-        this.nameOfDead.push('Ninguém morreu nessa noite!');
-
+        this.nameOfDead.push('<b class="primary-color">&nbspNinguém&nbsp</b>morreu nessa noite!');
+        
       } else {
-        this.nameOfDead.push('Ninguém morreu nesse dia!');
+        this.nameOfDead.push('<b class="primary-color">&nbspNinguém&nbsp</b>morreu nesse dia!');
 
       }
     }
 
     if (this.hasClassArray('cacador', playerNotSaved)) {
       // this.openSnackBar("Caçador deve matar alguém!");
-      this.nameOfDead.push('Caçador deve matar alguém!');
-
+      this.nameOfDead.push('<b class="primary-color">&nbspCaçador&nbsp</b>deve matar alguém!');
+      
     }
 
-    console.log(this.nameOfDead);
+    // console.log(this.nameOfDead);
     this.talkTheNames();
 
 
