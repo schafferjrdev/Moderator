@@ -1,17 +1,21 @@
 
 
 <!-- Tela INICIAL -->
-<div *ngIf="step == 0" class="content initial-screen" fxLayout="column" (click)="nextStep()">
+<div *ngIf="step == 0" class="content initial-screen gradient-night" fxLayout="column" (click)="nextStep()">
+    <div class='stars_base'></div>
+
     <mat-icon class="blink_me icon-start icon-white" svgIcon="white-wolf"></mat-icon>
     <span class="blink_me wolf-font">Toque para iniciar</span>
 
 </div>
 
 <div *ngIf="step == 1" class="content newgame-screen" fxLayout="column" >
-    <mat-icon class="icon-start icon-primary" svgIcon="white-wolf"></mat-icon>
-    <h2 class="primary-color wolf-font" >Lobisomem</h2>
-    <button class="btn-start" mat-raised-button color="primary" (click)="nextStep()">Novo jogo</button>
-    <button class="btn-start" [disabled]="!hasData" mat-stroked-button color="primary" (click)="restart()">Continuar</button>
+    
+
+    <mat-icon class="icon-start primary-color" svgIcon="white-wolf"></mat-icon>
+    <h2 class="wolf-font primary-color" >Lobisomem</h2>
+    <button class="btn-start bouncy" color="primary" mat-raised-button (click)="nextStep()">Novo jogo</button>
+    <button class="btn-start bouncy" color="primary" [disabled]="!hasData" mat-stroked-button (click)="restart()">Continuar</button>
 
 </div>
 
