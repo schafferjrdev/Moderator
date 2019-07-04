@@ -966,7 +966,7 @@ export class TodoComponent implements OnInit {
     }else{
       this.changeStatusWhere('target', this.jogadores, playerAlive, false);
     }
-    // this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
+    
     this.changeStatusWhere('toughTarget', this.jogadores, playerAlive, false);
     this.changeStatusWhere('save', this.jogadores, playerAlive, false);
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
@@ -974,6 +974,8 @@ export class TodoComponent implements OnInit {
     this.changeStatusWhere('psycho', this.jogadores, playerAlive, false);
     this.night = !this.night;
     if(this.night){
+      this.changeStatusWhere('crowMark', this.jogadores, playerAlive, false);
+      this.changeStatusWhere('spell', this.jogadores, playerAlive, false);
       this.callToast('Está anoitecendo', 1000);
     }else{
       this.callToast('Está amanhecendo', 1000);
