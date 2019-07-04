@@ -25,6 +25,7 @@
     "@angular/router": "~7.2.0",
     "@angular/service-worker": "~7.2.0",
     "angular2-number-picker": "^0.8.8",
+    "animate.css": "^3.7.2",
     "bootstrap": "^4.3.1",
     "bootstrap-input-spinner": "^1.11.1",
     "core-js": "^2.5.4",

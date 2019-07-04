@@ -83,14 +83,16 @@
 
 }
 .dot{
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     background-color: #999;
     border-radius: 50%;
     margin: 10px;
+    transition: all ease 0.5s;
 }
 
 .dotActive{
+    transform: scale(1.5);
     background-color: #fff; 
 }
 
@@ -132,11 +134,13 @@
 }
 
 .lista-overflow{
+    overflow-x: hidden;
     height: 60vh;
     overflow-y: scroll; /* has to be scroll, not auto */
     -webkit-overflow-scrolling: touch;
 }
 .lista-overflow-classes{
+    overflow-x: hidden;
     height: 70vh;
     overflow-y: scroll; /* has to be scroll, not auto */
   -webkit-overflow-scrolling: touch;
@@ -322,6 +326,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#683ab7', end
     height: 100vh;
     justify-content: center;
     text-align: center;
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,efefef+100 */
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%, rgba(239,239,239,1) 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover,  rgba(255,255,255,1) 0%,rgba(239,239,239,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center,  rgba(255,255,255,1) 0%,rgba(239,239,239,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#efefef',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }
 .newgame-screen button{
     margin-bottom: 10px;
@@ -514,8 +525,9 @@ button{
     margin: auto;
     top: 80px;
     width: 80vw;
-}
 
+}
+   
 .explanation{
     font-size: 10pt;
     color: #444;
@@ -540,6 +552,13 @@ button{
     margin-top: 0;
     margin-bottom: 10px;
 }
+
+.btn-help{
+    position: absolute;
+    top:50px;
+    right: 50px;
+}
+
 .game-body{
     padding: 0;
     background: linear-gradient(#2d91c2,#38a3d1,#57c1eb,#757abf,#4a4969,#020111,#071B26,#154277,#1e528e,#2d91c2,#38a3d1,#57c1eb);

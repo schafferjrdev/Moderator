@@ -12,17 +12,20 @@
 <div *ngIf="step == 1" class="content newgame-screen" fxLayout="column" >
     
 
-    <mat-icon class="icon-start primary-color" svgIcon="white-wolf"></mat-icon>
-    <h2 class="wolf-font primary-color" >Lobisomem</h2>
-    <button class="btn-start bouncy" color="primary" mat-raised-button (click)="nextStep()">Novo jogo</button>
-    <button class="btn-start bouncy" style="animation-delay: 0.7s" color="primary" [disabled]="!hasData" mat-stroked-button (click)="restart()">Continuar</button>
-
+    <mat-icon class="icon-start primary-color bounce-in-fwd" svgIcon="white-wolf"></mat-icon>
+    <h2 class="wolf-font primary-color bounce-in-fwd" >Lobisomem</h2>
+    <button class="btn-start bounce-in-fwd" style="animation-delay: 0.5s" color="primary" mat-raised-button (click)="nextStep()">Novo jogo</button>
+    <button class="btn-start bounce-in-fwd" style="animation-delay: 0.7s" color="primary" [disabled]="!hasData" mat-stroked-button (click)="restart()">Continuar</button>
+    <!-- <button class="btn-start bounce-in-fwd" style="animation-delay: 0.5s" color="primary" mat-raised-button (click)="goTutorial()">Tutorial</button> -->
+    <button class="btn-help bounce-in-fwd" style="animation-delay: 0.9s" (click)="goTutorial()" color="primary" mat-icon-button aria-label="Icon-button with a help icon">
+        <mat-icon style="font-size: 34pt" >help_outline</mat-icon>
+      </button>
 </div>
 
 <!-- TUTORIAL -->
-<div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" (click)="nextTutorial()" class="tutorials">
-    
-    <div *ngIf="tutorialScreen == 0" class="tips">
+<div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" class="tutorials gradient-night">
+    <div class='stars_base'></div>
+    <div *ngIf="tutorialScreen == 0" class="tips animated bounceInLeft">
         <div  class="content" fxLayout="column" >
 
             <div fxFlex>
@@ -43,9 +46,10 @@
         
                            
         
-                           <button  color="accent" mat-icon-button >
+                           <button [ngClass]="{'rubberBand': !tutorialActions.star}" class="animated infinite" (click)="removeClass($event,'rubberBand', 'Aqui você favorita','star');" color="accent" mat-icon-button >
                              
-                             <mat-icon >star_border</mat-icon>
+                             <mat-icon *ngIf='!tutorialActions.star'>star_border</mat-icon>
+                             <mat-icon *ngIf='tutorialActions.star'>star</mat-icon>
                            </button>
                            
                            <button color="warn" mat-icon-button >
@@ -68,7 +72,7 @@
         
         </div>
     </div>
-    <div *ngIf="tutorialScreen == 1" class="tips">
+    <div *ngIf="tutorialScreen == 1" [ngClass]="{'bounceInRight':!slideLeft,'bounceInLeft':slideLeft}" class="tips animated">
         
         <div  class="content" fxLayout="column" >
             <div fxFlex>
@@ -93,9 +97,10 @@
                   
 
                 <div class="icons-status">
-
-                    <button mat-icon-button >
-                        <mat-icon  class="icon-gray example-tab-icon" svgIcon="atk"></mat-icon>
+                    
+                    <button [ngClass]="{'rubberBand': !tutorialActions.icon}" class="animated infinite" mat-icon-button (click)="removeClass($event,'rubberBand', 'Agora Estela foi atacada','icon');">
+                        <mat-icon  *ngIf='!tutorialActions.icon' class="icon-gray example-tab-icon" svgIcon="atk"></mat-icon>
+                        <mat-icon  *ngIf='tutorialActions.icon' class="icon-warn example-tab-icon" svgIcon="atk"></mat-icon>
                     </button>
                     <button mat-icon-button >
                         <mat-icon  class="icon-bad example-tab-icon" svgIcon="shield"></mat-icon>
@@ -140,7 +145,7 @@
 
 
     </div>
-    <div *ngIf="tutorialScreen == 2" class="tips">
+    <div *ngIf="tutorialScreen == 2" class="tips animated bounceInRight">
       
         
         <div  class="content" fxLayout="column" >
@@ -238,7 +243,7 @@
           <div class="lista-overflow">
 
           <mat-list>
-                <mat-list-item  *ngFor="let jogador of jogadores">
+                <mat-list-item class="animated bounceInRight" *ngFor="let jogador of jogadores">
                    <h4 mat-line>{{jogador.name}}</h4>
 
                    <button disableRipple *ngIf="!hasName(jogador.name)"  color="accent" mat-icon-button (click)="fav(jogador.name)">
@@ -264,7 +269,7 @@
 
       
       </div>
-      <div class="btn-footer">
+      <div class="btn-footer animated bounceInDown">
           <div fxLayout="row" fxLayoutAlign="start center">
               <mat-form-field class="input-name">
                    <input (keyup.enter)="save(jogador)" maxlength="10" matInput placeholder="Jogador"  id="input-player-name" [(ngModel)]="jogador.name" [formControl]="myControl" [matAutocomplete]="auto">
@@ -276,7 +281,7 @@
     
               </mat-form-field>
               
-               <button  mat-raised-button color="primary" (click)="save(jogador)" >Adicionar</button>
+               <button class="animated bounceInRight" style="animation-delay: 0.8s" mat-raised-button color="primary" (click)="save(jogador)" >Adicionar</button>
     
                
               </div>
@@ -305,7 +310,7 @@
           <div class="lista-overflow-classes">
             
 
-              <div *ngFor="let class of classes">
+              <div class="animated bounceInRight"  *ngFor="let class of classes">
               <mat-card >
                   <mat-card-header>
                     
@@ -321,7 +326,7 @@
                     <div class="spinner-number darkgray-color" [ngClass]="{'primary-color':class.team === 'good' && class.qnt>0,'warn-color':class.team === 'bad' && class.qnt>0,'accent-color':class.team === 'neutral' && class.qnt>0}">
                         <button disableRipple *ngIf="class.qnt>0" mat-icon-button (click)="sub(class)"><mat-icon>remove</mat-icon></button>
                           <span *ngIf="class.qnt>0">{{class.qnt}}</span>
-                        <button disableRipple [disabled]="(jogadores.length - times.totalClasses) <= 0" mat-icon-button (click)="add(class)"><mat-icon >add</mat-icon></button>
+                        <button disableRipple [disabled]="(jogadores.length - times.totalClasses) <= 0 || class.qnt >= class.maxQnt" mat-icon-button (click)="add(class)"><mat-icon >add</mat-icon></button>
                     </div> 
                   </mat-card-header>
 
@@ -330,6 +335,7 @@
                         {{class.desc}}
                     </p>
                     <p>Balanceamento: {{class.power}}</p>
+                    <p *ngIf="class.maxQnt < 100" >Quantidade Máxima: {{class.maxQnt}}</p>
                     
                     
                   </mat-card-content>
@@ -407,10 +413,10 @@
         
         <!-- Card Jogador -->
       <div  class="lista-overflow-game" *ngIf="!showPlayer">
-        <div  *ngFor="let jogador of jogadores">
+        <div class="animated bounceIn" *ngFor="let jogador of jogadores">
           
           
-          <mat-card  (press)="{event:open(jogador), time:5000}" [ngClass]="{'lupin-border':jogador.job.id === 'lupino','lycan-border':jogador.job.id === 'licano','good-border':jogador.job.team === 'good' ||jogador.job.id === 'liderdoculto' ||jogador.job.id === 'psicopata', 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" class="player mat-elevation-z6"  >
+          <mat-card   (press)="{event:open(jogador), time:5000}" [ngClass]="{'lupin-border':jogador.job.id === 'lupino','lycan-border':jogador.job.id === 'licano','good-border':jogador.job.team === 'good' ||jogador.job.id === 'liderdoculto' ||jogador.job.id === 'psicopata', 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" class="player mat-elevation-z6"  >
              
   
               <mat-card-title class="title-player"  [ngClass]="{'primary-color':jogador.job.team === 'good', 'warn-color':jogador.job.team === 'bad','accent-color':jogador.job.team === 'neutral'}">
@@ -578,7 +584,7 @@
 </div>
 
 <div class="modal-help" *ngIf="orderFlag" (click)="showOrder()">
-    <mat-card class="card-help" (click)="$event.stopPropagation()">
+    <mat-card class="card-help bounceIn" (click)="$event.stopPropagation()">
         
           <div>
             Ordem de chamar

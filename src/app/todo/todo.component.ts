@@ -54,6 +54,7 @@ export interface Classes {
   power: string;
   order: number;
   qnt: number;
+  maxQnt: number;
   icon: string;
   id: string;
   first: boolean;
@@ -72,6 +73,12 @@ export class TodoComponent implements OnInit {
   
   tutorial = true;
   tutorialScreen = 0;
+  tutorialActions = {
+    star:false,
+    icon:false,
+
+  }
+  slideLeft = false;
 
   showPlayer = false;
   filterInGame = false;
@@ -119,6 +126,7 @@ export class TodoComponent implements OnInit {
       power: '-6',
       order: 5,
       qnt: 0,
+      maxQnt:100,
       icon: 'lobisomem',
       id: 'lobisomem',
       first: true,
@@ -132,6 +140,7 @@ export class TodoComponent implements OnInit {
       power: '-4',
       order: 0,
       qnt: 0,
+      maxQnt: 1,
       icon: 'cao',
       id: 'cachorro',
       first: true,
@@ -145,6 +154,7 @@ export class TodoComponent implements OnInit {
       power: '+1',
       order: 100,
       qnt: 0,
+      maxQnt:100,
       icon: 'aldeao',
       id: 'aldeao',
       first: false,
@@ -158,6 +168,7 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 4,
       qnt: 0,
+      maxQnt: 1,
       icon: 'guardiao',
       id: 'guardiao',
       first: false,
@@ -171,6 +182,7 @@ export class TodoComponent implements OnInit {
       power: '+7',
       order: 2,
       qnt: 0,
+      maxQnt: 1,
       icon: 'vidente',
       id: 'vidente',
       first: false,
@@ -184,6 +196,7 @@ export class TodoComponent implements OnInit {
       power: '-3',
       order: 3,
       qnt: 0,
+      maxQnt: 1,
       icon: 'feiticeira',
       id: 'feiticeira',
       first: false,
@@ -197,6 +210,7 @@ export class TodoComponent implements OnInit {
       power: '+4',
       order: 8,
       qnt: 0,
+      maxQnt: 1,
       icon: 'bruxa',
       id: 'bruxa',
       first: false,
@@ -210,6 +224,7 @@ export class TodoComponent implements OnInit {
       power: '-1',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'licano',
       id: 'licano',
       first: false,
@@ -223,6 +238,7 @@ export class TodoComponent implements OnInit {
       power: '-3',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'amaldicoado',
       id: 'amaldicoado',
       first: false,
@@ -236,6 +252,7 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'gigante',
       id: 'gigante',
       first: false,
@@ -249,6 +266,7 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'cacador',
       id: 'cacador',
       first: false,
@@ -262,6 +280,7 @@ export class TodoComponent implements OnInit {
       power: '+2',
       order: 0,
       qnt: 0,
+      maxQnt:3,
       icon: 'macom',
       id: 'macom',
       first: true,
@@ -275,6 +294,7 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'principe',
       id: 'principe',
       first: false,
@@ -288,6 +308,7 @@ export class TodoComponent implements OnInit {
       power: '-9',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'lupino',
       id: 'lupino',
       first: true,
@@ -301,6 +322,7 @@ export class TodoComponent implements OnInit {
       power: '-8',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'lobinho',
       id: 'lobinho',
       first: true,
@@ -314,6 +336,7 @@ export class TodoComponent implements OnInit {
       power: '-9',
       order: 6,
       qnt: 0,
+      maxQnt: 1,
       icon: 'lobo-mau',
       id: 'lobomau',
       first: false,
@@ -327,6 +350,7 @@ export class TodoComponent implements OnInit {
       power: '-3',
       order: 6.5,
       qnt: 0,
+      maxQnt: 1,
       icon: 'psicopata',
       id: 'psicopata',
       first: false,
@@ -340,6 +364,7 @@ export class TodoComponent implements OnInit {
       power: '-3',
       order: 0,
       qnt: 0,
+      maxQnt: 1,
       icon: 'cupido',
       id: 'cupido',
       first: true,
@@ -353,6 +378,7 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 100,
       qnt: 0,
+      maxQnt: 1,
       icon: 'urso',
       id: 'urso',
       first: false,
@@ -366,6 +392,7 @@ export class TodoComponent implements OnInit {
       power: '+3',
       order: 3,
       qnt: 0,
+      maxQnt: 1,
       icon: 'raposa',
       id: 'raposa',
       first: false,
@@ -379,6 +406,7 @@ export class TodoComponent implements OnInit {
       power: '+2',
       order: 1,
       qnt: 0,
+      maxQnt: 1,
       icon: 'corvo',
       id: 'corvo',
       first: false,
@@ -392,6 +420,7 @@ export class TodoComponent implements OnInit {
       power: '+2',
       order: 1,
       qnt: 0,
+      maxQnt: 1,
       icon: 'mago',
       id: 'mago',
       first: false,
@@ -405,6 +434,7 @@ export class TodoComponent implements OnInit {
       power: '+5',
       order: 7,
       qnt: 0,
+      maxQnt: 1,
       icon: 'leprechaun',
       id: 'leprechaun',
       first: false,
@@ -418,6 +448,7 @@ export class TodoComponent implements OnInit {
       power: '+1',
       order: 9,
       qnt: 0,
+      maxQnt: 1,
       icon: 'liderdoculto',
       id: 'liderdoculto',
       first: false,
@@ -517,7 +548,7 @@ export class TodoComponent implements OnInit {
 
   showOrder() {
     this.filterOrder();
-
+    // console.log(this.classesHelp)
     this.orderFlag = !this.orderFlag;
   }
 
@@ -826,9 +857,10 @@ export class TodoComponent implements OnInit {
 
   }
 
-  callToast(msg:string, time:number){
+  callToast(msg:string, time:number, type:any = false){
     Swal.fire({
       title: msg,
+      type: type,
       showConfirmButton: false,
       position: 'top',
       toast:true,
@@ -952,7 +984,16 @@ export class TodoComponent implements OnInit {
     // });
 
  }
-
+ removeClass(e, classe:string, toast:string, tutorial:string) { 
+    if(!this.tutorialActions[tutorial]){
+      this.callToast(toast,2000, 'success');
+    }
+    this.tutorialActions[tutorial] = true;
+    const classList = e.currentTarget.classList;
+    const classes = e.currentTarget.className;
+    classList.remove(classe);
+    
+}
   show() {
     console.log('teste');
   }
@@ -1222,6 +1263,7 @@ export class TodoComponent implements OnInit {
 
   nextTutorial() {
     if (this.tutorialScreen < 3) {
+      this.slideLeft = false;
       if (this.tutorialScreen == 2) {
         this.tutorial = false;
         this.saveLocalTutorial();
@@ -1233,9 +1275,19 @@ export class TodoComponent implements OnInit {
   }
   prevTutorial() {
     if (this.tutorialScreen > 0) {
+      this.slideLeft = true;
       this.tutorialScreen--;
     }
     console.log(this.tutorialScreen);
+  }
+
+  goTutorial(){
+    this.tutorialScreen = 0;
+    this.tutorialActions.star = false;
+    this.tutorialActions.icon = false;
+    this.tutorial = true;
+    this.step++;
+
   }
 
   nextStep() {
