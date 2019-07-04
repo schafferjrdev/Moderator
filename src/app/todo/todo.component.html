@@ -15,7 +15,7 @@
     <mat-icon class="icon-start primary-color" svgIcon="white-wolf"></mat-icon>
     <h2 class="wolf-font primary-color" >Lobisomem</h2>
     <button class="btn-start bouncy" color="primary" mat-raised-button (click)="nextStep()">Novo jogo</button>
-    <button class="btn-start bouncy" color="primary" [disabled]="!hasData" mat-stroked-button (click)="restart()">Continuar</button>
+    <button class="btn-start bouncy" style="animation-delay: 0.7s" color="primary" [disabled]="!hasData" mat-stroked-button (click)="restart()">Continuar</button>
 
 </div>
 
@@ -439,7 +439,7 @@
                 </div> -->
                 <div >
                     
-                  <div class='status-player-title'>Status do jogador</div>
+                  <div *ngIf="!jogador.dead" class='status-player-title'>Status do jogador</div>
                   <div class="icons-status">
                   
                   <button disableRipple  *ngIf="!night && jogador.job.id !== 'principe' && !jogador.dead" mat-icon-button  (click)="changeStatus(jogador, 'lynch')">
@@ -451,11 +451,11 @@
                   </button>
   
                   <button disableRipple   [disabled]="jogador.attacked && jogador.job.id === 'gigante'" *ngIf="night && !jogador.dead"  mat-icon-button (click)="changeStatus(jogador, 'target')">
-                    <mat-icon  [ngClass]="{'icon-gray':!jogador.target, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="atk"></mat-icon>
+                    <mat-icon svgIcon="atk"  [ngClass]="{'icon-gray':!jogador.target, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" ></mat-icon>
                   </button>
   
                   <button disableRipple   *ngIf="jogador.job.id === 'gigante' && jogador.attacked  && night && !jogador.dead"  mat-icon-button (click)="changeStatus(jogador, 'toughTarget')">
-                    <mat-icon [ngClass]="{'icon-gray':!jogador.toughTarget, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" svgIcon="double-claw"></mat-icon>
+                    <mat-icon svgIcon="double-claw" [ngClass]="{'icon-gray':!jogador.toughTarget, 'icon-good':jogador.job.team === 'good', 'icon-bad': jogador.job.team === 'bad','icon-neutral':jogador.job.team === 'neutral' }" class="example-tab-icon" ></mat-icon>
                   </button>
   
   
