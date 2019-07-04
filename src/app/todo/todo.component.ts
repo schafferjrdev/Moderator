@@ -790,7 +790,7 @@ export class TodoComponent implements OnInit {
 
     for (let i = 0; i < arrayToChange.length; i++) {
       for (let j = 0; j < arrayCompare.length; j++) {
-        if (arrayToChange[i].name === arrayCompare[j].name && arrayToChange[i].job.name !== classe) {
+        if (arrayToChange[i].name === arrayCompare[j].name && arrayToChange[i].job.id !== classe) {
           arrayToChange[i][stat] = type;
         }
 
@@ -959,7 +959,14 @@ export class TodoComponent implements OnInit {
 
   dayPass() {
     const playerAlive = _.filter(this.jogadores, function(o) {return o.dead === false; });
-    this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
+    const giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.attacked === true; });
+    if(giantAttacked != -1){
+      this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
+      
+    }else{
+      this.changeStatusWhere('target', this.jogadores, playerAlive, false);
+    }
+    // this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
     this.changeStatusWhere('toughTarget', this.jogadores, playerAlive, false);
     this.changeStatusWhere('save', this.jogadores, playerAlive, false);
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
@@ -978,24 +985,25 @@ export class TodoComponent implements OnInit {
   }
 
   eliminate() {
+    console.log(this.jogadores)
     this.nameOfDead = [];
-    this.changeAllStatus('saved', this.jogadores, false);
-    let playerAttacked = _.filter(this.jogadores, function(o) {return o.target === true && o.job.id !== 'gigante'; });
-    playerAttacked = _.filter(playerAttacked, function(o) {return o.target === true && o.job.id !== 'amaldicoado' ; });
-    playerAttacked = _.filter(playerAttacked, function(o) {return o.target === true && o.job.id !== 'psicopata' ; });
-    const indexGiantWound = _.findIndex(this.jogadores, (o) => { o.job.id === 'gigante' && o.target === true && o.save === false && o.curePotion === false; });
+    this.changeAllStatus('saved',this.jogadores,false);
+    let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.id !== 'gigante'; });
+    playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.id !== 'amaldicoado' ; });
+    playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.id !== 'psicopata' ; });
+    const indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.target === true && o.save === false && o.curePotion === false; });
     const indexCursedWound = _.findIndex(this.jogadores, function(o) { return o.job.id === 'amaldicoado' && o.target === true && o.save === false && o.curePotion === false; });
     const saved = _.filter(this.jogadores, function(o) { return o.save === true; });
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.lynch === true && o.job.id !== 'principe'; }));
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.deathPotion === true; }));
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.psycho === true; }));
-
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.toughTarget === true; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.lynch === true && o.job.id !== 'principe'; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.psycho === true; }));
+    
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
     playerAttacked = _.uniqBy(playerAttacked, 'name');
 
-    let playerNotSaved = _.filter(playerAttacked, function(o) {return o.save === false; });
-    playerNotSaved = _.filter(playerNotSaved, function(o) {return o.curePotion === false; });
-    playerNotSaved = _.concat(playerNotSaved, _.filter(this.jogadores, function(o) {return o.mason === true; }));
+    let playerNotSaved = _.filter(playerAttacked, function(o){return o.save === false; });
+    playerNotSaved = _.filter(playerNotSaved, function(o){return o.curePotion === false; });
+    playerNotSaved = _.concat(playerNotSaved,_.filter(this.jogadores, function(o){return o.mason === true; }));
     playerNotSaved = _.uniqBy(playerNotSaved, 'name');
 
     if (saved.length > 0) {
@@ -1096,12 +1104,12 @@ export class TodoComponent implements OnInit {
 
 
 
-    const playerAlive = _.filter(this.jogadores, function(o) {return o.dead === false; });
-    const giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.attacked === true; });
-    if (giantAttacked != -1) {
+    let playerAlive = _.filter(this.jogadores, function(o){return o.dead === false; });
+    let giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.attacked === true; });
+    if(giantAttacked != -1){
       this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
-
-    } else {
+      
+    }else{
       this.changeStatusWhere('target', this.jogadores, playerAlive, false);
     }
 
