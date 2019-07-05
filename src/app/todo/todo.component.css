@@ -118,7 +118,11 @@
     margin-top: 50px;
 }
 
-
+.players-list{
+    display: flex;
+    flex-flow: column-reverse;
+    transition: all ease 0.5s;
+}
 
 .mat-expansion-panel-header-title {
     width: 65px;

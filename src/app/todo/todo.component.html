@@ -101,7 +101,7 @@
         
         </div>
     </div>
-    <div *ngIf="tutorialScreen == 1"  class="tips animated">
+    <div *ngIf="tutorialScreen == 1" [ngClass]="{'bounceInLeft': slideLeft,'bounceInRight': !slideLeft}"   class="tips animated">
         
         <div  class="content" fxLayout="column" >
             <div fxFlex>
@@ -123,8 +123,8 @@
             
             <mat-card-content>
               <div >
-                  
-
+                
+                
                 <div class="icons-status">
                     
                     <button [ngClass]="{'rubberBand': !tutorialActions.icon}" class="animated infinite" mat-icon-button (click)="removeClass($event,'rubberBand', 'Agora Estela foi atacada','icon');">
@@ -271,7 +271,7 @@
           <mat-divider></mat-divider>
           <div class="lista-overflow">
 
-          <mat-list>
+          <mat-list class="players-list">
                 <mat-list-item class="animated bounceInRight" *ngFor="let jogador of jogadores">
                    <h4 mat-line>{{jogador.name}}</h4>
 
