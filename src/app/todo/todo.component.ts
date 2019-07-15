@@ -75,8 +75,7 @@ export interface Classes {
 
 
 export class TodoComponent implements OnInit {
-  private subscription: Subscription;
-  everySeconds$: Observable<number> = interval(1000);
+  
 
   tutorial = true;
   tutorialScreen = 0;
@@ -490,9 +489,7 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.hours = new Date().getHours();
     this.cloudy = _.sample([ true, false]);
-    this.subscription = this.everySeconds$.subscribe(n => {
-      this.hours = new Date().getHours();
-    });
+    
   }
  
 
@@ -1227,7 +1224,7 @@ export class TodoComponent implements OnInit {
   }
 
   nextStep() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
     this.step++;
   }
 
