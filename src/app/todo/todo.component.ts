@@ -70,27 +70,25 @@ export interface Classes {
 
 
 export class TodoComponent implements OnInit {
+  
   tutorial = true;
   tutorialScreen = 0;
   tutorialActions = {
-    star: false,
-    icon: false,
+    star:false,
+    icon:false,
 
-  };
-  hours = 23;
-  cloudy = false;
-  interval: any;
+  }
   slideLeft = false;
 
   showPlayer = false;
   filterInGame = false;
   sortGame = false;
-  hasData: boolean = localStorage.gameSave;
+  hasData: boolean = localStorage['gameSave'];
   step = 0;
   night = true;
   showDead = false;
   showDeadFlag = true;
-  orderFlag = false;
+  orderFlag: boolean = false;
 
   playerEditIndex = 0;
   myControl = new FormControl();
@@ -128,7 +126,7 @@ export class TodoComponent implements OnInit {
       power: '-6',
       order: 5,
       qnt: 0,
-      maxQnt: 100,
+      maxQnt:100,
       icon: 'lobisomem',
       id: 'lobisomem',
       first: true,
@@ -137,7 +135,6 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Cachorro',
-// tslint:disable-next-line: max-line-length
       desc: 'Na primeira noite escolhe outra pessoa para ser seu companheiro, se essa pessoa morrer, você morre. No resto das noites joga pelos lobos. ',
       team: 'bad',
       power: '-4',
@@ -157,7 +154,7 @@ export class TodoComponent implements OnInit {
       power: '+1',
       order: 100,
       qnt: 0,
-      maxQnt: 100,
+      maxQnt:100,
       icon: 'aldeao',
       id: 'aldeao',
       first: false,
@@ -207,9 +204,7 @@ export class TodoComponent implements OnInit {
       skills: []
     },
     {
-// tslint:disable-next-line: max-line-length
       name: 'Bruxa',
-// tslint:disable-next-line: max-line-length
       desc: 'Tem duas poções que podem ser usadas uma vez durante o jogo, com a cura ela sabe quem foi atacado a noite e salva, e com o veneno ela elimina um jogador.',
       team: 'good',
       power: '+4',
@@ -266,7 +261,6 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Caçador',
-// tslint:disable-next-line: max-line-length
       desc: 'Se morrer em algum momento ele escolhe alguém pra matar, sem influencia da vila. (Se morrer de dia todo mundo sabe, se for de noite fica secreto',
       team: 'good',
       power: '+3',
@@ -286,7 +280,7 @@ export class TodoComponent implements OnInit {
       power: '+2',
       order: 0,
       qnt: 0,
-      maxQnt: 3,
+      maxQnt:3,
       icon: 'macom',
       id: 'macom',
       first: true,
@@ -365,7 +359,6 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Cupido',
-// tslint:disable-next-line: max-line-length
       desc: 'No começo do jogo, ele escolhe duas pessoas para se apaixonarem. A partir dai, essas duas pessoas jogam juntas, mas não sabem o que a outra pessoa é. Se uma morrer, a outra morre automaticamente.',
       team: 'good',
       power: '-3',
@@ -380,7 +373,6 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Urso',
-// tslint:disable-next-line: max-line-length
       desc: 'Se de dia um lobo estiver ao lado dele o moderador diz "Urso sente cheiro de lobo". Quando um do lado dele morre, então o próximo é o novo vizinho dele.',
       team: 'good',
       power: '+3',
@@ -395,7 +387,6 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Raposa',
-// tslint:disable-next-line: max-line-length
       desc: 'Escolhe 3 pessoas, se tiver um lobo entre eles o moderador indica positivamente, mas se não tiver a raposa perde seus poderes até o fim do jogo.',
       team: 'good',
       power: '+3',
@@ -452,7 +443,6 @@ export class TodoComponent implements OnInit {
     },
     {
       name: 'Lider do Culto',
-// tslint:disable-next-line: max-line-length
       desc: 'Toda noite ele converte uma pessoa para seu culto e se todos os vivos estiverem no culto ele ganha o jogo sozinho. (Opcional) Depois de converter, o moderador manda toda noite quem está convertido abrir o olho e se reconhecerem, assim todos sabem se está ficando perto ou não.',
       team: 'neutral',
       power: '+1',
@@ -488,16 +478,6 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hours = new Date().getHours();
-
-    this.interval = setInterval(() => {
-      this.hours = new Date().getHours();
-
-      console.log(this.hours);
-  }, 1000);
-    this.cloudy = _.sample([true, false]);
-
-    console.log(this.cloudy);
 
   }
 
@@ -508,7 +488,7 @@ export class TodoComponent implements OnInit {
   save(jogador: Jogador) {
     document.getElementById('input-player-name').focus();
     if (jogador.name !== undefined) {
-      if (jogador.name.trim() !== '' && !this.hasNamePlayer(jogador.name.trim())) {
+      if (jogador.name.trim() != '' && !this.hasNamePlayer(jogador.name.trim())) {
         const index = _.findIndex(this.classes, { id: 'aldeao' });
 
         jogador.job = this.classes[index];
@@ -519,7 +499,6 @@ export class TodoComponent implements OnInit {
         let quantity = 0;
         let dead = 0;
         let balance = 0;
-// tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < this.jogadores.length; index++) {
           balance = balance + Number(this.jogadores[index].job.power);
           if (this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead) {
@@ -541,7 +520,7 @@ export class TodoComponent implements OnInit {
 
     this.jogadores = _.sortBy(this.jogadores, ['job.order']);
 
-    if (this.filterInGame === true) {
+    if (this.filterInGame == true) {
       const classTemp = [];
 
       for (let i = 0; i < this.jogadores.length; i++) {
@@ -575,36 +554,39 @@ export class TodoComponent implements OnInit {
 
   delete(jogador: Jogador) {
     Swal.fire({
-      title: 'Deletar ' + jogador.name + '?',
+      title: 'Deletar '+ jogador.name + "?",
       text: 'Uma vez deletado, você não poderá recuperar este jogador!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sim',
-      cancelButtonText: 'Não',
+      cancelButtonText:'Não',
       customClass: {
         actions: 'actions-class',
         confirmButton: 'mat-raised-button mat-warn',
         cancelButton: 'mat-stroked-button mat-warn',
       },
       buttonsStyling: false,
-      reverseButtons: true,
+      reverseButtons:true,
       backdrop: 'transparent'
     }).then((result) => {
       if (result.value) {
       Swal.fire({
-        title: 'Poof! ' + jogador.name + ' foi deletado!',
+        title: 'Poof! '+ jogador.name +' foi deletado!',
         type: 'success',
-        timer: 900,
         showCancelButton: false,
-        showConfirmButton: false,
+        confirmButtonText: 'Obrigado',
+        customClass: {
+          confirmButton: 'mat-raised-button mat-primary',
+        },
+        buttonsStyling: false,
         backdrop: 'transparent'
-      });
-
-      this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
-      let quantity = 0;
-      let dead = 0;
-      let balance = 0;
-      for (let index = 0; index < this.jogadores.length; index++) {
+      })
+      
+        this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
+        let quantity = 0;
+        let dead = 0;
+        let balance = 0;
+        for (let index = 0; index < this.jogadores.length; index++) {
           balance = balance + Number(this.jogadores[index].job.power);
           if (this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead) {
             quantity++;
@@ -614,12 +596,12 @@ export class TodoComponent implements OnInit {
           }
         }
         // this.times.balance = balance;
-      this.times.lobos = quantity;
-      this.times.aldeia = this.jogadores.length - dead - quantity;
-      this.showPlayer = false;
-      this.jogadores = _.sortBy(this.jogadores, ['job.order']);
+        this.times.lobos = quantity;
+        this.times.aldeia = this.jogadores.length - dead - quantity;
+        this.showPlayer = false;
+        this.jogadores = _.sortBy(this.jogadores, ['job.order']);
 
-      if (this.filterInGame === true) {
+        if (this.filterInGame == true) {
           const classTemp = [];
 
           for (let i = 0; i < this.jogadores.length; i++) {
@@ -632,7 +614,7 @@ export class TodoComponent implements OnInit {
           this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
         }
 
-      if (this.jogadores.length - this.times.totalClasses < 0) {
+        if (this.jogadores.length - this.times.totalClasses < 0) {
           this.classesInGame = _.sortBy(this.classesInGame, ['qnt']);
           this.classesInGame[0].qnt--;
           this.changeBalance();
@@ -741,7 +723,7 @@ export class TodoComponent implements OnInit {
     this.times.lobos = quantity;
     this.times.aldeia = this.jogadores.length - dead - quantity;
 
-    if (this.filterInGame === true) {
+    if (this.filterInGame == true) {
       const classTemp = [];
 
       for (let i = 0; i < this.jogadores.length; i++) {
@@ -767,40 +749,40 @@ export class TodoComponent implements OnInit {
   }
 
   hasClass(className: string) {
-    const index = _.findIndex(this.jogadores, function(o) { return o.job.id === className; });
+    const index = _.findIndex(this.jogadores, function(o) { return o.job.id == className; });
     return index !== -1 ? true : false;
   }
 
   manyClass(className: string) {
-    const many = _.filter(this.jogadores, function(o) { return o.job.id === className; });
+    const many = _.filter(this.jogadores, function(o) { return o.job.id == className; });
     return many.length;
   }
 
   hasClassArray(className: string, array) {
-    const index = _.findIndex(array, function(o) { return o.job.id === className; });
+    const index = _.findIndex(array, function(o) { return o.job.id == className; });
     return index !== -1 ? true : false;
   }
 
   playerWithStatus(stat: string, array, type: boolean) {
-    const playerWithStatus = _.filter(array, function(o) { return o[stat] === type; });
+    const playerWithStatus = _.filter(array, function(o) { return o[stat] == type; });
 
     return playerWithStatus;
   }
   playerWithClass(classe: string, array) {
-    const playerWithClass = _.filter(array, function(o) { return o.job.id === classe; });
+    const playerWithClass = _.filter(array, function(o) { return o.job.id == classe; });
 
     return playerWithClass;
   }
 
   playerWithClassAndStatusTrue(classe: string, array, stat: string) {
-    const playerWithClassAndStatus = _.filter(array, function(o) { return o.job.id === classe; });
-    const index = _.findIndex(playerWithClassAndStatus, function(o) { return o[stat] === true; });
+    const playerWithClassAndStatus = _.filter(array, function(o) { return o.job.id == classe; });
+    const index = _.findIndex(playerWithClassAndStatus, function(o) { return o[stat] == true; });
     return index !== -1 ? true : false;
   }
 
   atLastOne(classe: string, array, stat: string) {
-    const playerWithClassAndStatus = _.filter(array, function(o) { return o.job.id === classe; });
-    const playersWithTrue = _.filter(playerWithClassAndStatus, function(o) { return o[stat] === false; });
+    const playerWithClassAndStatus = _.filter(array, function(o) { return o.job.id == classe; });
+    const playersWithTrue = _.filter(playerWithClassAndStatus, function(o) { return o[stat] == false; });
 
     return playersWithTrue.length > 0 ? true : false;
   }
@@ -808,7 +790,7 @@ export class TodoComponent implements OnInit {
 
 
   statusTrue(stat: string, array) {
-    const index = _.findIndex(array, function(o) { return o[stat] === true; });
+    const index = _.findIndex(array, function(o) { return o[stat] == true; });
 
     return index !== -1 ? true : false;
   }
@@ -855,18 +837,18 @@ export class TodoComponent implements OnInit {
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sim',
-      cancelButtonText: 'Não',
+      cancelButtonText:'Não',
       customClass: {
         actions: 'actions-class',
         confirmButton: 'mat-raised-button mat-warn',
         cancelButton: 'mat-stroked-button mat-warn',
       },
       buttonsStyling: false,
-      reverseButtons: true,
+      reverseButtons:true,
       backdrop: 'transparent'
     }).then((result) => {
       if (result.value) {
-        this.hasData = localStorage.gameSave;
+        this.hasData = localStorage['gameSave'];
         this.resetGame();
         this.toStep(1);
       }
@@ -875,16 +857,16 @@ export class TodoComponent implements OnInit {
 
   }
 
-  callToast(msg: string, time: number, type: any = false) {
+  callToast(msg:string, time:number, type:any = false){
     Swal.fire({
       title: msg,
-      type,
+      type: type,
       showConfirmButton: false,
       position: 'top',
-      toast: true,
+      toast:true,
       timer: time,
-      width: '95vw'
-    });
+      width:'95vw'
+    })
   }
 
   resetMatch() {
@@ -893,14 +875,14 @@ export class TodoComponent implements OnInit {
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sim',
-      cancelButtonText: 'Não',
+      cancelButtonText:'Não',
       customClass: {
         actions: 'actions-class',
         confirmButton: 'mat-raised-button mat-warn',
         cancelButton: 'mat-stroked-button mat-warn',
       },
       buttonsStyling: false,
-      reverseButtons: true,
+      reverseButtons:true,
       backdrop: 'transparent'
     }).then((result) => {
       if (result.value) {
@@ -975,16 +957,16 @@ export class TodoComponent implements OnInit {
     this.saveLocal();
   }
 
-  openSnackBar(message: string, icon: any = 'warning') {
+  openSnackBar(message: string, icon:any = 'warning') {
     Swal.fire({
       title: message,
       type: icon,
       showConfirmButton: false,
       position: 'top',
-      toast: true,
+      toast:true,
       timer: 3000,
-      width: '95vw'
-    }).then(() => {
+      width:'95vw'
+    }).then(() =>{
       if (this.nameOfDead.length > 0) {
         this.talkTheNames();
       }
@@ -1002,15 +984,15 @@ export class TodoComponent implements OnInit {
     // });
 
  }
- removeClass(e, classe: string, toast: string, tutorial: string) {
-    if (!this.tutorialActions[tutorial]) {
-      this.callToast(toast, 2000, 'success');
+ removeClass(e, classe:string, toast:string, tutorial:string) { 
+    if(!this.tutorialActions[tutorial]){
+      this.callToast(toast,2000, 'success');
     }
     this.tutorialActions[tutorial] = true;
     const classList = e.currentTarget.classList;
     const classes = e.currentTarget.className;
     classList.remove(classe);
-
+    
 }
   show() {
     console.log('teste');
@@ -1019,24 +1001,24 @@ export class TodoComponent implements OnInit {
   dayPass() {
     const playerAlive = _.filter(this.jogadores, function(o) {return o.dead === false; });
     const giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.attacked === true; });
-    if (giantAttacked !== -1) {
+    if(giantAttacked != -1){
       this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
-
-    } else {
+      
+    }else{
       this.changeStatusWhere('target', this.jogadores, playerAlive, false);
     }
-
+    
     this.changeStatusWhere('toughTarget', this.jogadores, playerAlive, false);
     this.changeStatusWhere('save', this.jogadores, playerAlive, false);
     this.changeStatusWhere('curePotion', this.jogadores, playerAlive, false);
     this.changeStatusWhere('lynch', this.jogadores, playerAlive, false);
     this.changeStatusWhere('psycho', this.jogadores, playerAlive, false);
     this.night = !this.night;
-    if (this.night) {
+    if(this.night){
       this.changeStatusWhere('crowMark', this.jogadores, playerAlive, false);
       this.changeStatusWhere('spell', this.jogadores, playerAlive, false);
       this.callToast('Está anoitecendo', 1000);
-    } else {
+    }else{
       this.callToast('Está amanhecendo', 1000);
 
     }
@@ -1046,25 +1028,25 @@ export class TodoComponent implements OnInit {
   }
 
   eliminate() {
-    console.log(this.jogadores);
+    console.log(this.jogadores)
     this.nameOfDead = [];
-    this.changeAllStatus('saved', this.jogadores, false);
-    let playerAttacked = _.filter(this.jogadores, function(o) {return o.target === true && o.job.id !== 'gigante'; });
-    playerAttacked = _.filter(playerAttacked, function(o) {return o.target === true && o.job.id !== 'amaldicoado' ; });
-    playerAttacked = _.filter(playerAttacked, function(o) {return o.target === true && o.job.id !== 'psicopata' ; });
+    this.changeAllStatus('saved',this.jogadores,false);
+    let playerAttacked = _.filter(this.jogadores, function(o){return o.target === true && o.job.id !== 'gigante'; });
+    playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.id !== 'amaldicoado' ; });
+    playerAttacked = _.filter(playerAttacked, function(o){return o.target === true && o.job.id !== 'psicopata' ; });
     const indexGiantWound = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.target === true && o.save === false && o.curePotion === false; });
     const indexCursedWound = _.findIndex(this.jogadores, function(o) { return o.job.id === 'amaldicoado' && o.target === true && o.save === false && o.curePotion === false; });
     const saved = _.filter(this.jogadores, function(o) { return o.save === true; });
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.lynch === true && o.job.id !== 'principe'; }));
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.deathPotion === true; }));
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.psycho === true; }));
-
-    playerAttacked = _.concat(playerAttacked, _.filter(this.jogadores, function(o) {return o.toughTarget === true; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.lynch === true && o.job.id !== 'principe'; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.deathPotion === true; }));
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.psycho === true; }));
+    
+    playerAttacked = _.concat(playerAttacked,_.filter(this.jogadores, function(o){return o.toughTarget === true; }));
     playerAttacked = _.uniqBy(playerAttacked, 'name');
 
-    let playerNotSaved = _.filter(playerAttacked, function(o) {return o.save === false; });
-    playerNotSaved = _.filter(playerNotSaved, function(o) {return o.curePotion === false; });
-    playerNotSaved = _.concat(playerNotSaved, _.filter(this.jogadores, function(o) {return o.mason === true; }));
+    let playerNotSaved = _.filter(playerAttacked, function(o){return o.save === false; });
+    playerNotSaved = _.filter(playerNotSaved, function(o){return o.curePotion === false; });
+    playerNotSaved = _.concat(playerNotSaved,_.filter(this.jogadores, function(o){return o.mason === true; }));
     playerNotSaved = _.uniqBy(playerNotSaved, 'name');
 
     if (saved.length > 0) {
@@ -1072,14 +1054,14 @@ export class TodoComponent implements OnInit {
       this.changeStatusWhere('saved', this.jogadores, saved, true);
     }
 
-    if (indexGiantWound !== -1) {
+    if (indexGiantWound != -1) {
       this.jogadores[indexGiantWound].attacked = true;
     }
-    if (indexCursedWound !== -1) {
+    if (indexCursedWound != -1) {
       this.jogadores[indexCursedWound].attacked = true;
       // this.openSnackBar("Um novo lobisomem surge!");
       this.nameOfDead.push('Um novo<b class="primary-color">&nbsplobisomem&nbsp</b>surge!');
-
+      
     }
     console.log('Before', playerNotSaved);
 
@@ -1090,13 +1072,13 @@ export class TodoComponent implements OnInit {
     if (this.statusTrue('love', playerNotSaved)) {
     console.log('Inside', this.jogadores);
 
-    lovers = this.playerWithStatus('love', this.jogadores, true);
-    playerNotSaved = _.concat(playerNotSaved, lovers);
-    playerNotSaved = _.uniqBy(playerNotSaved, 'name');
+      lovers = this.playerWithStatus('love', this.jogadores, true);
+      playerNotSaved = _.concat(playerNotSaved, lovers);
+      playerNotSaved = _.uniqBy(playerNotSaved, 'name');
       // this.openSnackBar("O casal morreu!");
+      
 
-
-    if (this.playerWithStatus('dead', lovers, false).length > 0) {
+      if (this.playerWithStatus('dead', lovers, false).length > 0) {
         this.nameOfDead.push('O<b class="primary-color">&nbspcasal&nbsp</b>morreu!');
       }
     }
@@ -1134,7 +1116,7 @@ export class TodoComponent implements OnInit {
         if (this.statusTrue('lynch', cubs)) {
         // this.openSnackBar("Na noite os lobos podem matar 2!");
         this.nameOfDead.push('Na noite os<b class="primary-color">&nbsplobos&nbsp</b>podem matar 2!');
-
+        
       }
 
     }
@@ -1144,10 +1126,10 @@ export class TodoComponent implements OnInit {
 
     this.changeStatusWhere('dead', this.jogadores, playerNotSaved, true);
 
-    if (playerNotSaved.length === 0) {
+    if (playerNotSaved.length == 0) {
       if (this.night) {
         this.nameOfDead.push('<b class="primary-color">&nbspNinguém&nbsp</b>morreu nessa noite!');
-
+        
       } else {
         this.nameOfDead.push('<b class="primary-color">&nbspNinguém&nbsp</b>morreu nesse dia!');
 
@@ -1157,7 +1139,7 @@ export class TodoComponent implements OnInit {
     if (this.hasClassArray('cacador', playerNotSaved)) {
       // this.openSnackBar("Caçador deve matar alguém!");
       this.nameOfDead.push('<b class="primary-color">&nbspCaçador&nbsp</b>deve matar alguém!');
-
+      
     }
 
     // console.log(this.nameOfDead);
@@ -1165,12 +1147,12 @@ export class TodoComponent implements OnInit {
 
 
 
-    const playerAlive = _.filter(this.jogadores, function(o) {return o.dead === false; });
-    const giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.attacked === true; });
-    if (giantAttacked !== -1) {
+    let playerAlive = _.filter(this.jogadores, function(o){return o.dead === false; });
+    let giantAttacked = _.findIndex(this.jogadores, function(o) { return o.job.id === 'gigante' && o.attacked === true; });
+    if(giantAttacked != -1){
       this.changeStatusWhereMinus('target', this.jogadores, playerAlive, false, 'gigante');
-
-    } else {
+      
+    }else{
       this.changeStatusWhere('target', this.jogadores, playerAlive, false);
     }
 
@@ -1190,7 +1172,7 @@ export class TodoComponent implements OnInit {
 
     const indexWolf = _.findIndex(this.classes, function(o) { return o.id === 'lobisomem'; });
 
-    if (indexCursed !== -1) {
+    if (indexCursed != -1) {
 
       this.jogadores[indexCursed].job = this.classes[indexWolf];
       this.teamsUp();
@@ -1282,7 +1264,7 @@ export class TodoComponent implements OnInit {
   nextTutorial() {
     if (this.tutorialScreen < 3) {
       this.slideLeft = false;
-      if (this.tutorialScreen === 2) {
+      if (this.tutorialScreen == 2) {
         this.tutorial = false;
         this.saveLocalTutorial();
       } else {
@@ -1299,7 +1281,7 @@ export class TodoComponent implements OnInit {
     console.log(this.tutorialScreen);
   }
 
-  goTutorial() {
+  goTutorial(){
     this.tutorialScreen = 0;
     this.tutorialActions.star = false;
     this.tutorialActions.icon = false;
@@ -1309,7 +1291,6 @@ export class TodoComponent implements OnInit {
   }
 
   nextStep() {
-    clearInterval(this.interval);
     this.step++;
   }
 
@@ -1339,7 +1320,7 @@ export class TodoComponent implements OnInit {
   }
 
   restart() {
-    if (typeof(Storage) !== 'undefined' && localStorage.gameSave) {
+    if (typeof(Storage) !== 'undefined' && localStorage['gameSave']) {
       // console.log(JSON.parse(localStorage.getItem("gameSave")));
       const save = JSON.parse(localStorage.getItem('gameSave'));
       this.classesInGame = save.classesin;
@@ -1366,7 +1347,7 @@ export class TodoComponent implements OnInit {
   }
 
   getLocalTutorial() {
-    if (typeof(Storage) !== 'undefined' && localStorage.tutorial) {
+    if (typeof(Storage) !== 'undefined' && localStorage['tutorial']) {
       this.tutorial = JSON.parse(localStorage.getItem('tutorial'));
 
     } else {
@@ -1381,7 +1362,7 @@ export class TodoComponent implements OnInit {
   }
 
   getLocalFav() {
-    if (typeof(Storage) !== 'undefined' && localStorage.favorites) {
+    if (typeof(Storage) !== 'undefined' && localStorage['favorites']) {
       this.options = JSON.parse(localStorage.getItem('favorites'));
 
     } else {
@@ -1486,7 +1467,7 @@ export class TodoComponent implements OnInit {
    filterDead() {
     if (this.showDeadFlag === false) {
       this.jogadoresFilter = this.jogadores;
-      this.jogadores =  _.filter(this.jogadores, function(o) { return o.dead === false; });
+      this.jogadores =  _.filter(this.jogadores, function(o) { return o.dead == false; });
     } else {
       this.jogadores = this.jogadoresFilter;
     }
@@ -1504,7 +1485,7 @@ export class TodoComponent implements OnInit {
 
 
         }
-    const indexWolf = _.findIndex(this.classes, { id: 'lobisomem' });
+    let indexWolf = _.findIndex(this.classes, { id: 'lobisomem' });
 
 
 
@@ -1538,7 +1519,7 @@ export class TodoComponent implements OnInit {
   }
 
   filterClasses() {
-    if (this.filterInGame === true && this.sortGame === true) {
+    if (this.filterInGame == true && this.sortGame == true) {
       const classTemp = [];
 
       for (let i = 0; i < this.jogadores.length; i++) {
@@ -1550,15 +1531,15 @@ export class TodoComponent implements OnInit {
       this.classesHelp = classTemp;
       this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order < 99; });
       this.classesHelp = _.sortBy(this.classesHelp, ['order']);
-    } else if (this.filterInGame === false && this.sortGame === true) {
+    } else if (this.filterInGame == false && this.sortGame == true) {
       this.filterInGame = false;
       this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order < 99; });
       this.classesHelp = _.sortBy(this.classesHelp, ['order']);
-    } else if (this.sortGame === true) {
+    } else if (this.sortGame == true) {
       this.filterInGame = false;
       this.classesHelp =  _.filter(this.classesHelp, function(o) { return o.order < 99; });
       this.classesHelp = _.sortBy(this.classesHelp, ['order']);
-    } else if (this.filterInGame === true) {
+    } else if (this.filterInGame == true) {
       const classTemp = [];
 
       for (let i = 0; i < this.jogadores.length; i++) {
@@ -1578,14 +1559,14 @@ export class TodoComponent implements OnInit {
 
   }
 
-  getColor(team: string) {
+  getColor(team: String) {
 
     if (team === 'bad') {
-      return 'warn';
+      return 'warn'
     } else if (team === 'good') {
-      return 'primary';
+      return 'primary'
     } else if (team === 'neutral') {
-      return 'accent';
+      return 'accent'
     }
 
   }
@@ -1597,7 +1578,7 @@ export class TodoComponent implements OnInit {
   changeStatus(jogador: Jogador, property) {
 
     jogador[property] = !jogador[property];
-    if (property === 'curePotion') {
+    if (property == 'curePotion') {
       jogador.cureUsed = jogador.curePotion;
     }
     this.teamsUp();
@@ -1638,14 +1619,14 @@ function add(array, value) {
 }
 
 function remove(array, value) {
-  const index = array.indexOf(value);
+  let index = array.indexOf(value);
   if (index !== -1) {
     array.splice(index, 1);
   }
 }
 
 
-function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
