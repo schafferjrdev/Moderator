@@ -493,7 +493,7 @@ export class TodoComponent implements OnInit {
 
      this.cloudy = _.sample([true, false]);
 
-     console.log(this.cloudy);
+    
   }
 
   openDialog() {
