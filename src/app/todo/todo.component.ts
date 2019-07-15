@@ -3,7 +3,7 @@ import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import _ from 'lodash';
 import Swal from 'sweetalert2';
-import { interval } from 'rxjs';
+import { interval, Subscription, Observable } from 'rxjs';
 
 
 
@@ -75,7 +75,9 @@ export interface Classes {
 
 
 export class TodoComponent implements OnInit {
-  
+  private subscription: Subscription;
+  everySeconds$: Observable<number> = interval(1000);
+
   tutorial = true;
   tutorialScreen = 0;
   tutorialActions = {
@@ -488,14 +490,9 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.hours = new Date().getHours();
     this.cloudy = _.sample([ true, false]);
-    // const secondsCounter = interval(1000);
-    // secondsCounter.subscribe(n => {
-    //   console.log(`It's been ${n} seconds since subscribing!`, this.hours); 
-      
-    //   // this.runMyMethod()
-    // });
-    
-    
+    this.subscription = this.everySeconds$.subscribe(n => {
+      this.hours = new Date().getHours();
+    });
   }
  
 
@@ -637,83 +634,7 @@ export class TodoComponent implements OnInit {
         }
       }
     });
-    // swal({
-    //   title: 'Deletar '+ jogador.name + "?",
-    //   text: 'Uma vez deletado, você não poderá recuperar este jogador!',
-    //   icon: 'warning',
-    //   buttons: {
-    //     cancel: {
-    //       text: 'Cancelar',
-    //       value: null,
-    //       visible: true,
-    //       className: 'mat-stroked-button',
-    //       closeModal: true,
-    //     },
-    //     confirm: {
-    //       text: 'OK',
-    //       value: true,
-    //       visible: true,
-    //       className: 'mat-raised-button mat-warn',
-    //       closeModal: true
-    //     }
-    //   },
-    //   dangerMode: true,
-    // })
-    // .then((willDelete) => {
-    //   if (willDelete) {
-    //     swal('Poof! '+ jogador.name +' foi deletado!', {
-    //       icon: 'success',
-    //       buttons:{confirm:{text: 'Obrigado', value: true,visible: true,className: 'mat-raised-button mat-primary modal-btn',closeModal: true}},
-    //     });
-
-    //     this.jogadores.splice(this.jogadores.indexOf(jogador), 1);
-    //     let quantity = 0;
-    //     let dead = 0;
-    //     let balance = 0;
-    //     for (let index = 0; index < this.jogadores.length; index++) {
-    //       balance = balance + Number(this.jogadores[index].job.power);
-    //       if (this.jogadores[index].job.team === 'bad' && !this.jogadores[index].dead) {
-    //         quantity++;
-    //       }
-    //       if (this.jogadores[index].dead) {
-    //         dead++;
-    //       }
-    //     }
-    //     // this.times.balance = balance;
-    //     this.times.lobos = quantity;
-    //     this.times.aldeia = this.jogadores.length - dead - quantity;
-    //     this.showPlayer = false;
-    //     this.jogadores = _.sortBy(this.jogadores, ['job.order']);
-
-    //     if (this.filterInGame == true) {
-    //       const classTemp = [];
-
-    //       for (let i = 0; i < this.jogadores.length; i++) {
-
-    //           add(classTemp, this.jogadores[i].job);
-
-    //         }
-
-    //       this.classesHelp = classTemp;
-    //       this.classesHelp = _.sortBy(this.classesHelp, ['team', 'power']);
-    //     }
-
-    //     if (this.jogadores.length - this.times.totalClasses < 0) {
-    //       this.classesInGame = _.sortBy(this.classesInGame, ['qnt']);
-    //       this.classesInGame[0].qnt--;
-    //       this.changeBalance();
-
-    //     }
-    //   } else {
-    //     swal(jogador.name + " está salvo!", {buttons:{ confirm: {
-    //       text: 'Certo!',
-    //       value: true,
-    //       visible: true,
-    //       className: 'mat-raised-button mat-primary modal-btn',
-    //       closeModal: true,
-    //     }, }});
-    //   }
-    // });
+    
 
 
   }
@@ -1306,6 +1227,7 @@ export class TodoComponent implements OnInit {
   }
 
   nextStep() {
+    this.subscription.unsubscribe();
     this.step++;
   }
 
