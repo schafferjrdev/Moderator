@@ -27,7 +27,7 @@
   <div [ngClass]="{'reveal':hours===24 }" class="sky-gradient sky-gradient-24"></div>
 
   <div *ngIf="hours>18 " class='stars_base'></div>
-  <div *ngIf="hours<19 || cloudy" class='cloud_base'></div>
+  <div *ngIf="hours<19" class='cloud_base'></div>
 
     <mat-icon class="blink_me icon-start icon-white" svgIcon="white-wolf"></mat-icon>
     <span class="blink_me wolf-font">Toque para iniciar</span>

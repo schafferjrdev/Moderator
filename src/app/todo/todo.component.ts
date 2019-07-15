@@ -79,8 +79,6 @@ export class TodoComponent implements OnInit {
 
   }
   hours = 23;
-  cloudy =false;
-  interval:any;
   slideLeft = false;
 
   showPlayer = false;
@@ -482,16 +480,6 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     this.hours = new Date().getHours();
-
-
-     this.interval = setInterval(() => {
-      this.hours = new Date().getHours();
-
-       console.log(this.hours);
-  }, 1000);
-
-
-     this.cloudy = _.sample([true, false]);
 
     
   }
@@ -1303,7 +1291,6 @@ export class TodoComponent implements OnInit {
   }
 
   nextStep() {
-    clearInterval(this.interval);
     this.step++;
   }
 
