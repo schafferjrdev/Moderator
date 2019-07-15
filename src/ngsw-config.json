@@ -9,10 +9,7 @@
           "/favicon.ico",
           "/index.html",
           "/*.css",
-          "/*.js",
-          "/assets/icons/*.png",
-          "/assets/icons/*.svg",
-          "/assets/players/*.svg"
+          "/*.js"
 
         ]
       }
