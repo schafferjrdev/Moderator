@@ -3,6 +3,9 @@ import {FormControl} from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import _ from 'lodash';
 import Swal from 'sweetalert2';
+import { interval } from 'rxjs';
+
+
 
 export class Jogador {
   name: string;
@@ -69,6 +72,8 @@ export interface Classes {
 })
 
 
+
+
 export class TodoComponent implements OnInit {
   
   tutorial = true;
@@ -78,6 +83,8 @@ export class TodoComponent implements OnInit {
     icon:false,
 
   }
+  
+  cloudy = false;
   hours = 23;
   slideLeft = false;
 
@@ -480,12 +487,20 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     this.hours = new Date().getHours();
-
+    this.cloudy = _.sample([ true, false]);
+    // const secondsCounter = interval(1000);
+    // secondsCounter.subscribe(n => {
+    //   console.log(`It's been ${n} seconds since subscribing!`, this.hours); 
+      
+    //   // this.runMyMethod()
+    // });
+    
     
   }
+ 
 
   openDialog() {
-
+    
   }
 
   save(jogador: Jogador) {
