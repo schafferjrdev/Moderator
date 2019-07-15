@@ -78,6 +78,9 @@ export class TodoComponent implements OnInit {
     icon:false,
 
   }
+  hours = 23;
+  cloudy =false;
+  interval:any;
   slideLeft = false;
 
   showPlayer = false;
@@ -478,7 +481,19 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.hours = new Date().getHours();
 
+
+     this.interval = setInterval(() => {
+      this.hours = new Date().getHours();
+
+       console.log(this.hours);
+  }, 1000);
+
+
+     this.cloudy = _.sample([true, false]);
+
+     console.log(this.cloudy);
   }
 
   openDialog() {
@@ -574,11 +589,8 @@ export class TodoComponent implements OnInit {
         title: 'Poof! '+ jogador.name +' foi deletado!',
         type: 'success',
         showCancelButton: false,
-        confirmButtonText: 'Obrigado',
-        customClass: {
-          confirmButton: 'mat-raised-button mat-primary',
-        },
-        buttonsStyling: false,
+        timer:900,
+        showConfirmButton: false,
         backdrop: 'transparent'
       })
       
@@ -1291,6 +1303,7 @@ export class TodoComponent implements OnInit {
   }
 
   nextStep() {
+    clearInterval(this.interval);
     this.step++;
   }
 

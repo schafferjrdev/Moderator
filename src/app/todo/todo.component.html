@@ -1,8 +1,33 @@
-
-
 <!-- Tela INICIAL -->
-<div *ngIf="step == 0" class="content initial-screen gradient-night" fxLayout="column" (click)="nextStep()">
-    <div class='stars_base'></div>
+<div *ngIf="step == 0"  class="content initial-screen" fxLayout="column" (click)="nextStep()">
+  <div [ngClass]="{'reveal':hours===0 }"  class="sky-gradient sky-gradient-00"></div>
+  <div [ngClass]="{'reveal':hours===1 }" class="sky-gradient sky-gradient-01"></div>
+  <div [ngClass]="{'reveal':hours===2 }" class="sky-gradient sky-gradient-02"></div>
+  <div [ngClass]="{'reveal':hours===3 }" class="sky-gradient sky-gradient-03"></div>
+  <div [ngClass]="{'reveal':hours===4 }" class="sky-gradient sky-gradient-04"></div>
+  <div [ngClass]="{'reveal':hours===5 }" class="sky-gradient sky-gradient-05"></div>
+  <div [ngClass]="{'reveal':hours===6 }" class="sky-gradient sky-gradient-06"></div>
+  <div [ngClass]="{'reveal':hours===7 }" class="sky-gradient sky-gradient-07"></div>
+  <div [ngClass]="{'reveal':hours===8 }" class="sky-gradient sky-gradient-08"></div>
+  <div [ngClass]="{'reveal':hours===9 }" class="sky-gradient sky-gradient-09"></div>
+  <div [ngClass]="{'reveal':hours===10 }" class="sky-gradient sky-gradient-10"></div>
+  <div [ngClass]="{'reveal':hours===11 }" class="sky-gradient sky-gradient-11"></div>
+  <div [ngClass]="{'reveal':hours===12 }" class="sky-gradient sky-gradient-12"></div>
+  <div [ngClass]="{'reveal':hours===13 }" class="sky-gradient sky-gradient-13"></div>
+  <div [ngClass]="{'reveal':hours===14 }" class="sky-gradient sky-gradient-14"></div>
+  <div [ngClass]="{'reveal':hours===15 }" class="sky-gradient sky-gradient-15"></div>
+  <div [ngClass]="{'reveal':hours===16 }" class="sky-gradient sky-gradient-16"></div>
+  <div [ngClass]="{'reveal':hours===17 }" class="sky-gradient sky-gradient-17"></div>
+  <div [ngClass]="{'reveal':hours===18 }" class="sky-gradient sky-gradient-18"></div>
+  <div [ngClass]="{'reveal':hours===19 }" class="sky-gradient sky-gradient-19"></div>
+  <div [ngClass]="{'reveal':hours===20 }" class="sky-gradient sky-gradient-20"></div>
+  <div [ngClass]="{'reveal':hours===21 }" class="sky-gradient sky-gradient-21"></div>
+  <div [ngClass]="{'reveal':hours===22 }" class="sky-gradient sky-gradient-22"></div>
+  <div [ngClass]="{'reveal':hours===23 }" class="sky-gradient sky-gradient-23"></div>
+  <div [ngClass]="{'reveal':hours===24 }" class="sky-gradient sky-gradient-24"></div>
+
+  <div *ngIf="hours>18 " class='stars_base'></div>
+  <div *ngIf="hours<19 || cloudy" class='cloud_base'></div>
 
     <mat-icon class="blink_me icon-start icon-white" svgIcon="white-wolf"></mat-icon>
     <span class="blink_me wolf-font">Toque para iniciar</span>
@@ -23,8 +48,9 @@
 </div>
 
 <!-- TUTORIAL -->
-<div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" class="tutorials gradient-night">
+<div *ngIf="step == 2 && tutorial" (swiperight)="prevTutorial()" (swipeleft)="nextTutorial()" class="tutorials sky-gradient-23">
     <div class='stars_base'></div>
+    <div class='cloud_base'></div>
     <div *ngIf="tutorialScreen == 0" class="tips animated bounceInLeft">
         <div  class="content" fxLayout="column" >
 
