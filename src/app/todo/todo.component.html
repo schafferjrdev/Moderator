@@ -267,9 +267,9 @@
            <label class="subtitles gray-color">Jogadores ({{jogadores.length}})</label>   
           <mat-divider></mat-divider>
           <div class="lista-overflow">
-
-          <mat-list>
-                <mat-list-item class="animated bounceInRight" *ngFor="let jogador of jogadores">
+          
+          <mat-list class="lista-direction">
+                <mat-list-item class="animated highlight" *ngFor="let jogador of jogadores">
                    <h4 mat-line>{{jogador.name}}</h4>
 
                    <button disableRipple *ngIf="!hasName(jogador.name)"  color="accent" mat-icon-button (click)="fav(jogador.name)">
@@ -291,6 +291,7 @@
                  
               
              </mat-list>
+            
            </div>
 
       
@@ -439,7 +440,7 @@
         
         <!-- Card Jogador -->
       <div  class="lista-overflow-game" *ngIf="!showPlayer">
-        <div class="animated bounceIn" *ngFor="let jogador of jogadores">
+        <div *ngFor="let jogador of jogadores">
           
           
           <mat-card   (press)="{event:open(jogador), time:5000}" [ngClass]="{'lupin-border':jogador.job.id === 'lupino','lycan-border':jogador.job.id === 'licano','good-border':jogador.job.team === 'good' ||jogador.job.id === 'liderdoculto' ||jogador.job.id === 'psicopata', 'bad-border':jogador.job.team === 'bad', 'dead':jogador.dead }" class="player mat-elevation-z6"  >

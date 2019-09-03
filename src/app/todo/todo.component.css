@@ -139,6 +139,10 @@
     overflow-y: scroll; /* has to be scroll, not auto */
     -webkit-overflow-scrolling: touch;
 }
+.lista-direction{
+    display: flex;
+    flex-direction: column-reverse;
+}
 .lista-overflow-classes{
     overflow-x: hidden;
     height: 70vh;
@@ -794,3 +798,19 @@ button{
 .sky-gradient-21 { background: linear-gradient(to bottom, #010A10 30%,#59230B 80%,#2F1107 100%); }
 .sky-gradient-22 { background: linear-gradient(to bottom, #010A10 80%,#150800 100%); }
 .sky-gradient-23 { background: linear-gradient(to bottom, #00000c 50%,#010A10 100%); }
+
+
+.highlight:last-child{
+    animation: highlight 600ms ease-out;
+    
+}
+
+@keyframes highlight {
+    0% {
+        background-color: rgb(255, 255, 125);
+    }
+
+    100% {
+        background-color: white;
+    }
+}
